@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.admin.AdDTO;
 import dto.admin.MovieAdDTO;
 import oracle.connect.OracleJDBCManager;
 

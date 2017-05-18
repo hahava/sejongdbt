@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 import dao.admin.*;
 import dao.user.*;
-import dto.user.MyuserDTO;
-import oracle.connect.Connector;
 
 public class ExecuteProject {
 

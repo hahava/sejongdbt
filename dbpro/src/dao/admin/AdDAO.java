@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.AdDTO;
-import dto.admin.EmployeeTaskDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class AdDAO implements DAO {

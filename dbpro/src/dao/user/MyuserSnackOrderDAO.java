@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.user.MyuserDTO;
 import dto.user.MyuserSnackOrderDTO;
-import dto.user.SnackInfoDTO;
 import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
@@ -34,13 +32,13 @@ public class MyuserSnackOrderDAO implements DAO {
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "ORDER_NUM");
-			pstm.setString(2,"MYUSER_ID");
+			pstm.setString(2, "MYUSER_ID");
 			pstm.setString(3, "SNACK_CODE");
 			pstm.setString(4, "ORDER_DATE");
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"), result.getString("SNACK_CODE"),
-						result.getDate("ORDER_DATE")));
+				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"),
+						result.getString("SNACK_CODE"), result.getDate("ORDER_DATE")));
 			}
 			for (int i = 0; i < arrayList.size(); i++) {
 				System.out.println(arrayList.get(i).toString());
@@ -58,8 +56,8 @@ public class MyuserSnackOrderDAO implements DAO {
 			e.printStackTrace();
 		}
 
-
 	}
+
 	public void listMe(String id) {
 
 		OracleJDBCManager manager = new OracleJDBCManager();
@@ -81,8 +79,8 @@ public class MyuserSnackOrderDAO implements DAO {
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"), result.getString("SNACK_CODE"),
-						result.getDate("ORDER_DATE")));
+				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"),
+						result.getString("SNACK_CODE"), result.getDate("ORDER_DATE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);

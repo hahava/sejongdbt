@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.EmployeeDTO;
-import dto.user.RatDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class EmployeeDAO implements DAO {

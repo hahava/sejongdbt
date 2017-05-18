@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.admin.MovieActorDTO;
 import dto.user.PaymentDTO;
 import oracle.connect.OracleJDBCManager;
 

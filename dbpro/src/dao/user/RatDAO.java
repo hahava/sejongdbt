@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.user.MoviePaymentDTO;
-import dto.user.PaymentDTO;
 import dto.user.RatDTO;
 import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;

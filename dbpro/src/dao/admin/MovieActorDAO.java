@@ -7,10 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.MovieActorDTO;
-import dto.user.*;
 import oracle.connect.OracleJDBCManager;
 
-public class MovieActorDAO implements DAO{
+public class MovieActorDAO implements DAO {
 	public void list() {
 
 		OracleJDBCManager manager = new OracleJDBCManager();

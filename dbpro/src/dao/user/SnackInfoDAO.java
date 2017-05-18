@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.user.RatDTO;
 import dto.user.SnackInfoDTO;
 import oracle.connect.OracleJDBCManager;
 

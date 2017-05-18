@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.PaymentStaticsDTO;
-import dto.user.MyuserSnackOrderDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class PayMentStaticsDAO implements DAO {
