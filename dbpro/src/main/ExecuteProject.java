@@ -82,16 +82,46 @@ public class ExecuteProject {
 				employeeTaskDAO.list();
 				break;
 			case 8:
+				ActorDAO actorDAO = new ActorDAO();
+				actorDAO.list();
+				break;
+			case 9 : 
+				MovieActorDAO movieActorDAO=new MovieActorDAO();
+				movieActorDAO.list();
+				break;
+			case 10 :
+				RatDAO ratDAO=new RatDAO();
+				ratDAO.list();
+				break;
+			case 11 : 
+				PaymentDAO paymentDAO=new PaymentDAO();
+				paymentDAO.list();
+				break;
+			case 12 :
+				MoviePaymentDAO moviePaymentDAO=new MoviePaymentDAO();
+				moviePaymentDAO.list();
+				break;
+			case 13 :
+				SnackInfoDAO snackInfoDAO=new SnackInfoDAO();
+				snackInfoDAO.list();
+				break;
+			case 14 : 
+				MyuserSnackOrderDAO myuserSnackDAO = new MyuserSnackOrderDAO();
+				myuserSnackDAO.list();
+				break;
+				
+				
+			case 15:
 				login();
 				return 0;
-			case 9:
+			case 16:
 				// insert init function//
 				InitDatabaseDAO initDAO = new InitDatabaseDAO();
 				initDAO.list();
 				break;
 			// finished //
 
-			case 10:
+			case 17:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
 			}
@@ -138,26 +168,40 @@ public class ExecuteProject {
 
 	private static void showMenu() {
 
+		/*
+DELETE FROM SNACK_INFO;
+DELETE FROM MYUSER_SNACK_ORDER;
+
+
+
+		*/
 		System.out.println("원하는 정보를 보여드립니다.!");
 		if (isAdmin()) {
 			System.out.println("1. 유저 정보");
 			System.out.println("2. 영화 정보");
-			System.out.println("3. 평점 통계 정보");
+			System.out.println("3. 결제 통계 정보");
 			System.out.println("4. 광고 정보");
-			System.out.println("5. 광고 삽입");
+			System.out.println("5. 영화 광고 정보");
 			System.out.println("6. 직원 정보");
 			System.out.println("7. 직원 업무 내역");
-			System.out.println("8. 로그인 변경");
-			System.out.println("9. 데이터 초기화");
-			System.out.println("10. 프로그램 종료");
+			System.out.println("8. 배우 정보");
+			System.out.println("9. 영화에 출연한 배우 정보");
+			System.out.println("10. 회원평점정보");
+			System.out.println("11. 결제 정보");
+			System.out.println("12. 영화 결제 정보");
+			System.out.println("13. 간식 종류");
+			System.out.println("14. 회원들이 주문한 간식 종류 ");
+			System.out.println("15. 로그인 변경");
+			System.out.println("16. 데이터 초기화");
+			System.out.println("17. 프로그램 종료");
 		} else {
 			System.out.println("1. 나의 정보");
-			System.out.println("2. 영화 정보");
-			System.out.println("3. 평점 정보");
-			System.out.println("4. 가능한 결제 종류");
-			System.out.println("5. 결제 내역");
+			System.out.println("2. 나의 영화 정보");
+			System.out.println("3. 나의 평점 정보");
+			System.out.println("4. 결제 종류");
+			System.out.println("5. 나의 결제 내역");
 			System.out.println("6. 스낵정보");
-			System.out.println("7. 스낵주문 내역");
+			System.out.println("7. 나의 스낵주문 내역");
 			System.out.println("8. 로그인 변경");
 			System.out.println("9. 프로그램 종료");
 		}
