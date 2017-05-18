@@ -1,13 +1,23 @@
-package dao.user;
+package dao.admin;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+
+import dao.user.DAO;
 import dto.user.*;
 import oracle.connect.OracleJDBCManager;
+import SqlRunner.SqlRunner;
 
 public class InitDatabaseDAO implements DAO {
 
@@ -32,7 +42,8 @@ public class InitDatabaseDAO implements DAO {
 		CallableStatement cstm=null;
 		conn = manager.connect(oracleId, passwd, port);
 		
-
+		ArrayList<String> temp;
+		SqlRunner sr=new SqlRunner();
 		
 		try {
 			
@@ -53,6 +64,17 @@ public class InitDatabaseDAO implements DAO {
 			cstm.executeUpdate();
 			}
 			
+
+			temp=sr.createQueries("./sql/INSERT_DATA_ver2.sql");
+//			for(String s : temp) {
+//				System.out.println(s);
+//		}		
+		for(String insertQuery : temp) {
+		
+			pstm=conn.prepareStatement(insertQuery);
+			pstm.executeUpdate();
+		}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("실행도중 오류가 발생했습니다. 관리자에게 문의하세요.");
@@ -60,6 +82,7 @@ public class InitDatabaseDAO implements DAO {
 			e.printStackTrace();
 		}
 		try {
+			cstm.close();
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
@@ -67,5 +90,6 @@ public class InitDatabaseDAO implements DAO {
 			e.printStackTrace();
 		}
 	}
+
 
 }
