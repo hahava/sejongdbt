@@ -10,6 +10,7 @@ import oracle.connect.Connector;
 public class ExecuteProject {
 
 	public static boolean authority = false;
+	public static String id;
 
 	public static void main(String[] args) {
 
@@ -18,7 +19,7 @@ public class ExecuteProject {
 
 		login();
 
-		while (num != 9) {
+		while (num != 10) {
 			showMenu();
 			num = scanner.nextInt();
 			num = selectMenu(num);
@@ -26,10 +27,9 @@ public class ExecuteProject {
 	}
 
 	private static void login() {
-		String id = null;
 		String pw = null;
 		Scanner scanner = new Scanner(System.in);
-		int num = 0;
+		int num = MyuserDAO.NOLOGIN;
 		MyuserDAO dao = new MyuserDAO();
 		while (num == 0) {
 			System.out.println("아이디와 패스워드를 입력해주세요");
@@ -81,22 +81,45 @@ public class ExecuteProject {
 				EmployeeTaskDAO employeeTaskDAO = new EmployeeTaskDAO();
 				employeeTaskDAO.list();
 				break;
-			case 8 :
-				break;
+			case 8:
+				login();
+				return 0;
 			case 9:
 				// insert init function//
-				InitDatabaseDAO initDAO=new InitDatabaseDAO();
+				InitDatabaseDAO initDAO = new InitDatabaseDAO();
 				initDAO.list();
 				break;
+			// finished //
 
-				
-				// finished //
-				
 			case 10:
-				break;
+				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
+				return 10;
 			}
 		} else {
+			switch (num) {
+			case 1:
+				MyuserDAO dao = new MyuserDAO();
+				dao.listMe(id);
+				break;
+			case 2:
+				MovieDAO movieDAO = new MovieDAO();
+				movieDAO.list();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			case 8:
+				login();
+				return 0;
 
+			}
 		}
 		return 0;
 	}
