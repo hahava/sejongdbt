@@ -99,7 +99,7 @@ public class ExecuteProject {
 				break;
 			case 12:
 				MoviePaymentDAO moviePaymentDAO = new MoviePaymentDAO();
-				moviePaymentDAO.listMe(id);
+				moviePaymentDAO.list();
 				break;
 			case 13:
 				SnackInfoDAO snackInfoDAO = new SnackInfoDAO();
@@ -195,7 +195,7 @@ public class ExecuteProject {
 			System.out.println("17. 프로그램 종료");
 		} else {
 			System.out.println("1. 나의 정보");
-			System.out.println("2. 나의 영화 정보");
+			System.out.println("2. 영화 정보");
 			System.out.println("3. 나의 평점 정보");
 			System.out.println("4. 결제 종류");
 			System.out.println("5. 나의 결제 내역");

@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dao.user.DAO;
 import dto.admin.MovieActorDTO;
 import dto.user.*;
 import oracle.connect.OracleJDBCManager;

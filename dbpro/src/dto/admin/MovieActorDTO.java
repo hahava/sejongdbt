@@ -1,6 +1,5 @@
 package dto.admin;
 
-import dto.user.DTO;
 
 public class MovieActorDTO implements DTO{
 

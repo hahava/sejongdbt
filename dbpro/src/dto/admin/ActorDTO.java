@@ -1,6 +1,5 @@
 package dto.admin;
 
-import dto.user.DTO;
 
 public class ActorDTO implements DTO {
 	public String actorCode;
