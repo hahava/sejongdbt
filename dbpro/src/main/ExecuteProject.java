@@ -115,6 +115,8 @@ public class ExecuteProject {
 				break;
 			case 5:
 				//need to adding
+				MoviePaymentDAO moviepaymentDAO=new MoviePaymentDAO();
+				moviepaymentDAO.list();
 				break;
 			case 6:
 				SnackInfoDAO infoDAO = new SnackInfoDAO();
