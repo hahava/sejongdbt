@@ -9,15 +9,43 @@ import oracle.connect.Connector;
 
 public class ExecutePro {
 
-	static boolean authority = false;
+	public static boolean authority = false;
 
 	public static void main(String[] args) {
+
 		Scanner scanner = new Scanner(System.in);
 		int num = 0;
-		Loop: while (num != 9) {
-			showMenu();
+
+		login();
+
+		while (num != 9) {
+		//	showMenu();
 			num = scanner.nextInt();
 			num = selectMenu(num);
+		}
+	}
+
+	private static void login() {
+		String id = null;
+		String pw = null;
+		Scanner scanner = new Scanner(System.in);
+		int num = 0;
+		MyuserDAO dao = new MyuserDAO();
+		while (num == 0) {
+			System.out.println("아이디와 패스워드를 입력해주세요");
+			id = scanner.nextLine();
+			pw = scanner.nextLine();
+			num = dao.login(id, pw);
+			if (num == MyuserDAO.NOLOGIN) {
+				System.out.println("없는 계정이거나 잘못된 암호입니다!!!\n\n\n");
+			}
+		}
+		if (num == MyuserDAO.ADMINLOGIN) {
+			System.out.println("관리자 입니다 반갑습니다!");
+			authority = true;
+		} else if (num == MyuserDAO.USERLOGIN) {
+			System.out.println(id + " 님 반갑습니다.");
+			authority = false;
 		}
 	}
 
@@ -54,7 +82,7 @@ public class ExecutePro {
 				employeeTaskDAO.list();
 				break;
 			case 8:
-				
+
 				break;
 			case 9:
 				break;
