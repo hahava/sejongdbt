@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import dto.user.MyuserDTO;
 import dto.user.RatDTO;
-import main.ExecutePro;
+import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
 public class MyuserDAO implements DAO {
@@ -59,7 +59,6 @@ public class MyuserDAO implements DAO {
 
 	public int login(String id, String pw) {
 		int returnnum = NOLOGIN;
-
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
@@ -95,10 +94,10 @@ public class MyuserDAO implements DAO {
 		}
 
 		for (int i = 0; i < arrayList.size(); i++) {
-			if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).equals(pw) && id.equals("admin")) {
+			if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).MYUSER_PW.equals(pw) && id.equals("admin")) {
 				returnnum = ADMINLOGIN;
 				break;
-			} else if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).equals(pw)) {
+			} else if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).MYUSER_PW.equals(pw)) {
 				returnnum = USERLOGIN;
 				break;
 			}
