@@ -81,10 +81,18 @@ public class ExecuteProject {
 				EmployeeTaskDAO employeeTaskDAO = new EmployeeTaskDAO();
 				employeeTaskDAO.list();
 				break;
-			case 8:
-
+			case 8 :
 				break;
 			case 9:
+				// insert init function//
+				InitDatabaseDAO initDAO=new InitDatabaseDAO();
+				initDAO.list();
+				break;
+
+				
+				// finished //
+				
+			case 10:
 				break;
 			}
 		} else {
@@ -105,7 +113,8 @@ public class ExecuteProject {
 			System.out.println("6. 직원 정보");
 			System.out.println("7. 직원 업무 내역");
 			System.out.println("8. 로그인 변경");
-			System.out.println("9. 프로그램 종료");
+			System.out.println("9. 데이터 초기화");
+			System.out.println("10. 프로그램 종료");
 		} else {
 			System.out.println("1. 나의 정보");
 			System.out.println("2. 영화 정보");
