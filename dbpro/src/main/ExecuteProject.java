@@ -106,19 +106,29 @@ public class ExecuteProject {
 				movieDAO.list();
 				break;
 			case 3:
+				RatDAO ratDAO = new RatDAO();
+				ratDAO.list();
 				break;
 			case 4:
+				PaymentDAO paymentDAO = new PaymentDAO();
+				paymentDAO.list();
 				break;
 			case 5:
+				//need to adding
 				break;
 			case 6:
+				SnackInfoDAO infoDAO = new SnackInfoDAO();
+				infoDAO.list();
 				break;
 			case 7:
+				MyuserSnackOrderDAO myuserSnackOrderDAO = new MyuserSnackOrderDAO();
+				myuserSnackOrderDAO.list();
 				break;
 			case 8:
 				login();
 				return 0;
-
+			case 9:
+				return 10;
 			}
 		}
 		return 0;
@@ -146,6 +156,8 @@ public class ExecuteProject {
 			System.out.println("5. 결제 내역");
 			System.out.println("6. 스낵정보");
 			System.out.println("7. 스낵주문 내역");
+			System.out.println("8. 로그인 변경");
+			System.out.println("9. 프로그램 종료");
 		}
 	}
 
