@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import dto.user.MyuserSnackOrderDTO;
 import dto.user.SnackInfoDTO;
+import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
 public class MyuserSnackOrderDAO implements DAO {
@@ -26,15 +27,16 @@ public class MyuserSnackOrderDAO implements DAO {
 		Connection conn = null;
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from myuser_snack_order";
+		String query = "select * from myuser_snack_order where MYUSER_ID=?";
 
 		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
+			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"),
-						result.getString("SNACK_CODE"), result.getDate("ORDER_DATE")));
+				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"), result.getString("SNACK_CODE"),
+						result.getDate("ORDER_DATE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);

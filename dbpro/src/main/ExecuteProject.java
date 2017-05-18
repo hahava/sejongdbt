@@ -85,32 +85,31 @@ public class ExecuteProject {
 				ActorDAO actorDAO = new ActorDAO();
 				actorDAO.list();
 				break;
-			case 9 : 
-				MovieActorDAO movieActorDAO=new MovieActorDAO();
+			case 9:
+				MovieActorDAO movieActorDAO = new MovieActorDAO();
 				movieActorDAO.list();
 				break;
-			case 10 :
-				RatDAO ratDAO=new RatDAO();
+			case 10:
+				RatDAO ratDAO = new RatDAO();
 				ratDAO.list();
 				break;
-			case 11 : 
-				PaymentDAO paymentDAO=new PaymentDAO();
+			case 11:
+				PaymentDAO paymentDAO = new PaymentDAO();
 				paymentDAO.list();
 				break;
-			case 12 :
-				MoviePaymentDAO moviePaymentDAO=new MoviePaymentDAO();
-				moviePaymentDAO.list();
+			case 12:
+				MoviePaymentDAO moviePaymentDAO = new MoviePaymentDAO();
+				moviePaymentDAO.listMe(id);
 				break;
-			case 13 :
-				SnackInfoDAO snackInfoDAO=new SnackInfoDAO();
+			case 13:
+				SnackInfoDAO snackInfoDAO = new SnackInfoDAO();
 				snackInfoDAO.list();
 				break;
-			case 14 : 
+			case 14:
 				MyuserSnackOrderDAO myuserSnackDAO = new MyuserSnackOrderDAO();
 				myuserSnackDAO.list();
 				break;
-				
-				
+
 			case 15:
 				login();
 				return 0;
@@ -137,16 +136,16 @@ public class ExecuteProject {
 				break;
 			case 3:
 				RatDAO ratDAO = new RatDAO();
-				ratDAO.list();
+				ratDAO.listMe(id);
 				break;
 			case 4:
 				PaymentDAO paymentDAO = new PaymentDAO();
 				paymentDAO.list();
 				break;
 			case 5:
-				//need to adding
-				MoviePaymentDAO moviepaymentDAO=new MoviePaymentDAO();
-				moviepaymentDAO.list();
+				// need to adding
+				MoviePaymentDAO moviepaymentDAO = new MoviePaymentDAO();
+				moviepaymentDAO.listMe(id);
 				break;
 			case 6:
 				SnackInfoDAO infoDAO = new SnackInfoDAO();
@@ -160,6 +159,7 @@ public class ExecuteProject {
 				login();
 				return 0;
 			case 9:
+				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
 			}
 		}
@@ -169,12 +169,11 @@ public class ExecuteProject {
 	private static void showMenu() {
 
 		/*
-DELETE FROM SNACK_INFO;
-DELETE FROM MYUSER_SNACK_ORDER;
-
-
-
-		*/
+		 * DELETE FROM SNACK_INFO; DELETE FROM MYUSER_SNACK_ORDER;
+		 * 
+		 * 
+		 * 
+		 */
 		System.out.println("원하는 정보를 보여드립니다.!");
 		if (isAdmin()) {
 			System.out.println("1. 유저 정보");
