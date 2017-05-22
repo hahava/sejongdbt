@@ -40,11 +40,10 @@ public class MovieDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from ?";
+		String query = "select * from movie";
 
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "movie");
 			result = pstm.executeQuery();
 			while (result.next()) {
 				movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),

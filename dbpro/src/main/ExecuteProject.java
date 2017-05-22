@@ -28,7 +28,7 @@ public class ExecuteProject {
 		String pw = null;
 		Scanner scanner = new Scanner(System.in);
 		int num = MyuserDAO.NOLOGIN;
-		MyuserDAO dao = new MyuserDAO();
+		MyuserDAO dao = MyuserDAO.getInstance();
 		while (num == 0) {
 			System.out.println("아이디와 패스워 드를 입력해주세요");
 			id = scanner.nextLine();
@@ -52,7 +52,7 @@ public class ExecuteProject {
 		if (isAdmin()) {
 			switch (num) {
 			case 1:
-				MyuserDAO myuserDAO = new MyuserDAO();
+				MyuserDAO myuserDAO = MyuserDAO.getInstance();
 				myuserDAO.list();
 				break;
 			case 2:
@@ -60,7 +60,7 @@ public class ExecuteProject {
 				movieDAO.list();
 				break;
 			case 3:
-				PayMentStaticsDAO mentStaticsDAO = new PayMentStaticsDAO();
+				PayMentStaticsDAO mentStaticsDAO = PayMentStaticsDAO.getInstance();
 				mentStaticsDAO.list();
 				break;
 			case 4:
@@ -88,11 +88,11 @@ public class ExecuteProject {
 				movieActorDAO.list();
 				break;
 			case 10:
-				RatDAO ratDAO = new RatDAO();
+				RatDAO ratDAO = RatDAO.getInstance();
 				ratDAO.list();
 				break;
 			case 11:
-				PaymentDAO paymentDAO = new PaymentDAO();
+				PaymentDAO paymentDAO = PaymentDAO.getInstance();
 				paymentDAO.list();
 				break;
 			case 12:
@@ -125,19 +125,19 @@ public class ExecuteProject {
 		} else {
 			switch (num) {
 			case 1:
-				MyuserDAO dao = new MyuserDAO();
-				dao.listMe(id);
+				MyuserDAO dao = MyuserDAO.getInstance();
+				dao.selectMenu();
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
 				movieDAO.list();
 				break;
 			case 3:
-				RatDAO ratDAO = new RatDAO();
+				RatDAO ratDAO = RatDAO.getInstance();
 				ratDAO.listMe(id);
 				break;
 			case 4:
-				PaymentDAO paymentDAO = new PaymentDAO();
+				PaymentDAO paymentDAO = PaymentDAO.getInstance();
 				paymentDAO.list();
 				break;
 			case 5:
