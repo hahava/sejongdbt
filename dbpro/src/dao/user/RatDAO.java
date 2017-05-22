@@ -11,22 +11,28 @@ import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
 public class RatDAO implements DAO {
-	public void list() {
 
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
+		Connection conn;
 		manager.registerOracleJDBCDriver();
+		conn = manager.connect(oracleId, passwd, port);
+
+		return conn;
+	}
+
+	public void list() {
 
 		ArrayList<RatDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from RAT";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();

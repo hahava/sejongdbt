@@ -13,7 +13,7 @@ public class MovieDTO implements DTO{
 
 	@Override
 	public String toString() {
-		return "MovieDTO [MOVIE_CODE=" + MOVIE_CODE + ", MOVIE_TITLE=" + MOVIE_TITLE + ", MOVIE_DIRECTOR="
+		return "[MOVIE_CODE=" + MOVIE_CODE + ", MOVIE_TITLE=" + MOVIE_TITLE + ", MOVIE_DIRECTOR="
 				+ MOVIE_DIRECTOR + ", MOVIE_AGE=" + MOVIE_AGE + ", MOVIE_GENRE=" + MOVIE_GENRE + ", MOVIE_START="
 				+ MOVIE_START + ", MOVIE_END=" + MOVIE_END + "]";
 	}

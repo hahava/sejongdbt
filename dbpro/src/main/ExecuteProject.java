@@ -30,7 +30,7 @@ public class ExecuteProject {
 		int num = MyuserDAO.NOLOGIN;
 		MyuserDAO dao = new MyuserDAO();
 		while (num == 0) {
-			System.out.println("아이디와 패스워드를 입력해주세요");
+			System.out.println("아이디와 패스워 드를 입력해주세요");
 			id = scanner.nextLine();
 			pw = scanner.nextLine();
 			num = dao.login(id, pw);
@@ -56,7 +56,7 @@ public class ExecuteProject {
 				myuserDAO.list();
 				break;
 			case 2:
-				MovieDAO movieDAO = new MovieDAO();
+				MovieDAO movieDAO = MovieDAO.getInstance();
 				movieDAO.list();
 				break;
 			case 3:
@@ -96,7 +96,7 @@ public class ExecuteProject {
 				paymentDAO.list();
 				break;
 			case 12:
-				MoviePaymentDAO moviePaymentDAO = new MoviePaymentDAO();
+				MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
 				moviePaymentDAO.list();
 				break;
 			case 13:
@@ -129,7 +129,7 @@ public class ExecuteProject {
 				dao.listMe(id);
 				break;
 			case 2:
-				MovieDAO movieDAO = new MovieDAO();
+				MovieDAO movieDAO = MovieDAO.getInstance();
 				movieDAO.list();
 				break;
 			case 3:
@@ -142,7 +142,7 @@ public class ExecuteProject {
 				break;
 			case 5:
 				// need to adding
-				MoviePaymentDAO moviepaymentDAO = new MoviePaymentDAO();
+				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();
 				moviepaymentDAO.listMe(id);
 				break;
 			case 6:
@@ -166,12 +166,6 @@ public class ExecuteProject {
 
 	private static void showMenu() {
 
-		/*
-		 * DELETE FROM SNACK_INFO; DELETE FROM MYUSER_SNACK_ORDER;
-		 * 
-		 * 
-		 * 
-		 */
 		System.out.println("원하는 정보를 보여드립니다.!");
 		if (isAdmin()) {
 			System.out.println("1. 유저 정보");
