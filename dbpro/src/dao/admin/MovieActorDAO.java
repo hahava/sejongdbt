@@ -10,22 +10,34 @@ import dto.admin.MovieActorDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class MovieActorDAO implements DAO {
-	public void list() {
-
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
 
+	private MovieActorDAO() {
+
+	}
+
+	private static MovieActorDAO instance = new MovieActorDAO();
+
+	public static MovieActorDAO getInstance() {
+		return instance;
+	}
+
+	public void list() {
 		ArrayList<MovieActorDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from MOVIE_ACTOR";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();

@@ -10,24 +10,34 @@ import dto.user.SnackInfoDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class SnackInfoDAO implements DAO {
-
-	@Override
-	public void list() {
-
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
 
+	private SnackInfoDAO() {
+	}
+
+	private static SnackInfoDAO instance = new SnackInfoDAO();
+
+	public static SnackInfoDAO getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void list() {
 		ArrayList<SnackInfoDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from SNACK_INFO";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
@@ -44,7 +54,6 @@ public class SnackInfoDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

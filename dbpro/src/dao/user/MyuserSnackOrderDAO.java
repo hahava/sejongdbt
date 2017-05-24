@@ -11,24 +11,35 @@ import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
 public class MyuserSnackOrderDAO implements DAO {
-
-	@Override
-	public void list() {
-
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
+
+	private MyuserSnackOrderDAO() {
+	}
+
+	private static MyuserSnackOrderDAO instance = new MyuserSnackOrderDAO();
+
+	public static MyuserSnackOrderDAO getInstance() {
+		return instance;
+	}
+
+	@Override
+	public void list() {
 
 		ArrayList<MyuserSnackOrderDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from myuser_snack_order";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, "ORDER_NUM");

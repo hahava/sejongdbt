@@ -7,16 +7,14 @@ import dao.user.*;
 
 public class ExecuteProject {
 
-	public static boolean authority = false;
-	public static String id;
+	public static boolean authority = false; // true인경우 관리자
+	public static String id; // 로그인 세션기능
 
 	public static void main(String[] args) {
 
-		Scanner scanner = new Scanner(System.in);
 		int num = 0;
-
+		Scanner scanner = new Scanner(System.in);
 		login();
-
 		while (num != 10) {
 			showMenu();
 			num = scanner.nextInt();
@@ -48,7 +46,7 @@ public class ExecuteProject {
 	}
 
 	private static int selectMenu(int num) {
-		// TODO Auto-generated method stub
+		// while문으로 메뉴구현
 		if (isAdmin()) {
 			switch (num) {
 			case 1:
@@ -64,27 +62,27 @@ public class ExecuteProject {
 				mentStaticsDAO.list();
 				break;
 			case 4:
-				AdDAO adDAO = new AdDAO();
+				AdDAO adDAO = AdDAO.getInstance();
 				adDAO.list();
 				break;
 			case 5:
-				MovieAdDAO movieAdDAO = new MovieAdDAO();
+				MovieAdDAO movieAdDAO = MovieAdDAO.getInstnace();
 				movieAdDAO.list();
 				break;
 			case 6:
-				EmployeeDAO employeeDAO = new EmployeeDAO();
+				EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
 				employeeDAO.list();
 				break;
 			case 7:
-				EmployeeTaskDAO employeeTaskDAO = new EmployeeTaskDAO();
+				EmployeeTaskDAO employeeTaskDAO = EmployeeTaskDAO.getnstance();
 				employeeTaskDAO.list();
 				break;
 			case 8:
-				ActorDAO actorDAO = new ActorDAO();
+				ActorDAO actorDAO = ActorDAO.getInstance();
 				actorDAO.list();
 				break;
 			case 9:
-				MovieActorDAO movieActorDAO = new MovieActorDAO();
+				MovieActorDAO movieActorDAO = MovieActorDAO.getInstance();
 				movieActorDAO.list();
 				break;
 			case 10:
@@ -100,24 +98,20 @@ public class ExecuteProject {
 				moviePaymentDAO.list();
 				break;
 			case 13:
-				SnackInfoDAO snackInfoDAO = new SnackInfoDAO();
+				SnackInfoDAO snackInfoDAO = SnackInfoDAO.getInstance();
 				snackInfoDAO.list();
 				break;
 			case 14:
-				MyuserSnackOrderDAO myuserSnackDAO = new MyuserSnackOrderDAO();
+				MyuserSnackOrderDAO myuserSnackDAO = MyuserSnackOrderDAO.getInstance();
 				myuserSnackDAO.list();
 				break;
-
 			case 15:
 				login();
 				return 0;
 			case 16:
-				// insert init function//
-				InitDatabaseDAO initDAO = new InitDatabaseDAO();
+				InitDatabaseDAO initDAO = InitDatabaseDAO.getInstance();
 				initDAO.list();
 				break;
-			// finished //
-
 			case 17:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
@@ -141,16 +135,15 @@ public class ExecuteProject {
 				paymentDAO.list();
 				break;
 			case 5:
-				// need to adding
 				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();
 				moviepaymentDAO.listMe(id);
 				break;
 			case 6:
-				SnackInfoDAO infoDAO = new SnackInfoDAO();
+				SnackInfoDAO infoDAO = SnackInfoDAO.getInstance();
 				infoDAO.list();
 				break;
 			case 7:
-				MyuserSnackOrderDAO myuserSnackOrderDAO = new MyuserSnackOrderDAO();
+				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
 				myuserSnackOrderDAO.list();
 				break;
 			case 8:
@@ -164,8 +157,8 @@ public class ExecuteProject {
 		return 0;
 	}
 
+	// 메뉴를 보여준다.
 	private static void showMenu() {
-
 		System.out.println("원하는 정보를 보여드립니다.!");
 		if (isAdmin()) {
 			System.out.println("1. 유저 정보");
@@ -198,6 +191,7 @@ public class ExecuteProject {
 		}
 	}
 
+	// 현재 세션이 admin 여부 판단.
 	private static boolean isAdmin() {
 		if (authority) {
 			return true;

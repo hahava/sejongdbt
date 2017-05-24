@@ -10,22 +10,36 @@ import dto.admin.EmployeeDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class EmployeeDAO implements DAO {
-	public void list() {
 
+	private EmployeeDAO() {
+
+	}
+
+	private static EmployeeDAO instance = new EmployeeDAO();
+
+	public static EmployeeDAO getInstance() {
+		return instance;
+	}
+
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
+
+	public void list() {
 
 		ArrayList<EmployeeDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from EMPLOYEE";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
@@ -44,7 +58,6 @@ public class EmployeeDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

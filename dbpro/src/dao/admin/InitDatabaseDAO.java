@@ -9,26 +9,38 @@ import oracle.connect.OracleJDBCManager;
 import SqlRunner.SqlRunner;
 
 public class InitDatabaseDAO implements DAO {
+	private Connection getConnection() {
+		OracleJDBCManager manager = new OracleJDBCManager();
+		String oracleId = "s15010924";
+		String passwd = "s15010924";
+		int port = 1521;
+		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
+
+	private InitDatabaseDAO() {
+	}
+
+	private static InitDatabaseDAO instance = new InitDatabaseDAO();
+
+	public static InitDatabaseDAO getInstance() {
+		return instance;
+	}
 
 	@Override
 	public void list() {
 		// TODO Auto-generated method stub
-		OracleJDBCManager manager = new OracleJDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
 		String[] tableName = { "MOVIE", "MYUSER", "RAT", "PAYMENT", "MOVIE_PAYMENT", "SNACK_INFO", "MYUSER_SNACK_ORDER",
 				"EMPLOYEE_TASK", "EMPLOYEE", "AD", "MOVIE_AD", "ACTOR", "MOVIE_ACTOR", "PAYMENT_STATICS" };
 		String[] query = new String[14];
 		String[] sequence = { "MOVIE_PAYMENT_INC", "EMPLOYEE_INC", "MOVIE_AD_INC", "SNACK_ORDER_INC" };
 
-		int port = 1521;
 		int resultnum;
-		manager.registerOracleJDBCDriver();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		CallableStatement cstm = null;
-		conn = manager.connect(oracleId, passwd, port);
 		String insertQuery[];
 		String temp = "INSERT INTO MOVIE VALUES('M1','광해','이영희',15,'역사','2017-05-11','2017-05-30');"
 				+ "INSERT INTO MOVIE VALUES('M2','아가씨','박찬욱',19,'로맨스','2016-05-01','2016-08-26');"
@@ -218,13 +230,11 @@ public class InitDatabaseDAO implements DAO {
 		SqlRunner sr = new SqlRunner();
 
 		try {
-
 			for (int i = 0; i < tableName.length; i++) {
 				query[i] = "DELETE FROM " + tableName[i];
 				pstm = conn.prepareStatement(query[i]);
 				resultnum = pstm.executeUpdate();
 				System.out.println("데이터를 모두 삭제했습니다..");
-
 			}
 
 			pstm = conn.prepareStatement("COMMIT");

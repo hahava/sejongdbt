@@ -15,7 +15,6 @@ public class OracleJDBCManager {
 			e.printStackTrace();
 			return;
 		}
-		System.out.println("Oracle JDBC Driver Registered!");
 
 	}
 

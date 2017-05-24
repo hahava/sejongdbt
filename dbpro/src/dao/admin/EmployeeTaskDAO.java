@@ -10,6 +10,24 @@ import dto.admin.EmployeeTaskDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class EmployeeTaskDAO implements DAO {
+	private Connection getConnection() {
+		OracleJDBCManager manager = new OracleJDBCManager();
+		String oracleId = "s15010924";
+		String passwd = "s15010924";
+		int port = 1521;
+		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
+
+	private EmployeeTaskDAO() {
+	}
+
+	private static EmployeeTaskDAO instance = new EmployeeTaskDAO();
+
+	public static EmployeeTaskDAO getnstance() {
+		return instance;
+	}
 
 	@Override
 	public void list() {

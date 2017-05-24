@@ -5,30 +5,41 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import dto.admin.MovieAdDTO;
 import oracle.connect.OracleJDBCManager;
 
 public class MovieAdDAO implements DAO {
 
-	@Override
-	public void list() {
-		// TODO Auto-generated method stub
+	private MovieAdDAO() {
+	}
 
+	private static MovieAdDAO instance = new MovieAdDAO();
+
+	public static MovieAdDAO getInstnace() {
+		return instance;
+	}
+
+	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 		manager.registerOracleJDBCDriver();
+		Connection conn = manager.connect(oracleId, passwd, port);
+		return conn;
+	}
+
+	@Override
+	public void list() {
+		// TODO Auto-generated method stub
 
 		ArrayList<MovieAdDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from MOVIE_AD";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();

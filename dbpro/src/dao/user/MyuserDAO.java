@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import com.sun.xml.internal.stream.Entity.ScannedEntity;
-
 import dto.user.MyuserDTO;
 import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
@@ -51,8 +48,9 @@ public class MyuserDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -85,8 +83,9 @@ public class MyuserDAO implements DAO {
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -117,8 +116,9 @@ public class MyuserDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
