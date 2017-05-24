@@ -160,25 +160,24 @@ public class MyuserDAO implements DAO {
 		System.out.printf("phone: ");
 		phone = scanner.nextLine();
 
-		String query = "update myuser set myuser_email = ?,  myuser_phone = ? where myuser_name = ?";
+		String query = "update myuser set myuser_email = ?,  myuser_phone = ? where myuser_id = ?";
 		try {
 			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, email);
 			pstm.setString(2, phone);
 			pstm.setString(3, id);
-			pstm.executeUpdate();
+			int cnt = pstm.executeUpdate();
 			conn.commit();
+			conn.setAutoCommit(true);
 		} catch (SQLException e1) {
 			System.out.println(e1);
 			System.out.println("fail...");
 		}
-
 		try {
 			// result.close();
 			pstm.close();
 			conn.close();
-			conn.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
