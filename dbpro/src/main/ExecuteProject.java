@@ -28,11 +28,15 @@ public class ExecuteProject {
 		int num = MyuserDAO.NOLOGIN;
 		MyuserDAO dao = MyuserDAO.getInstance();
 		while (num == 0) {
-			System.out.println("아이디와 패스워 드를 입력해주세요");
+			System.out.println("아이디와 패스워 드를 입력해주세요(id와 pass * 입력시 회원가입으로 이동");
 			id = scanner.nextLine();
 			pw = scanner.nextLine();
 			num = dao.login(id, pw);
-			if (num == MyuserDAO.NOLOGIN) {
+
+			if (id.equals("*") && pw.equals("*")) {
+				dao.insertMyuser();
+				continue;
+			} else if (num == MyuserDAO.NOLOGIN) {
 				System.out.println("없는 계정이거나 잘못된 암호입니다!!!\n\n\n");
 			}
 		}
@@ -144,7 +148,7 @@ public class ExecuteProject {
 				break;
 			case 7:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
-				myuserSnackOrderDAO.list();
+				myuserSnackOrderDAO.listMe(id);
 				break;
 			case 8:
 				login();

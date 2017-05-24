@@ -1,12 +1,16 @@
 package dao.user;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import dto.user.MyuserDTO;
+import javafx.scene.input.DataFormat;
 import main.ExecuteProject;
 import oracle.connect.OracleJDBCManager;
 
@@ -15,6 +19,7 @@ public class MyuserDAO implements DAO {
 	public final static int ADMINLOGIN = 1;
 	public final static int USERLOGIN = 2;
 	public final static int NOLOGIN = 0;
+	public final static int NEW = 3;
 
 	private static MyuserDAO instance = new MyuserDAO();
 
@@ -206,6 +211,34 @@ public class MyuserDAO implements DAO {
 				return;
 			}
 		}
+	}
+
+	public void insertMyuser() {
+		MyuserDTO dto = new MyuserDTO();
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("회원 가입을 진행합니다.");
+		while (true) {
+			System.out.print("id: ");
+			dto.MYUSER_ID = scanner.nextLine();
+			System.out.print("이름: ");
+			dto.MYUSER_NAME = scanner.nextLine();
+			System.out.print("pass: ");
+			dto.MYUSER_PW = scanner.nextLine();
+			System.out.printf("생년월일: ");
+			try {
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String temp = scanner.nextLine();
+				dto.MYUSER_BIRTH = (Date) dateFormat.parse(temp);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.print("phone: ");
+			dto.MYUSER_PHONE = scanner.nextLine();
+			System.out.print("email: ");
+			dto.MYUSER_EMAIL = scanner.nextLine();
+
+		}
+
 	}
 
 }

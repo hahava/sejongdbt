@@ -42,10 +42,6 @@ public class MyuserSnackOrderDAO implements DAO {
 
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "ORDER_NUM");
-			pstm.setString(2, "MYUSER_ID");
-			pstm.setString(3, "SNACK_CODE");
-			pstm.setString(4, "ORDER_DATE");
 			result = pstm.executeQuery();
 			while (result.next()) {
 				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"),
