@@ -28,5 +28,10 @@ public class MovieDTO implements DTO{
 		MOVIE_START = mOVIE_START;
 		MOVIE_END = mOVIE_END;
 	}
+	
+
+	public MovieDTO() {
+		// TODO Auto-generated constructor stub
+	}
 
 }
