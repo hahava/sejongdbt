@@ -28,7 +28,7 @@ public class ExecuteProject {
 		int num = MyuserDAO.NOLOGIN;
 		MyuserDAO dao = MyuserDAO.getInstance();
 		while (num == 0) {
-			System.out.println("아이디와 패스워 드를 입력해주세요(id와 pass * 입력시 회원가입으로 이동");
+			System.out.println("아이디와 패스워 드를 입력해주세요(id와 pass * 입력시 회원가입으로 이동)");
 			id = scanner.nextLine();
 			pw = scanner.nextLine();
 			num = dao.login(id, pw);
