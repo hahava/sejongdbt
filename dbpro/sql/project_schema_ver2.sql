@@ -45,7 +45,7 @@ INCREMENT BY 1;
   MYUSER_ID VARCHAR2(50) NOT NULL,
   MOVIE_CODE VARCHAR2(50) NOT NULL,
   RAT_POINT NUMBER(5,0) NOT NULL,
-  RAT_COMMENT VARCHAR2(200) DEFAULT '¼Õ¿¡ ¶¡À» Áã°ÔÇÏ´Â ¸íÀÛÀÔ´Ï´Ù!',
+  RAT_COMMENT VARCHAR2(200) DEFAULT 'ï¿½Õ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½!',
   
   CONSTRAINT RAT_PK_RATNO PRIMARY KEY (MYUSER_ID,MOVIE_CODE),
   CONSTRAINT RAT_FK_MYUSERID FOREIGN KEY (MYUSER_ID) REFERENCES MYUSER(MYUSER_ID)
@@ -105,14 +105,14 @@ INCREMENT BY 1;
   );
   
 
--- ½ÃÄö½º »ý¼ºÇÏ¿© AUTOINCREASE
--- ÇàÃß°¡½Ã INSERT INTO MEMBER(ID, NAME ,EMAIL) VALUES (AUTOINCREASE.NEXTVAL, ~~,~~);
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ AUTOINCREASE
+-- ï¿½ï¿½ï¿½ß°ï¿½ï¿½ï¿½ INSERT INTO MEMBER(ID, NAME ,EMAIL) VALUES (AUTOINCREASE.NEXTVAL, ~~,~~);
 
 
 -- ADMIN --
 CREATE TABLE EMPLOYEE_TASK(
     EMPLOYEE_ROLE VARCHAR2(20) ,
-    EMPLOYEE_TASK_CON VARCHAR2(50) DEFAULT '°í°´À» À§ÇÑ ÃÖ°íÀÇ ¼­ºñ½º',
+    EMPLOYEE_TASK_CON VARCHAR2(50) DEFAULT 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½',
     EMPLOYEE_TASK_SAL NUMBER NOT NULL,
     
     CONSTRAINT EMPLOYEE_TASK_PK_EMPLOYEEROLE PRIMARY KEY (EMPLOYEE_ROLE)
@@ -185,10 +185,10 @@ alter table employee modify (employee_pun_cnt number default 0 not null);
     END reset_sequence;
     
 
--- ¿©±â±îÁö ½ÇÇàÇÏ¼¼¿ä. --
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. --
 
 
--- ÀÌ ¹Ø¿¡´Â DROPÇÒ °ÍÀÌ ÀÖÀ»¶§¸¸ »ç¿ëÇÏ¼¼¿ä. --
+-- ï¿½ï¿½ ï¿½Ø¿ï¿½ï¿½ï¿½ DROPï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½. --
 
 -- drop --    
 DROP TABLE EMPLOYEE CASCADE CONSTRAINTS;

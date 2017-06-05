@@ -119,6 +119,10 @@ public class ExecuteProject {
 			case 17:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
+			case 18:
+				EmployeeDAO employeeDAOver2=EmployeeDAO.getInstance();
+				// 메뉴를 보여주는 함수 호출하기
+				employeeDAOver2.employeeSearchMenu();
 			}
 		} else {
 			switch (num) {
@@ -182,6 +186,10 @@ public class ExecuteProject {
 			System.out.println("15. 로그인 변경");
 			System.out.println("16. 데이터 초기화");
 			System.out.println("17. 프로그램 종료");
+			
+			// test > 최종때 수정요망 //
+			
+			System.out.println("18. 직원관리");
 		} else {
 			System.out.println("1. 나의 정보");
 			System.out.println("2. 영화 정보");

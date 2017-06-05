@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dto.admin.AdDTO;
 import dto.admin.EmployeeTaskDTO;
 import oracle.connect.OracleJDBCManager;
 
@@ -33,20 +34,24 @@ public class EmployeeTaskDAO implements DAO {
 	public void list() {
 		// TODO Auto-generated method stub
 
-		OracleJDBCManager manager = new OracleJDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-		manager.registerOracleJDBCDriver();
+	/*
+	 * 
+		ArrayList<AdDTO> arrayList = new ArrayList<>();
+
+		Connection conn = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet result = null;
+		String query = "select * from AD";
+		
+		*/
 
 		ArrayList<EmployeeTaskDTO> arrayList = new ArrayList<>();
 
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 		String query = "select * from EMPLOYEE_TASK";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
