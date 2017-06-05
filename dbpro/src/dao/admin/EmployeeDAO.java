@@ -72,9 +72,8 @@ public class EmployeeDAO implements DAO {
 		Scanner sc=new Scanner(System.in);
 		
 		System.out.println("환영합니다! 직원정보관리메뉴입니다.");
-		System.out.println("1. 직원 검색");
-		System.out.println("2. 부서별 연봉 평균");
-		System.out.println("3. 직급별 연봉 평균" );
+		System.out.println("1. 직원 정보 검색");
+		System.out.println("2. 나이 기반 연봉 평균");
 		System.out.println("4. 뒤로");
 		
 		selectMenu=sc.nextInt();
@@ -83,6 +82,7 @@ public class EmployeeDAO implements DAO {
 			employeeSearch_allInfo();
 			break;
 		case 2:
+			employeeSearch_age_sal();
 			break;
 		case 3:
 			break;
@@ -155,4 +155,50 @@ public class EmployeeDAO implements DAO {
 		}
 		
 	}
-}
+	
+	
+	public void employeeSearch_age_sal() {
+		int agemin;
+		int agemax;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("나이 기반 연봉 평균입니다. 최소 나이와 최대 나이를 입력하세요.");
+		agemin=sc.nextInt();
+		agemax=sc.nextInt();
+		String query;
+
+		query="select count(*),avg(employee_task_sal) "
+				+ "from employee_task "
+				+ "where employee_role in (select employee_role from employee where employee_age between "+agemin+" and +"+agemax+")";
+		
+
+
+		Connection conn = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet result = null;
+		
+		try {
+			pstm=conn.prepareStatement(query);
+			result=pstm.executeQuery();
+			
+			if(result.next()) {
+				System.out.print("count : "+result.getInt(1)+","+"\tavg : "+result.getInt(2)+"\n");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			result.close();
+			pstm.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		}
+		
+		
+		
+	}
+
