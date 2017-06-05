@@ -74,6 +74,7 @@ public class EmployeeDAO implements DAO {
 		System.out.println("환영합니다! 직원정보관리메뉴입니다.");
 		System.out.println("1. 직원 정보 검색");
 		System.out.println("2. 나이 기반 연봉 평균");
+		System.out.println("3. 근태직원 조회");
 		System.out.println("4. 뒤로");
 		
 		selectMenu=sc.nextInt();
@@ -85,6 +86,7 @@ public class EmployeeDAO implements DAO {
 			employeeSearch_age_sal();
 			break;
 		case 3:
+			employeeSearch_pun_mem();
 			break;
 		case 4:
 			return;
@@ -198,6 +200,34 @@ public class EmployeeDAO implements DAO {
 		
 		}
 		
+	public void employeeSearch_pun_mem() {
+		System.out.println("근태 직원을 출력합니다.");
+		Connection conn = getConnection();
+		PreparedStatement pstm = null;
+		ResultSet result = null;
+		String query="select employee_num, employee_name, employee_role, employee_pun_cnt "
+				+ "from employee "
+				+ "where employee_pun_cnt>0";
+		
+		try {
+			pstm=conn.prepareStatement(query);
+			result=pstm.executeQuery();
+			while(result.next()) {
+				System.out.println(result.getInt(1)+"\t"+result.getString(2)+"\t"+result.getString(3)+"\t"+result.getInt(4));
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			result.close();
+			pstm.close();
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 		
 		
 	}
