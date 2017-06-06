@@ -72,10 +72,13 @@ public class EmployeeDAO implements DAO {
 		Scanner sc=new Scanner(System.in);
 		
 		System.out.println("환영합니다! 직원정보관리메뉴입니다.");
-		System.out.println("1. 직원 정보 검색");
-		System.out.println("2. 나이 기반 연봉 평균");
-		System.out.println("3. 근태직원 조회");
-		System.out.println("4. 뒤로");
+		System.out.println("1. 직원 정보 검색(전체/이름기반)");
+		System.out.println("2. 부서 별 직원 검색");
+		System.out.println("3. 나이 기반 연봉 평균");
+		System.out.println("4. 지정 연봉 이상 직원");
+		System.out.println("5. 근태직원 조회");
+	
+		System.out.println("6. 뒤로");
 		
 		selectMenu=sc.nextInt();
 		switch(selectMenu) {
@@ -83,12 +86,19 @@ public class EmployeeDAO implements DAO {
 			employeeSearch_allInfo();
 			break;
 		case 2:
-			employeeSearch_age_sal();
+			employeeSearch_dep();
 			break;
 		case 3:
+			employeeSearch_age_sal();
+			break;
+
+		case 4:
+			employeeSearch_sal();
+			break;
+		case 5:
 			employeeSearch_pun_mem();
 			break;
-		case 4:
+		case 6:
 			return;
 		default :
 			System.out.println("잘못된 번호를  입력하셨습니다.");
@@ -199,9 +209,113 @@ public class EmployeeDAO implements DAO {
 		
 		
 		}
+	////////////////////////////////////////////////////
+	public void employeeSearch_dep() {
+		Connection conn=getConnection();
+		PreparedStatement pstm=null;
+		ResultSet result=null;
+		String depName;
+		ArrayList<EmployeeDTO> employeeDTO=new ArrayList<EmployeeDTO>();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("검색하고자 하는 부서의 팀원을 출력합니다.");
+		depName=sc.nextLine();
+		String query="select * from employee where employee_role='"+depName+"'";
 		
+		try {
+			pstm=conn.prepareStatement(query);
+			result=pstm.executeQuery();
+			
+			while(result.next()) {
+
+				employeeDTO.add(new EmployeeDTO(result.getInt("employee_num"),
+						result.getString("employee_name"),
+						result.getInt("employee_age"),
+						result.getString("employee_gender"),
+						result.getString("employee_role"),
+						result.getDate("employee_hiredate"),
+						result.getInt("employee_pun_cnt")));
+				
+			}
+			if(employeeDTO.size()==0) {
+				System.out.println("팀원 배정 전인 부서이거나 잘못 입력했습니다.");
+				return;
+			}
+			System.out.println("직번\t이름\t나이\t성별\t부서\t고용일");
+			
+			
+			for(int i=0;i<employeeDTO.size();i++) {
+				System.out.println(employeeDTO.get(i).EMPLOYEE_NUM+"\t"+
+									employeeDTO.get(i).EMPLOYEE_NAME+"\t"+
+									employeeDTO.get(i).EMPLOYEE_AGE+"\t"+
+									employeeDTO.get(i).EMPLOYEE_GENDER+"\t"+
+									employeeDTO.get(i).EMPLOYEE_ROLE+"\t"+
+									employeeDTO.get(i).EMPLOYEE_HIREDATE);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	///////////////////////////////////////////////////
+	public void employeeSearch_sal() {
+		Connection conn=getConnection();
+		PreparedStatement pstm=null;
+		ResultSet result=null;
+		int minsal;
+		int maxsal;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("지정 범위 내 연봉을 수령하는 직원들의 정보를 출력합니다. 단위는 만원" );
+		System.out.println("최소 연봉을 입력하세요");
+		minsal=sc.nextInt();
+		System.out.println("최대 연봉을 입력하세요");
+		maxsal=sc.nextInt();
+		String query="select * from employee where employee_role in (select employee_role from employee_task where employee_task_sal between "+minsal+" and "+maxsal+")";
+		ArrayList<EmployeeDTO> employeeDTO=new ArrayList<EmployeeDTO>();
+
+		
+		try {
+			pstm=conn.prepareStatement(query);
+			result=pstm.executeQuery();
+			while(result.next()) {
+
+				employeeDTO.add(new EmployeeDTO(result.getInt("employee_num"),
+						result.getString("employee_name"),
+						result.getInt("employee_age"),
+						result.getString("employee_gender"),
+						result.getString("employee_role"),
+						result.getDate("employee_hiredate"),
+						result.getInt("employee_pun_cnt")));
+				
+			}
+			if(employeeDTO.size()==0) {
+				System.out.println("범위를 다시 확인하세요.");
+				return;
+			}
+			System.out.println("직번\t이름\t나이\t성별\t부서\t고용일");
+			
+			
+			for(int i=0;i<employeeDTO.size();i++) {
+				System.out.println(employeeDTO.get(i).EMPLOYEE_NUM+"\t"+
+									employeeDTO.get(i).EMPLOYEE_NAME+"\t"+
+									employeeDTO.get(i).EMPLOYEE_AGE+"\t"+
+									employeeDTO.get(i).EMPLOYEE_GENDER+"\t"+
+									employeeDTO.get(i).EMPLOYEE_ROLE+"\t"+
+									employeeDTO.get(i).EMPLOYEE_HIREDATE);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void employeeSearch_pun_mem() {
 		System.out.println("근태 직원을 출력합니다.");
+		System.out.println("직번\t이름\t직급\t근태횟수");
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
@@ -229,6 +343,7 @@ public class EmployeeDAO implements DAO {
 		}
 	}
 		
+	
 		
 	}
 

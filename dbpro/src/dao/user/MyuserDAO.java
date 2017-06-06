@@ -310,4 +310,43 @@ public class MyuserDAO implements DAO {
 		return check;
 	}
 
+	public void pickBestMenu() {
+		int menu;
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.println("이달의 우수회원을 선출합니다.");
+		System.out.println("1. 영화왕)가장 많이 본 회원 1명 선출");
+		System.out.println("2. 영화왕)범위 지정 후 여러명 선출");
+		System.out.println("3. 스낵왕)스낵에 돈을 가장 많이 쓴 회원 선출");
+		System.out.println("4. 스낵왕)범위 지정후 여러명 선출");
+		menu=sc.nextInt();
+		MovieDAO moviedao=MovieDAO.getInstance();
+		MyuserSnackOrderDAO myuserSnackOrderDao=MyuserSnackOrderDAO.getInstance();
+	
+		switch(menu) {
+			case 1:
+				moviedao.pickBestMovieOne();
+				break;
+			case 2:
+				moviedao.pickBestMoviePeople();
+				
+				break;
+			case 3:
+				myuserSnackOrderDao.pickBestSnackOne();
+				return;
+			case 4:
+				myuserSnackOrderDao.pickBestSnackPeople();
+			default:
+				System.out.println("잘못 입력하셨습니다.");
+				break;
+				
+		}
+		
+	}
+	
+
+
+	
+	
+
 }

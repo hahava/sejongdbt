@@ -98,5 +98,7 @@ public class RatDAO implements DAO {
 			System.out.println(arrayList.get(i).toString());
 		}
 	}
+	
+	
 
 }

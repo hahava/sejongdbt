@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import dto.user.MyuserSnackOrderDTO;
 import main.ExecuteProject;
@@ -103,6 +104,62 @@ public class MyuserSnackOrderDAO implements DAO {
 		}
 		for (int i = 0; i < arrayList.size(); i++) {
 			System.out.println(arrayList.get(i).toString());
+		}
+	}
+	
+	public void pickBestSnackOne() {
+		
+		String query="select mso.myuser_id, sum(si.snack_price), count(*) from myuser_snack_order mso, snack_info si " + 
+				"where mso.snack_code=si.snack_code " + 
+				"group by mso.myuser_id " + 
+				"order by sum(si.snack_price) desc";
+		Connection conn=getConnection();
+		PreparedStatement pstm=null;
+		ResultSet result=null;
+		System.out.println("가장 스낵에 돈을 많이 투자한 회원을 출력합니다.");
+		
+		try {
+			pstm=conn.prepareStatement(query);
+			result=pstm.executeQuery();
+			
+			if(result.next()) {
+				System.out.println("아이디\t\t사용금액\t구입횟수");
+				System.out.println(result.getString(1)+"\t\t"+result.getInt(2)+"\t"+result.getInt(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void pickBestSnackPeople() {
+		String query="select mso.myuser_id, sum(si.snack_price), count(*) from myuser_snack_order mso, snack_info si " + 
+				"where mso.snack_code=si.snack_code " + 
+				"group by mso.myuser_id " + 
+				"having sum(si.snack_price)>? "
+				+ "order by sum(si.snack_price) desc";
+		Connection conn=getConnection();
+		PreparedStatement pstm=null;
+		ResultSet result=null;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("스낵에 돈을 많이 투자한 회원을 출력합니다. 범위를 지정하세요.");
+		int minMoney=sc.nextInt();
+		try {
+			pstm=conn.prepareStatement(query);
+			pstm.setInt(1, minMoney);
+			result=pstm.executeQuery();
+			System.out.println("아이디\t\t사용금액\t구입횟수");
+			if(result.next()!=true) {
+				System.out.println("범위를 다시 설정하세요.");
+				return;
+			}
+			do {
+				System.out.println(result.getString(1)+"\t"+result.getInt(2)+"\t"+result.getInt(3));
+			}while(result.next());
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
