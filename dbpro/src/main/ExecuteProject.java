@@ -189,7 +189,9 @@ public class ExecuteProject {
 			
 			// test > 최종때 수정요망 //
 			
-			System.out.println("18. 직원관리");
+			System.out.println("18. 직원관리"); // 쿼리 3개
+			System.out.println("19. 우수회원"); // 스낵 많이 산 사람, 영화 많이 본 사람, 조회
+			
 		} else {
 			System.out.println("1. 나의 정보");
 			System.out.println("2. 영화 정보");
