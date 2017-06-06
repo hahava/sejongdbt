@@ -1,10 +1,15 @@
 package dao.admin;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import dto.admin.MovieAdDTO;
 import oracle.connect.OracleJDBCManager;
 
@@ -44,8 +49,7 @@ public class MovieAdDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MovieAdDTO(result.getInt("CNT"), result.getString("MOVIE_CODE"),
-						result.getString("AD_TITLE")));
+				arrayList.add(new MovieAdDTO(result.getInt("CNT"), result.getString("MOVIE_CODE"), result.getString("AD_TITLE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);

@@ -59,7 +59,7 @@ public class ExecuteProject {
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
-				movieDAO.list();
+				movieDAO.movieMenu();
 				break;
 			case 3:
 				PayMentStaticsDAO mentStaticsDAO = PayMentStaticsDAO.getInstance();
