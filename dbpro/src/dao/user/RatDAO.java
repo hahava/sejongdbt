@@ -68,19 +68,21 @@ public class RatDAO implements DAO {
 
 	public void listMe(String id) {
 
-		ArrayList<RatDTO> arrayList = new ArrayList<>();
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from RAT where MYUSER_ID=?";
+		String query = "select r.myuser_id,m.movie_code,m.movie_title, r.rat_point,r.rat_comment " + 
+				"from movie m, rat r " + 
+				"where m.movie_code=r.movie_code and r.myuser_id=?";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
+			System.out.println("아이디\t영화코드\t영화제목\t\t평점\t한줄평");
 			while (result.next()) {
-				arrayList.add(new RatDTO(result.getString("MYUSER_ID"), result.getString("MOVIE_CODE"), result.getInt("RAT_POINT"),
-						result.getString("RAT_COMMENT")));
+				System.out.println(result.getString(1)+"\t"+result.getString(2)+"\t"+result.getString(3)+"\t\t"+
+									result.getInt(4)+"\t"+result.getString(5));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -94,9 +96,7 @@ public class RatDAO implements DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+
 	}
 	
 	

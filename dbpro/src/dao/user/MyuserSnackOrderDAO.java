@@ -68,27 +68,22 @@ public class MyuserSnackOrderDAO implements DAO {
 
 	public void listMe(String id) {
 
-		OracleJDBCManager manager = new OracleJDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-		manager.registerOracleJDBCDriver();
 
-		ArrayList<MyuserSnackOrderDTO> arrayList = new ArrayList<>();
-
-		Connection conn = null;
+		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from myuser_snack_order where MYUSER_ID = ?";
+		String query = "select mso.order_num,mso.myuser_id, s.snack_name, s.snack_price, mso.order_date"
+				+ " from myuser_snack_order mso, snack_info s "
+				+ "where mso.snack_code=s.snack_code and mso.myuser_id=?";
 
-		conn = manager.connect(oracleId, passwd, port);
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
+			System.out.println("주문번호\t아이디\t간식이름\t\t\t가격\t주문일자");
 			while (result.next()) {
-				arrayList.add(new MyuserSnackOrderDTO(result.getInt("ORDER_NUM"), result.getString("MYUSER_ID"),
-						result.getString("SNACK_CODE"), result.getDate("ORDER_DATE")));
+				System.out.println(result.getInt(1)+"\t"+result.getString(2)+"\t"+
+									result.getString(3)+"\t\t\t"+result.getInt(4)+"\t"+result.getDate(5));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -102,9 +97,7 @@ public class MyuserSnackOrderDAO implements DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+	
 	}
 	
 	public void pickBestSnackOne() {

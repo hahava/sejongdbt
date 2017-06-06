@@ -66,20 +66,23 @@ public class MoviePaymentDAO implements DAO {
 
 	public void listMe(String id) {
 
-		ArrayList<MoviePaymentDTO> arrayList = new ArrayList<>();
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from MOVIE_PAYMENT where MYUSER_ID=?";
+		String query = "select mp.myuser_id, m.movie_title, m.movie_age, p.payment_way, mp.payment_date " + 
+				"from movie_payment mp, movie m, payment p " + 
+				"where mp.movie_code=m.movie_code and mp.payment_code=p.payment_code and mp.myuser_id=?";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
+			System.out.println("아이디\t영화이름\t\t연령\t결제수단\t결제일");
 			while (result.next()) {
-				arrayList.add(new MoviePaymentDTO(result.getInt("MOVIE_PAYMENT_CODE"), result.getString("MYUSER_ID"), result.getString("MOVIE_CODE"),
-						result.getString("PAYMENT_CODE"), result.getDate("PAYMENT_DATE")));
+				System.out.println(result.getString(1)+"\t"+result.getString(2)+"\t\t"+
+			result.getInt(3)+"\t"+result.getString(4)+"\t"+result.getDate(5));
+				
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -93,9 +96,7 @@ public class MoviePaymentDAO implements DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+
 	}
 
 	

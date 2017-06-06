@@ -145,7 +145,7 @@ public class ExecuteProject {
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
-				movieDAO.list();
+				movieDAO.movieMenu();
 				break;
 			case 3:
 				RatDAO ratDAO = RatDAO.getInstance();
@@ -223,9 +223,9 @@ public class ExecuteProject {
 			System.out.println("2. 영화 정보");		// 영화 정보, 조인해서 쏴줌  > 관리자 20번 사용
 			// 해당영화에 달린 평점평균과 한줄평 - 해야됨
 			System.out.println("특정 영화 평점 정보");
-			System.out.println("3. 나의 평점 정보");		// 단순쿼리, 완료
+			System.out.println("3. 나의 평점 정보");		//  완료
 			System.out.println("4. 결제 종류");
-			System.out.println("5. 나의 결제 내역");		// 단순쿼리, 완료
+			System.out.println("5. 나의 결제 내역");		//  완료
 			System.out.println("6. 스낵정보");
 			System.out.println("7. 나의 스낵주문 내역");		// 단순쿼리, 완료
 			System.out.println("8. 로그인 변경");
