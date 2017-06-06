@@ -148,29 +148,33 @@ public class ExecuteProject {
 				movieDAO.movieMenu();
 				break;
 			case 3:
+				RatDAO ratdaover2=RatDAO.getInstance();
+				ratdaover2.showMovieRat();
+				break;
+			case 4:
 				RatDAO ratDAO = RatDAO.getInstance();
 				ratDAO.listMe(id);
 				break;
-			case 4:
+			case 5:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
 				paymentDAO.list();
 				break;
-			case 5:
+			case 6:
 				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();
 				moviepaymentDAO.listMe(id);
 				break;
-			case 6:
+			case 7:
 				SnackInfoDAO infoDAO = SnackInfoDAO.getInstance();
 				infoDAO.list();
 				break;
-			case 7:
+			case 8:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
 				myuserSnackOrderDAO.listMe(id);
 				break;
-			case 8:
+			case 9:
 				login();
 				return 0;
-			case 9:
+			case 10:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
 			}
@@ -222,14 +226,14 @@ public class ExecuteProject {
 			System.out.println("1. 나의 정보");		// 단순쿼리, 완료
 			System.out.println("2. 영화 정보");		// 영화 정보, 조인해서 쏴줌  > 관리자 20번 사용
 			// 해당영화에 달린 평점평균과 한줄평 - 해야됨
-			System.out.println("특정 영화 평점 정보");
-			System.out.println("3. 나의 평점 정보");		//  완료
-			System.out.println("4. 결제 종류");
-			System.out.println("5. 나의 결제 내역");		//  완료
-			System.out.println("6. 스낵정보");
-			System.out.println("7. 나의 스낵주문 내역");		// 단순쿼리, 완료
-			System.out.println("8. 로그인 변경");
-			System.out.println("9. 프로그램 종료");
+			System.out.println("3. 영화 평점 정보");
+			System.out.println("4. 나의 평점 정보");		//  완료
+			System.out.println("5. 결제 종류");
+			System.out.println("6. 나의 결제 내역");		//  완료
+			System.out.println("7. 스낵정보");
+			System.out.println("8. 나의 스낵주문 내역");		// 단순쿼리, 완료
+			System.out.println("9. 로그인 변경");
+			System.out.println("10. 프로그램 종료");
 		}
 	}
 
