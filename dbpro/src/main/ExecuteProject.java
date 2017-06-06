@@ -228,7 +228,7 @@ public class ExecuteProject {
 			// 해당영화에 달린 평점평균과 한줄평 - 해야됨
 			System.out.println("3. 영화 평점 정보");
 			System.out.println("4. 나의 평점 정보");		//  완료
-			System.out.println("5. 결제 종류");
+			System.out.println("5. 결제 관련");
 			System.out.println("6. 나의 결제 내역");		//  완료
 			System.out.println("7. 스낵정보");
 			System.out.println("8. 나의 스낵주문 내역");		// 단순쿼리, 완료
