@@ -111,16 +111,23 @@ public class PaymentDAO implements DAO {
 		String query = "delete from movie_payment where movie_payment_code = ?";
 
 		try {
-			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, movie_payment_code);
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
+			
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
 
 		} catch (SQLException e1) {
 			System.out.println(e1);
 			e1.printStackTrace();
+		}
+		try {
+			pstm.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		System.out.println("삭제가 완료되었습니다!");
 	}
@@ -144,7 +151,7 @@ public class PaymentDAO implements DAO {
 
 		scanner.nextLine();
 
-		System.out.println("어떤 영화롤 바꾸시겠습니까?");
+		System.out.println("어떤 영화로 바꾸시겠습니까?");
 		dao.list();
 		System.out.println("바꿀 영화의 코드를 입력하세요");
 		dto.setMOVIE_CODE(scanner.nextLine());
@@ -162,7 +169,6 @@ public class PaymentDAO implements DAO {
 		String query = "update  movie_payment set MOVIE_CODE = ? ,PAYMENT_CODE = ? ,PAYMENT_DATE = ? where movie_payment_code = ?";
 
 		try {
-			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 
 			pstm.setString(1, dto.getMOVIE_CODE());
@@ -170,12 +176,20 @@ public class PaymentDAO implements DAO {
 			pstm.setDate(3, dto.getPAYMENT_DATE());
 			pstm.setInt(4, dto.getMOVIE_PAYMENT_CODE());
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
+			
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
 
 		} catch (SQLException e1) {
 			System.out.println(e1);
 			e1.printStackTrace();
+		}
+		try {
+			pstm.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		System.out.println("수정이 완료되었습니다!");
 	}
@@ -197,27 +211,27 @@ public class PaymentDAO implements DAO {
 		instance.list();
 		dto.setPAYMENT_CODE(scanner.nextLine());
 
-		System.out.println("예약숫자 오토로 변경해라..");
-		dto.setMOVIE_PAYMENT_CODE(scanner.nextInt());
-
 		dto.setMYUSER_ID(ExecuteProject.id);
 		dto.setPAYMENT_DATE(java.sql.Date.valueOf(timeNow()));
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
-		String query = "insert into movie_payment values (?,?,?,?,?)";
+		String query = "insert into movie_payment values (movie_payment_inc.nextval,?,?,?,?)";
 
+		
+		
 		try {
-			conn.setAutoCommit(false);
+			
 			pstm = conn.prepareStatement(query);
-			pstm.setInt(1, dto.getMOVIE_PAYMENT_CODE());
-			pstm.setString(2, dto.getMYUSER_ID());
-			pstm.setString(3, dto.getMOVIE_CODE());
-			pstm.setString(4, dto.getPAYMENT_CODE());
-			pstm.setDate(5, dto.getPAYMENT_DATE());
+			pstm.setString(1, dto.getMYUSER_ID());
+			pstm.setString(2, dto.getMOVIE_CODE());
+			pstm.setString(3, dto.getPAYMENT_CODE());
+			pstm.setDate(4, dto.getPAYMENT_DATE());
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
+			
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
+			
 
 		} catch (SQLException e1) {
 			System.out.println(e1);

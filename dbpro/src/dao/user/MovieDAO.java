@@ -77,73 +77,6 @@ public class MovieDAO implements DAO {
 		}
 	}
 
-	@SuppressWarnings("resource")
-	public void insertMovie() {
-		int insertMenu;
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("영화 정보를 삽입합니다. (0번을 누를 시 돌아갑니다)");
-
-		insertMenu = scanner.nextInt();
-		if (insertMenu == 0) {
-			return;
-		}
-		MovieDTO mvdto = new MovieDTO();
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		System.out.print("영화 코드 : ");
-		mvdto.MOVIE_CODE = scanner.nextLine();
-		System.out.print("영화 제목 (25자 내): ");
-		mvdto.MOVIE_TITLE = scanner.nextLine();
-		System.out.print("영화 감독 : ");
-		mvdto.MOVIE_AGE = scanner.nextInt();
-		System.out.print("영화 장르 : ");
-		mvdto.MOVIE_GENRE = scanner.nextLine();
-		System.out.print("상영시작 : ");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-		String temp = scanner.nextLine();
-		try {
-			mvdto.MOVIE_START = (Date) dateFormat.parse(temp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.print("상영 끝 : ");
-		temp = scanner.nextLine();
-		try {
-			mvdto.MOVIE_END = (Date) dateFormat.parse(temp);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			pstm = conn.prepareStatement("insert into movie values(?,?,?,?,?,?)");
-			pstm.setString(1, mvdto.MOVIE_CODE);
-			pstm.setString(2, mvdto.MOVIE_TITLE);
-			pstm.setString(3, mvdto.MOVIE_DIRECTOR);
-			pstm.setString(4, mvdto.MOVIE_GENRE);
-			pstm.setDate(5, mvdto.MOVIE_START);
-			pstm.setDate(6, mvdto.MOVIE_END);
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("COMMIT");
-			pstm.executeUpdate();
-
-		} catch (SQLException sqlException) {
-			System.out.println("문제가 발생했습니다. 관리자에게 문의하세요!");
-
-		} finally {
-			try {
-				pstm.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-	}
-
 	// 만약 이게 안된다면 Date부분에
 	/*
 	 * INSERT INTO emp (eno, ename, hdate) VALUES ('2000','안민정',
@@ -186,17 +119,13 @@ public class MovieDAO implements DAO {
 		case 4:
 			if (ExecuteProject.authority)
 				instance.addMovie();
-			else
-
-				break;
+			break;
 		case 5:
 			if (ExecuteProject.authority)
-
 				instance.modifyMovie();
 			break;
 		case 6:
 			if (ExecuteProject.authority)
-
 				instance.deleteMovie();
 			break;
 		case 7:
@@ -222,13 +151,12 @@ public class MovieDAO implements DAO {
 		String query = "delete from movie where movie_code = ?";
 
 		try {
-			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, MOVIE_CODE);
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-			System.out.println("!");
+
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
 		} catch (SQLException e1) {
 			System.out.println(e1);
 		}
@@ -276,7 +204,6 @@ public class MovieDAO implements DAO {
 		String query = "update movie set MOVIE_TITLE = ?, MOVIE_DIRECTOR = ? , MOVIE_AGE= ? , MOVIE_GENRE= ? , MOVIE_START=?, MOVIE_END=? where movie_code =?";
 
 		try {
-			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, MOVIE_TITLE);
 			pstm.setString(2, MOVIE_DIRECTOR);
@@ -286,9 +213,9 @@ public class MovieDAO implements DAO {
 			pstm.setDate(6, MOVIE_END);
 			pstm.setString(7, MOVIE_CODE);
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-			System.out.println("!");
+
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
 		} catch (SQLException e1) {
 			System.out.println(e1);
 		}
@@ -571,6 +498,7 @@ public class MovieDAO implements DAO {
 		// TODO Auto-generated method stub
 
 		Scanner scanner = new Scanner(System.in);
+
 		String MOVIE_CODE;
 		String MOVIE_TITLE;
 		String MOVIE_DIRECTOR;
@@ -583,6 +511,7 @@ public class MovieDAO implements DAO {
 		System.out.println("영화를 추가합니다");
 		System.err.println("현재 상영중인 영화");
 		instance.list();
+
 		System.out.print("영화 코드 : ");
 		MOVIE_CODE = scanner.nextLine();
 		System.out.print("영화 제목 : ");
@@ -611,7 +540,6 @@ public class MovieDAO implements DAO {
 		String query = "insert into movie values (?,?,?,?,?,?,?)";
 
 		try {
-			conn.setAutoCommit(false);
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, MOVIE_CODE);
 			pstm.setString(2, MOVIE_TITLE);
@@ -621,8 +549,9 @@ public class MovieDAO implements DAO {
 			pstm.setDate(6, MOVIE_START);
 			pstm.setDate(7, MOVIE_END);
 			pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
+
+			pstm = conn.prepareStatement("commit");
+			pstm.executeUpdate();
 
 		} catch (SQLException e1) {
 			System.out.println(e1);
