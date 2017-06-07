@@ -157,7 +157,7 @@ public class ExecuteProject {
 				break;
 			case 5:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
-				paymentDAO.list();
+				paymentDAO.paymentMenu();
 				break;
 			case 6:
 				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();

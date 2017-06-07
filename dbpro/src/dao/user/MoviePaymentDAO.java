@@ -37,11 +37,10 @@ public class MoviePaymentDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from ?";
+		String query = "select * from movie_payment";
 
 		try {
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, "movie_payment");
 			result = pstm.executeQuery();
 			while (result.next()) {
 				arrayList.add(new MoviePaymentDTO(result.getInt("MOVIE_PAYMENT_CODE"), result.getString("MYUSER_ID"), result.getString("MOVIE_CODE"),
@@ -70,7 +69,7 @@ public class MoviePaymentDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select mp.myuser_id, m.movie_title, m.movie_age, p.payment_way, mp.payment_date " + 
+		String query = "select mp.movie_payment_code, mp.myuser_id, m.movie_title, m.movie_age, p.payment_way, mp.payment_date " + 
 				"from movie_payment mp, movie m, payment p " + 
 				"where mp.movie_code=m.movie_code and mp.payment_code=p.payment_code and mp.myuser_id=?";
 
@@ -78,10 +77,10 @@ public class MoviePaymentDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
-			System.out.println("아이디\t영화이름\t\t연령\t결제수단\t결제일");
+			System.out.println("결제번호\t아이디\t영화이름\t\t연령\t결제수단\t결제일");
 			while (result.next()) {
-				System.out.println(result.getString(1)+"\t"+result.getString(2)+"\t\t"+
-			result.getInt(3)+"\t"+result.getString(4)+"\t"+result.getDate(5));
+				System.out.println(result.getString(1)+"\t"+result.getString(2)+"\t"+result.getString(3)+"\t\t"+
+			result.getInt(4)+"\t"+result.getString(5)+"\t"+result.getDate(6));
 				
 			}
 		} catch (SQLException e1) {
