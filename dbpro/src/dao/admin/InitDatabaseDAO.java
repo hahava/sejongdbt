@@ -261,6 +261,7 @@ public class InitDatabaseDAO implements DAO {
 		}
 		try {
 			cstm.close();
+			
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
