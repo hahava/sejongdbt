@@ -24,8 +24,10 @@ public class MovieActorDAO implements DAO {
 
 	}
 
+	// 객체 생성한다.
 	private static MovieActorDAO instance = new MovieActorDAO();
 
+	// 객체를 변환한다.
 	public static MovieActorDAO getInstance() {
 		return instance;
 	}
@@ -36,14 +38,13 @@ public class MovieActorDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from MOVIE_ACTOR";
+		String query = "select ACTOR_CODE, MOVIE_CODE, ACTOR_ROLE from MOVIE_ACTOR";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MovieActorDTO(result.getString("ACTOR_CODE"), result.getString("MOVIE_CODE"),
-						result.getString("ACTOR_ROLE")));
+				arrayList.add(new MovieActorDTO(result.getString("ACTOR_CODE"), result.getString("MOVIE_CODE"), result.getString("ACTOR_ROLE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -54,7 +55,6 @@ public class MovieActorDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

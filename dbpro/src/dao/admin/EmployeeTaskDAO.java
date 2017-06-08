@@ -30,34 +30,25 @@ public class EmployeeTaskDAO implements DAO {
 		return instance;
 	}
 
+	//직무내역을 전부 출력한다.
 	@Override
 	public void list() {
 		// TODO Auto-generated method stub
-
-	/*
-	 * 
-		ArrayList<AdDTO> arrayList = new ArrayList<>();
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select * from AD";
-		
-		*/
 
 		ArrayList<EmployeeTaskDTO> arrayList = new ArrayList<>();
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from EMPLOYEE_TASK";
+
+		String query = "select EMPLOYEE_ROLE, EMPLOYEE_TASK_CON, EMPLOYEE_TASK_SAL from EMPLOYEE_TASK";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new EmployeeTaskDTO(result.getString("EMPLOYEE_ROLE"),
-						result.getString("EMPLOYEE_TASK_CON"), result.getInt("EMPLOYEE_TASK_SAL")));
+				arrayList.add(new EmployeeTaskDTO(result.getString("EMPLOYEE_ROLE"), result.getString("EMPLOYEE_TASK_CON"),
+						result.getInt("EMPLOYEE_TASK_SAL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -68,7 +59,6 @@ public class EmployeeTaskDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

@@ -26,12 +26,15 @@ public class ActorDAO implements DAO {
 	private ActorDAO() {
 	}
 
+	// 객체를 생성한다.
 	private static ActorDAO instance = new ActorDAO();
 
+	// 객체를 반환하다.
 	public static ActorDAO getInstance() {
 		return instance;
 	}
 
+	// 등록된 배우를 전부 출력한다.
 	public void list() {
 
 		ArrayList<ActorDTO> actor = new ArrayList<>();
@@ -39,14 +42,15 @@ public class ActorDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from ACTOR";
+
+		String query = "select actor_code,actor_name,actor_gender, actor_birth from ACTOR";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				actor.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"),
-						result.getString("actor_gender"), result.getString("actor_birth")));
+				actor.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
+						result.getString("actor_birth")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -78,19 +82,24 @@ public class ActorDAO implements DAO {
 		ArrayList<ActorDTO> actorByMovie = new ArrayList<ActorDTO>();
 
 		System.out.println("특정 영화에 출연한 배우를 검색합니다. 영화 명을 입력하세요.");
-		
+
 		movieName = sc.nextLine();
-		
+
+		/*
+		 * 영화 이름으로 검색할 것이기 때문에 movie 테이블에서 해당 영화이름을 가진 영화의 코드를 받아온 뒤, movie_actor 테이블에서 해당 영화코드에 할당된 actor_code를 
+		 * 받아오고, 그것을 기반으로 actor테이블에서 배우 정보를 얻어온다.
+		 * subquery를 이용했다.
+		 * */
 		String query = "select actor_code, actor_name,actor_gender, actor_birth from actor where actor_code in "
-				+ "(select actor_code from movie_actor where movie_code in "
-				+ "(select movie_code from movie where movie_title='" + movieName + "'))";
+				+ "(select actor_code from movie_actor where movie_code in " + "(select movie_code from movie where movie_title='" + movieName
+				+ "'))";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				actorByMovie.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"),
-						result.getString("actor_gender"), result.getString("actor_birth")));
+				actorByMovie.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
+						result.getString("actor_birth")));
 			}
 			if (actorByMovie.size() == 0) {
 				System.out.println("그런 영화가 없거나 관리자가 배우정보를 등록하지 않았습니다.");
@@ -98,8 +107,7 @@ public class ActorDAO implements DAO {
 			}
 			System.out.println("배우이름\t배우생일\t배우성별");
 			for (int i = 0; i < actorByMovie.size(); i++) {
-				System.out.println(actorByMovie.get(i).actorName + "\t" + actorByMovie.get(i).actorBirth + "\t"
-						+ actorByMovie.get(i).actorGender);
+				System.out.println(actorByMovie.get(i).actorName + "\t" + actorByMovie.get(i).actorBirth + "\t" + actorByMovie.get(i).actorGender);
 
 			}
 		} catch (SQLException e) {

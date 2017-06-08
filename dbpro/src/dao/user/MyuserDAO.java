@@ -30,7 +30,7 @@ public class MyuserDAO implements DAO {
 		return instance;
 	}
 
-	// connection 변수
+	// connection 메서드
 	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
@@ -111,7 +111,7 @@ public class MyuserDAO implements DAO {
 		}
 	}
 
-	// 로그인 메서드 id와 password를 입력받아 myuser테이블안에 저장되어 있는지 확인한다.
+	// 로그인 메서드 id와 password를 입력받아 myuser테이블안에 저장되어 있는지 확인한다. 로그인 가능 여부를 확인 하는 메서드
 	public int login(String id, String pw) {
 		int returnnum = NOLOGIN;
 		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
@@ -154,7 +154,8 @@ public class MyuserDAO implements DAO {
 		}
 		return returnnum;
 	}
-
+	
+	//우수회원을 선별 하는 메뉴
 	public void pickBestMenu() {
 		int menu;
 		Scanner sc = new Scanner(System.in);
@@ -164,7 +165,9 @@ public class MyuserDAO implements DAO {
 		System.out.println("2. 영화왕)범위 지정 후 여러명 선출");
 		System.out.println("3. 스낵왕)스낵에 돈을 가장 많이 쓴 회원 선출");
 		System.out.println("4. 스낵왕)범위 지정후 여러명 선출");
+		
 		menu = sc.nextInt();
+		
 		MovieDAO moviedao = MovieDAO.getInstance();
 		MyuserSnackOrderDAO myuserSnackOrderDao = MyuserSnackOrderDAO.getInstance();
 

@@ -25,10 +25,12 @@ public class MovieDAO implements DAO {
 	private MovieDAO() {
 	}
 
+	// 만들어진 객체를 리턴
 	public static MovieDAO getInstance() {
 		return instance;
 	}
 
+	// 오라클 드라이버 로드한다.
 	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
@@ -39,8 +41,7 @@ public class MovieDAO implements DAO {
 		return conn;
 	}
 
-	// private static
-
+	// Movie 테이블의 내용을 전부 출력한다.
 	public void list() {
 
 		ArrayList<MovieDTO> movie = new ArrayList<>();
@@ -48,7 +49,7 @@ public class MovieDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from movie";
+		String query = "select MOVIE_CODE, MOVIE_TITLE,MOVIE_DIRECTOR, MOVIE_AGE,MOVIE_GENRE, MOVIE_START, MOVIE_END from movie";
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -71,20 +72,13 @@ public class MovieDAO implements DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// 해다열 전부 출력
+		// 해당열 전부 출력
 		for (int i = 0; i < movie.size(); i++) {
 			System.out.println(movie.get(i).toString());
 		}
 	}
 
-	// 만약 이게 안된다면 Date부분에
-	/*
-	 * INSERT INTO emp (eno, ename, hdate) VALUES ('2000','안민정',
-	 * TO_DATE('1991-05-17:12:00:13','YYYY-MM-DD:HH24:MI:SS'));
-	 * TO_DATE('날짜~','날짜 형식') << 함수를 써보세용
-	 * 
-	 */
-
+	// 영화 메뉴 상세. 관리자의 경우 영화를 추가, 삽입, 삭제 할 수 있다. 유저의 경우는 영화와 관련되 정보만을 출력해준다.
 	public void movieMenu() {
 		ActorDAO actordao = ActorDAO.getInstance();
 		int menu;
@@ -94,6 +88,7 @@ public class MovieDAO implements DAO {
 		System.out.println("1. 영화 개요 검색");
 		System.out.println("2. 배우기반 영화 검색");
 		System.out.println("3. 특정 영화에 출연한 배우 검색");
+		// 관리자 여부 화인
 		if (ExecuteProject.authority) {
 			System.out.println("4. 영화 추가 하기");
 			System.out.println("5. 영화 수정 하기");
@@ -104,33 +99,43 @@ public class MovieDAO implements DAO {
 
 		switch (menu) {
 		case 0:
+
+			// 영화를 출력
 			instance.list();
 			break;
 		case 1:
+			// 영화와 해당 출현 배우를 전부 출력한다.
 			movieInfo();
 			break;
 		case 2:
+			// 배우를 기준으로 검색
 			movieSearchByActor();
 			break;
 		case 3:
+			// 영화제목을 기준으로 해당 영화에 출연한 배우들을 검색
 			actordao.actorSearchByMovie();
 			break;
 
 		case 4:
 			if (ExecuteProject.authority)
+				// 영화를 추가
 				instance.addMovie();
 			break;
 		case 5:
 			if (ExecuteProject.authority)
+				// 영화를 수정
 				instance.modifyMovie();
 			break;
 		case 6:
 			if (ExecuteProject.authority)
+				// 영화를 삭제
 				instance.deleteMovie();
 			break;
 		case 7:
+			// 종료한다.
 			return;
 		default:
+			// 예외처리
 			System.out.println("잘못 입력하셨습니다.");
 			break;
 		}
@@ -157,6 +162,7 @@ public class MovieDAO implements DAO {
 
 			pstm = conn.prepareStatement("commit");
 			pstm.executeUpdate();
+
 		} catch (SQLException e1) {
 			System.out.println(e1);
 		}
@@ -201,9 +207,13 @@ public class MovieDAO implements DAO {
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
-		String query = "update movie set MOVIE_TITLE = ?, MOVIE_DIRECTOR = ? , MOVIE_AGE= ? , MOVIE_GENRE= ? , MOVIE_START=?, MOVIE_END=? where movie_code =?";
+
+		// 해당 where movie_code를 입력받아 수정한다.
+		String query = "update movie set MOVIE_TITLE = ?, MOVIE_DIRECTOR = ? ," + " MOVIE_AGE= ? , MOVIE_GENRE= ? , MOVIE_START=?, "
+				+ "MOVIE_END=? where movie_code =?";
 
 		try {
+
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, MOVIE_TITLE);
 			pstm.setString(2, MOVIE_DIRECTOR);
@@ -216,6 +226,7 @@ public class MovieDAO implements DAO {
 
 			pstm = conn.prepareStatement("commit");
 			pstm.executeUpdate();
+
 		} catch (SQLException e1) {
 			System.out.println(e1);
 		}
@@ -253,11 +264,14 @@ public class MovieDAO implements DAO {
 		} else {
 			ArrayList<MovieDTO> movie = new ArrayList<>();
 
-			String query = "select * from movie where movie_title='" + movieName + "'";
+			String query = "select MOVIE_CODE,MOVIE_TITLE,MOVIE_DIRECTOR, "
+					+ " MOVIE_AGE,MOVIE_GENRE, MOVIE_START,MOVIE_END  from movie where movie_title='" + movieName + "'";
 
 			try {
+
 				pstm = conn.prepareStatement(query);
 				result = pstm.executeQuery();
+
 				while (result.next()) {
 					movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),
 							result.getInt("MOVIE_AGE"), result.getString("MOVIE_GENRE"), result.getDate("MOVIE_START"), result.getDate("MOVIE_END")));
@@ -276,7 +290,7 @@ public class MovieDAO implements DAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// 해다열 전부 출력
+			// 해당열 전부 출력
 			for (int i = 0; i < movie.size(); i++) {
 				System.out.println(movie.get(i).toString());
 			}
@@ -286,23 +300,31 @@ public class MovieDAO implements DAO {
 
 	// 특정 배우가 출연한 영화 검색(subquery)
 	public void movieSearchByActor() {
+
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
+
 		Scanner sc = new Scanner(System.in);
+
 		System.out.println("특정 배우가 출연한 영화를 검색합니다. 배우 이름을 입력하세요.");
+
 		String actorName = sc.nextLine();
+
 		ArrayList<MovieDTO> movie = new ArrayList<MovieDTO>();
-		String query = "select  distinct * from movie where movie_code in " + "(select movie_code from movie_actor where actor_code in "
-				+ "(select actor_code from actor where actor_name='" + actorName + "'))";
+		String query = "select  distinct MOVIE_CODE, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_AGE, MOVIE_GENRE, MOVIE_START, MOVIE_END from movie where movie_code in "
+				+ "(select movie_code from movie_actor where actor_code in " + "(select actor_code from actor where actor_name='" + actorName + "'))";
 
 		try {
+
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
+
 			while (result.next()) {
 				movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),
 						result.getInt("MOVIE_AGE"), result.getString("MOVIE_GENRE"), result.getDate("MOVIE_START"), result.getDate("MOVIE_END")));
 			}
+
 			if (movie.size() == 0) {
 				System.out.println("그런 배우가 없거나, 아직 출연한 작품이 없습니다.");
 				return;
@@ -317,7 +339,6 @@ public class MovieDAO implements DAO {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -325,12 +346,12 @@ public class MovieDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	// 영화 예약 횟수가 가장 많은 회원의 id와 예약횟수를 출력한다.
 	public void pickBestMovieOne() {
 		String query;
 		Connection conn = getConnection();
@@ -362,6 +383,7 @@ public class MovieDAO implements DAO {
 		}
 	}
 
+	// 특정 횟수를 입력하고 그 횟수보다 더 많이 예약한 회원의 id와 예약횟수를 출력한다.
 	public void pickBestMoviePeople() {
 		String query;
 		Connection conn = getConnection();
@@ -383,7 +405,6 @@ public class MovieDAO implements DAO {
 				System.out.println(result.getString(1) + "\t" + result.getInt(2));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -392,25 +413,30 @@ public class MovieDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	// 영화 별 평점통계와 광고비 통계를 낼 수 있는 메뉴이다.
 	public void movieStaticsMenu() {
-		int menu;
+
+		int menu = 0;
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("관리자용 영화 상세 통계 메뉴입니다.");
 		System.out.println("1. 영화 별 평점 통계");
 		System.out.println("2. 영화별 광고비 합계");
 		System.out.println("3. 뒤로");
+
 		menu = sc.nextInt();
 
 		switch (menu) {
 		case 1:
+			// 영화별 평점 통계를 내는 메서드이다.
 			movieRatStatic();
 			break;
 		case 2:
+			// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
 			movieADStatic();
 			break;
 		case 3:
@@ -422,16 +448,25 @@ public class MovieDAO implements DAO {
 		}
 	}
 
+	// 영화별 평점 통계를 내는 메서드이다.
 	public void movieRatStatic() {
-		double minVal;
+		
+		double minVal = 0.0;
+		
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
+		
 		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("영화별 평점 통계입니다.");
 		System.out.println("최소 범위를 입력해주세요.(0~5)(0 입력시, 전체 출력)");
+		
 		minVal = sc.nextDouble();
-
+		/*
+		 * 관리자가 최소 평점을 입력하면, 해당 평점 이상이 되는 영화의 movie_code, movie_title, 평점, 점수를 준
+		 * 사람들의 수를 출력한다. group by와 having이 사용되었다.
+		 */
 		String query = "select m.movie_code,m.movie_title, avg(r.rat_point), count(m.movie_code) from movie m, rat r "
 				+ "where m.movie_code=r.movie_code " + "group by m.movie_code, m.movie_title " + "having avg(r.rat_point)>=?";
 		try {
@@ -447,7 +482,6 @@ public class MovieDAO implements DAO {
 				System.out.println(result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getDouble(3) + "\t" + result.getInt(4));
 			} while (result.next());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -455,17 +489,21 @@ public class MovieDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
+	// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
 	public void movieADStatic() {
 		System.out.println("영화별 광고 통계입니다. 영화에 할당된 광고료가 높은 순서로 출력됩니다.");
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
+		/*
+		 * movie와 movie_ad 테이블을 조인한 뒤 movie_code, movie_title로 grouping을 하고, 광고비 합계가 가장 많은 순서대로 정렬했다.
+		 * movie_code, movie_title, 광고비 합계, 해당 영화에 몇 개의 광고가 할당되었는지를 보여준다.
+		 * */
 		String query = "select m.movie_code, m.movie_title, sum(a.ad_price), count(*) " + "from movie m, movie_ad ma, ad a "
 				+ "where m.movie_code=ma.movie_code and ma.AD_TITLE=a.AD_TITLE " + "group by m.movie_code, m.movie_title "
 				+ "order by sum(a.ad_price) desc";

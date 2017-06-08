@@ -14,8 +14,10 @@ public class AdDAO implements DAO {
 	private AdDAO() {
 	}
 
+	// 인스턴스 생성
 	private static AdDAO instance = new AdDAO();
 
+	// 객체를 반환한다.
 	public static AdDAO getInstance() {
 		return instance;
 	}
@@ -31,6 +33,7 @@ public class AdDAO implements DAO {
 		return conn;
 	}
 
+	// 광고테이블에 모든 내역을 출력한다.
 	@Override
 	public void list() {
 		// TODO Auto-generated method stub
@@ -41,14 +44,14 @@ public class AdDAO implements DAO {
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 
-		String query = "select * from AD";
+		String query = "select AD_TITLE, AD_COMPANY,AD_DATE, AD_PRICE from AD";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new AdDTO(result.getString("AD_TITLE"), result.getString("AD_COMPANY"),
-						result.getDate("AD_DATE"), result.getInt("AD_PRICE")));
+				arrayList.add(new AdDTO(result.getString("AD_TITLE"), result.getString("AD_COMPANY"), result.getDate("AD_DATE"),
+						result.getInt("AD_PRICE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -61,6 +64,8 @@ public class AdDAO implements DAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		// 전부 출력한다.
 		for (int i = 0; i < arrayList.size(); i++) {
 			System.out.println(arrayList.get(i).toString());
 		}

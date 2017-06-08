@@ -27,6 +27,7 @@ public class InitDatabaseDAO implements DAO {
 	}
 
 	@Override
+	// 데이터베이스를 초기화하는 메서드이다.
 	public void list() {
 		// TODO Auto-generated method stub
 		String[] tableName = { "MOVIE", "MYUSER", "RAT", "PAYMENT", "MOVIE_PAYMENT", "SNACK_INFO", "MYUSER_SNACK_ORDER",
@@ -237,6 +238,8 @@ public class InitDatabaseDAO implements DAO {
 			pstm = conn.prepareStatement("COMMIT");
 			pstm.executeUpdate();
 
+			// 회원번호등과 같은 경우, 시퀀스를 사용하여 insert 될 때마다 오토로 숫자를 증가시켜주는데, 초기화의 경우 이 시퀀스를 초기화해주어야 한다.
+			// 이런 역할을 하는 프로시저콜을 호출해서 초기화를 완료한다.
 			for (int i = 0; i < sequence.length; i++) {
 				cstm = conn.prepareCall("{call reset_sequence(?)}");
 				cstm.setString(1, sequence[i]);

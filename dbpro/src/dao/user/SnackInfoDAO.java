@@ -29,6 +29,7 @@ public class SnackInfoDAO implements DAO {
 		return instance;
 	}
 
+	// 스낵관련 정보를 전부 출력한다.
 	@Override
 	public void list() {
 		ArrayList<SnackInfoDTO> arrayList = new ArrayList<>();
@@ -36,14 +37,14 @@ public class SnackInfoDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from SNACK_INFO";
+		String query = "select SNACK_CODE,SNACK_NAME, SNACK_CONTENT, SNACK_CAL,SNACK_PRICE from SNACK_INFO";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new SnackInfoDTO(result.getString("SNACK_CODE"), result.getString("SNACK_NAME"),
-						result.getString("SNACK_CONTENT"), result.getInt("SNACK_CAL"), result.getInt("SNACK_PRICE")));
+				arrayList.add(new SnackInfoDTO(result.getString("SNACK_CODE"), result.getString("SNACK_NAME"), result.getString("SNACK_CONTENT"),
+						result.getInt("SNACK_CAL"), result.getInt("SNACK_PRICE")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);

@@ -5,6 +5,12 @@ import java.util.Scanner;
 import dao.admin.*;
 import dao.user.*;
 
+/**
+ * @author kalin
+ * @date 2017. 6. 8.
+ * @filename
+ * @description admin 메뉴의 경우 실행할 때 2번, 18~20번 메뉴를 실행하면 된다.
+ */
 public class ExecuteProject {
 
 	public static boolean authority = false; // true인경우 관리자
@@ -23,6 +29,7 @@ public class ExecuteProject {
 		}
 	}
 
+	// 로그인 메서드
 	private static void login() {
 		String pw = null;
 		Scanner scanner = new Scanner(System.in);
@@ -46,8 +53,8 @@ public class ExecuteProject {
 		}
 	}
 
+	// while문으로 메뉴구현
 	private static int selectMenu(int num) {
-		// while문으로 메뉴구현
 		if (isAdmin()) {
 			switch (num) {
 			case 1:
@@ -118,7 +125,6 @@ public class ExecuteProject {
 				return 10;
 			case 18:
 				EmployeeDAO employeeDAOver2 = EmployeeDAO.getInstance();
-				// 메뉴를 보여주는 함수 호출하기
 				employeeDAOver2.employeeSearchMenu();
 				break;
 			case 19:
@@ -129,6 +135,8 @@ public class ExecuteProject {
 				MovieDAO moviedaover3 = MovieDAO.getInstance();
 				moviedaover3.movieStaticsMenu();
 				break;
+			default:
+				System.out.println("잘못된 입력입니다.");
 			}
 		} else {
 			switch (num) {
@@ -170,12 +178,14 @@ public class ExecuteProject {
 			case 10:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
+			default:
+				System.out.println("잘못된 입력입니다.");
 			}
 		}
 		return 0;
 	}
 
-	// 메뉴를 보여준다.
+	// 초기 메뉴를 보여준다. 유저와 관리자에 따라 다른 화면이 보여지도록한다.
 	private static void showMenu() {
 		System.out.println("원하는 정보를 보여드립니다.!");
 		if (isAdmin()) {
@@ -183,7 +193,7 @@ public class ExecuteProject {
 			System.out.println("2. 영화 정보");
 			System.out.println("3. 결제 통계 정보");
 			System.out.println("4. 광고 정보");
-			System.out.println("5. 영화 광고 정보");
+			System.out.println("5. 영화에 삽입 된 정보");
 			System.out.println("6. 직원 정보");
 			System.out.println("7. 직원 업무 내역");
 			System.out.println("8. 배우 정보");
@@ -196,11 +206,10 @@ public class ExecuteProject {
 			System.out.println("15. 로그인 변경");
 			System.out.println("16. 데이터 초기화");
 			System.out.println("17. 프로그램 종료");
-
 			System.out.println("18. 직원관련 검색");
 			// 나이 기반 검색(subquery.),
 			// 부서 검색 단순쿼리,
-			// 근태 직원 (단순쿼리), 최대 최소연봉 지정해서 쿼리
+			// 근무태만 직원 (단순쿼리), 최대 최소연봉 지정해서 쿼리
 			// (subquery)
 			System.out.println("19. 우수회원");
 			// 4개 스낵 많이 산 사람, 영화 많이 본 사람
@@ -223,7 +232,7 @@ public class ExecuteProject {
 		}
 	}
 
-	// 현재 세션이 admin 여부 판단.
+	// 현재 세션의 admin 여부 판단.
 	private static boolean isAdmin() {
 		if (authority) {
 			return true;

@@ -11,15 +11,19 @@ import oracle.connect.OracleJDBCManager;
 
 public class PayMentStaticsDAO implements DAO {
 
+	// 인스턴스
 	private static PayMentStaticsDAO instance = new PayMentStaticsDAO();
 
+	// 객체 생성을 못하게 막는다.
 	private PayMentStaticsDAO() {
 	}
 
+	// 인스턴스 리턴
 	public static PayMentStaticsDAO getInstance() {
 		return instance;
 	}
 
+	// 오라클 드라이버를 로드한다.
 	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
@@ -30,16 +34,17 @@ public class PayMentStaticsDAO implements DAO {
 		return conn;
 	}
 
+	// 결제내역을 전부 출력한다.
 	@Override
 	public void list() {
-		// TODO Auto-generated method stub
 
 		ArrayList<PaymentStaticsDTO> arrayList = new ArrayList<>();
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from Payment_statics";
+
+		String query = "select PAYMENT_DATE, PAYMENT_SUM, PAYMENT_COUNT, MYUSER_COUNT from Payment_statics";
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -57,7 +62,6 @@ public class PayMentStaticsDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

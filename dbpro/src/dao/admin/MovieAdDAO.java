@@ -18,12 +18,15 @@ public class MovieAdDAO implements DAO {
 	private MovieAdDAO() {
 	}
 
+	// 객체를 생성한다.
 	private static MovieAdDAO instance = new MovieAdDAO();
 
+	// 객체를 리턴한다.
 	public static MovieAdDAO getInstnace() {
 		return instance;
 	}
 
+	// 드라이버 로드한다.
 	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
@@ -36,14 +39,13 @@ public class MovieAdDAO implements DAO {
 
 	@Override
 	public void list() {
-		// TODO Auto-generated method stub
 
 		ArrayList<MovieAdDTO> arrayList = new ArrayList<>();
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from MOVIE_AD";
+		String query = "select CNT, MOVIE_CODE, AD_TITLE  from MOVIE_AD";
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -60,9 +62,10 @@ public class MovieAdDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// 결과를 전부 출력한다.
 		for (int i = 0; i < arrayList.size(); i++) {
 			System.out.println(arrayList.get(i).toString());
 		}

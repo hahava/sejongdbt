@@ -39,6 +39,7 @@ public class PaymentDAO implements DAO {
 		return conn;
 	}
 
+	// 결제 방법을 출력한다.
 	public void list() {
 
 		ArrayList<PaymentDTO> arrayList = new ArrayList<>();
@@ -46,7 +47,7 @@ public class PaymentDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from PAYMENT";
+		String query = "select PAYMENT_CODE, PAYMENT_WAY from PAYMENT";
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -63,7 +64,6 @@ public class PaymentDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {
@@ -71,6 +71,7 @@ public class PaymentDAO implements DAO {
 		}
 	}
 
+	// 유저로 로그인할 경우 영화 예약과 관련된 메뉴
 	public void paymentMenu() {
 		int menu;
 		Scanner sc = new Scanner(System.in);
@@ -97,6 +98,7 @@ public class PaymentDAO implements DAO {
 		}
 	}
 
+	// 예매 목록을 코드를 이용하여 삭제 하는 메뉴이다.
 	private void deletePayment() {
 		MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
 		System.out.println("나의 예매 목록");
@@ -114,7 +116,7 @@ public class PaymentDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			pstm.setInt(1, movie_payment_code);
 			pstm.executeUpdate();
-			
+
 			pstm = conn.prepareStatement("commit");
 			pstm.executeUpdate();
 
@@ -132,11 +134,13 @@ public class PaymentDAO implements DAO {
 		System.out.println("삭제가 완료되었습니다!");
 	}
 
+	// 영화 수정을 할 수 있는 메뉴이다.
 	private void modifyPayment() {
 
 		MoviePaymentDTO dto = new MoviePaymentDTO();
 		MovieDAO dao = MovieDAO.getInstance();
 		PaymentDAO dao2 = PaymentDAO.getInstance();
+
 		Scanner scanner = new Scanner(System.in);
 
 		MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
@@ -176,7 +180,7 @@ public class PaymentDAO implements DAO {
 			pstm.setDate(3, dto.getPAYMENT_DATE());
 			pstm.setInt(4, dto.getMOVIE_PAYMENT_CODE());
 			pstm.executeUpdate();
-			
+
 			pstm = conn.prepareStatement("commit");
 			pstm.executeUpdate();
 
@@ -188,16 +192,18 @@ public class PaymentDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		System.out.println("수정이 완료되었습니다!");
 	}
 
+	//예약할 수 있는 메뉴
 	private void addPaymet() {
+		
 		MoviePaymentDTO dto = new MoviePaymentDTO();
 		MovieDAO dao = MovieDAO.getInstance();
 		PaymentDAO dao2 = PaymentDAO.getInstance();
+		
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("영화 예매를 진행합니다.");
@@ -218,20 +224,17 @@ public class PaymentDAO implements DAO {
 		PreparedStatement pstm = null;
 		String query = "insert into movie_payment values (movie_payment_inc.nextval,?,?,?,?)";
 
-		
-		
 		try {
-			
+
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, dto.getMYUSER_ID());
 			pstm.setString(2, dto.getMOVIE_CODE());
 			pstm.setString(3, dto.getPAYMENT_CODE());
 			pstm.setDate(4, dto.getPAYMENT_DATE());
 			pstm.executeUpdate();
-			
+
 			pstm = conn.prepareStatement("commit");
 			pstm.executeUpdate();
-			
 
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -240,6 +243,7 @@ public class PaymentDAO implements DAO {
 
 	}
 
+	//현재 시각을 반환한다.
 	private String timeNow() {
 		long time = System.currentTimeMillis();
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd");
