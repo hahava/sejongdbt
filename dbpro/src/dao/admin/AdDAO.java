@@ -20,6 +20,7 @@ public class AdDAO implements DAO {
 		return instance;
 	}
 
+	// driver를 이용한 서버접속
 	private Connection getConnection() {
 		OracleJDBCManager manager = new OracleJDBCManager();
 		String oracleId = "s15010924";
@@ -34,12 +35,12 @@ public class AdDAO implements DAO {
 	public void list() {
 		// TODO Auto-generated method stub
 
-
 		ArrayList<AdDTO> arrayList = new ArrayList<>();
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
+
 		String query = "select * from AD";
 
 		try {
@@ -58,7 +59,6 @@ public class AdDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {

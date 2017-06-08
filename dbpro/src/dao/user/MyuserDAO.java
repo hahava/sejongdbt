@@ -15,10 +15,9 @@ import oracle.connect.OracleJDBCManager;
 public class MyuserDAO implements DAO {
 
 	// 로그인 상태
-	public final static int NOLOGIN = 0;
-	public final static int ADMINLOGIN = 1;
-	public final static int USERLOGIN = 2;
-	public final static int NEW = 3;
+	public final static int NOLOGIN = 0; // 로그인 실패
+	public final static int ADMINLOGIN = 1; // admin으로 로그인이 됨
+	public final static int USERLOGIN = 2; // user로 로그인이 됨
 
 	private static MyuserDAO instance = new MyuserDAO();
 
@@ -50,14 +49,15 @@ public class MyuserDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from MYUSER";
+		String query = "select MYUSER_ID, MYUSER_NAME, MYUSER_PW, MYUSER_BIRTH, MYUSER_PHONE,  MYUSER_EMAIL from MYUSER";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -68,14 +68,15 @@ public class MyuserDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// arraylist안에 테이블내용을 전부 출력한다.
 		for (int i = 0; i < arrayList.size(); i++) {
 			System.out.println(arrayList.get(i).toString());
 		}
 	}
 
+	// 로그인 한 유저의 정보만을 출력한다.
 	public void listMe(String id) {
 
 		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
@@ -83,15 +84,16 @@ public class MyuserDAO implements DAO {
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		String query = "select * from MYUSER where MYUSER_ID = ?";
+		String query = "select MYUSER_ID, MYUSER_NAME, MYUSER_PW, MYUSER_BIRTH, MYUSER_PHONE,  MYUSER_EMAIL from MYUSER where MYUSER_ID = ?";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, ExecuteProject.id);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -102,7 +104,6 @@ public class MyuserDAO implements DAO {
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (int i = 0; i < arrayList.size(); i++) {
@@ -110,20 +111,23 @@ public class MyuserDAO implements DAO {
 		}
 	}
 
+	// 로그인 메서드 id와 password를 입력받아 myuser테이블안에 저장되어 있는지 확인한다.
 	public int login(String id, String pw) {
 		int returnnum = NOLOGIN;
 		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
+
 		String query = "select * from MYUSER";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"), result.getString("MYUSER_PW"),
-						result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"), result.getString("MYUSER_EMAIL")));
+				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
+						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
+						result.getString("MYUSER_EMAIL")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -151,202 +155,38 @@ public class MyuserDAO implements DAO {
 		return returnnum;
 	}
 
-	private void modify(String id) {
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String email;
-		String phone;
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("이메일과 번호를 입력하세요");
-
-		System.out.printf("email: ");
-		email = scanner.nextLine();
-		System.out.printf("phone: ");
-		phone = scanner.nextLine();
-
-		String query = "update myuser set myuser_email = ?,  myuser_phone = ? where myuser_id = ?";
-		try {
-			conn.setAutoCommit(false);
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, email);
-			pstm.setString(2, phone);
-			pstm.setString(3, id);
-			int cnt = pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			System.out.println("fail...");
-		}
-		try {
-			// result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void menu() {
-		System.out.println("1. 나의 정보 보기");
-		System.out.println("2. 내 정보 수정하기");
-		System.out.println("3. 이전메뉴로");
-	}
-
-	public void selectMenu() {
-		int num = -1;
-		Scanner scanner = new Scanner(System.in);
-		while (num != 0) {
-			menu();
-			num = scanner.nextInt();
-			switch (num) {
-			case 1:
-				instance.listMe(ExecuteProject.id);
-				break;
-			case 2:
-				instance.modify(ExecuteProject.id);
-				break;
-			case 3:
-				return;
-			}
-		}
-	}
-
-	public void insertMyuser() {
-		MyuserDTO dto = new MyuserDTO();
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("회원 가입을 진행합니다.");
-		while (true) {
-			System.out.print("id: ");
-			dto.MYUSER_ID = scanner.nextLine();
-			if (!chechId(dto.MYUSER_ID)) {
-				System.out.println("중복입니다. 다른 아이디를 입력하세요!");
-			}
-			System.out.print("이름: ");
-			dto.MYUSER_NAME = scanner.nextLine();
-			System.out.print("pass: ");
-			dto.MYUSER_PW = scanner.nextLine();
-			System.out.printf("생년월일(yyyymmdd): ");
-			try {
-				String temp = scanner.nextLine();
-				Date date = new Date(Long.parseLong(temp));
-				dto.MYUSER_BIRTH = date;
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
-			System.out.print("phone: ");
-			dto.MYUSER_PHONE = scanner.nextLine();
-			System.out.print("email: ");
-			dto.MYUSER_EMAIL = scanner.nextLine();
-
-			break;
-		}
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		// ResultSet result = null;
-		String query = "insert into myuser values(?,?,?,?,?,?)";
-
-		try {
-			conn.setAutoCommit(false);
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, dto.getMYUSER_ID());
-			pstm.setString(2, dto.getMYUSER_NAME());
-			pstm.setString(3, dto.getMYUSER_PW());
-			pstm.setDate(4, dto.getMYUSER_BIRTH());
-			pstm.setString(5, dto.getMYUSER_PHONE());
-			pstm.setString(6, dto.getMYUSER_EMAIL());
-
-			int cnt = pstm.executeUpdate();
-			conn.commit();
-			conn.setAutoCommit(true);
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			// result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println("회원가입 성공! 로그인해주세요!");
-		System.out.println("\n\n\n\n\n\n\n");
-	}
-
-	// 회원 중복을 체크하는 메서드
-	private boolean chechId(String id) {
-		boolean check = true;
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select myuser_id from MYUSER";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				if (result.getString("myuser_id").equals(id)) {
-					check = false;
-					break;
-				}
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return check;
-	}
-
 	public void pickBestMenu() {
 		int menu;
-		Scanner sc=new Scanner(System.in);
-		
+		Scanner sc = new Scanner(System.in);
+
 		System.out.println("이달의 우수회원을 선출합니다.");
 		System.out.println("1. 영화왕)가장 많이 본 회원 1명 선출");
 		System.out.println("2. 영화왕)범위 지정 후 여러명 선출");
 		System.out.println("3. 스낵왕)스낵에 돈을 가장 많이 쓴 회원 선출");
 		System.out.println("4. 스낵왕)범위 지정후 여러명 선출");
-		menu=sc.nextInt();
-		MovieDAO moviedao=MovieDAO.getInstance();
-		MyuserSnackOrderDAO myuserSnackOrderDao=MyuserSnackOrderDAO.getInstance();
-	
-		switch(menu) {
-			case 1:
-				moviedao.pickBestMovieOne();
-				break;
-			case 2:
-				moviedao.pickBestMoviePeople();
-				
-				break;
-			case 3:
-				myuserSnackOrderDao.pickBestSnackOne();
-				return;
-			case 4:
-				myuserSnackOrderDao.pickBestSnackPeople();
-			default:
-				System.out.println("잘못 입력하셨습니다.");
-				break;
-				
+		menu = sc.nextInt();
+		MovieDAO moviedao = MovieDAO.getInstance();
+		MyuserSnackOrderDAO myuserSnackOrderDao = MyuserSnackOrderDAO.getInstance();
+
+		switch (menu) {
+		case 1:
+			moviedao.pickBestMovieOne();
+			break;
+		case 2:
+			moviedao.pickBestMoviePeople();
+
+			break;
+		case 3:
+			myuserSnackOrderDao.pickBestSnackOne();
+			return;
+		case 4:
+			myuserSnackOrderDao.pickBestSnackPeople();
+		default:
+			System.out.println("잘못 입력하셨습니다.");
+			break;
+
 		}
-		
+
 	}
-	
-
-
-	
-	
 
 }
