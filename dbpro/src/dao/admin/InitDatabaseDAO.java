@@ -4,9 +4,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 import oracle.connect.OracleJDBCManager;
-import SqlRunner.SqlRunner;
 
 public class InitDatabaseDAO implements DAO {
 	private Connection getConnection() {
@@ -227,7 +225,6 @@ public class InitDatabaseDAO implements DAO {
 				+ "INSERT INTO PAYMENT_STATICS VALUES('2017-05-12',7500000,2200,2200);"
 				+ "INSERT INTO PAYMENT_STATICS VALUES('2017-05-13',3300000,4400,4400);";
 		insertQuery = temp.split(";");
-		SqlRunner sr = new SqlRunner();
 
 		try {
 			for (int i = 0; i < tableName.length; i++) {
@@ -261,7 +258,7 @@ public class InitDatabaseDAO implements DAO {
 		}
 		try {
 			cstm.close();
-			
+
 			pstm.close();
 			conn.close();
 		} catch (SQLException e) {
