@@ -1,19 +1,19 @@
 package oracle.connect;
 
+import util.PropertiesWrapper;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class OracleJDBCManager {
-	public void registerOracleJDBCDriver() {
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-		} catch (ClassNotFoundException e) {
-			System.out.println("Where is your Oracle JDBC Driver?");
-			e.printStackTrace();
-			return;
-		}
 
+	static {
+		try {
+			Class.forName(PropertiesWrapper.getInstance().getProperty("jdbc.driver"));
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Connection connect(String id, String passwd, int port) {

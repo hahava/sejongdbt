@@ -29,7 +29,7 @@ public class RatDAO implements DAO {
 		String passwd = "s15010924";
 		int port = 1521;
 		Connection conn;
-		manager.registerOracleJDBCDriver();
+
 		conn = manager.connect(oracleId, passwd, port);
 
 		return conn;

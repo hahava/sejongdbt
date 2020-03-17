@@ -36,7 +36,7 @@ public class MovieDAO implements DAO {
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
-		manager.registerOracleJDBCDriver();
+
 		Connection conn = manager.connect(oracleId, passwd, port);
 		return conn;
 	}

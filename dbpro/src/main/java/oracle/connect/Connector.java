@@ -18,7 +18,7 @@ public class Connector {
 		String passwd = "s15010924";
 		int port = 1521;
 
-		manager.registerOracleJDBCDriver();
+
 		conn = manager.connect(oracleId, passwd, port);
 		PreparedStatement pstm = null;
 		String query = "select * from tab"; // Whatever you want to inquiry
