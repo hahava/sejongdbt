@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,7 +12,7 @@ import dao.admin.ActorDAO;
 import java.sql.Date;
 import dto.user.*;
 import main.ExecuteProject;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class MovieDAO implements DAO {
 
@@ -32,11 +30,11 @@ public class MovieDAO implements DAO {
 
 	// 오라클 드라이버 로드한다.
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
-		manager.registerOracleJDBCDriver();
+
 		Connection conn = manager.connect(oracleId, passwd, port);
 		return conn;
 	}

@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import com.sun.xml.internal.ws.api.pipe.NextAction;
-
 import dto.user.MoviePaymentDTO;
 import dto.user.PaymentDTO;
 import main.ExecuteProject;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class PaymentDAO implements DAO {
 
@@ -30,11 +27,11 @@ public class PaymentDAO implements DAO {
 	}
 
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
-		manager.registerOracleJDBCDriver();
+
 		Connection conn = manager.connect(oracleId, passwd, port);
 		return conn;
 	}

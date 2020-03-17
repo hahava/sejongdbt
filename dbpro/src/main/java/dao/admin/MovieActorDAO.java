@@ -7,15 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.MovieActorDTO;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class MovieActorDAO implements DAO {
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
-		manager.registerOracleJDBCDriver();
+
 		Connection conn = manager.connect(oracleId, passwd, port);
 		return conn;
 	}

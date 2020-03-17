@@ -6,17 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dto.admin.AdDTO;
 import dto.admin.EmployeeTaskDTO;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class EmployeeTaskDAO implements DAO {
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
-		manager.registerOracleJDBCDriver();
+
 		Connection conn = manager.connect(oracleId, passwd, port);
 		return conn;
 	}

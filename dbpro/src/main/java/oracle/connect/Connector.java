@@ -1,24 +1,22 @@
 package oracle.connect;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Connector {
 
 	public void check() {
 
 		Connection conn = null;
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
 
-		manager.registerOracleJDBCDriver();
+
 		conn = manager.connect(oracleId, passwd, port);
 		PreparedStatement pstm = null;
 		String query = "select * from tab"; // Whatever you want to inquiry

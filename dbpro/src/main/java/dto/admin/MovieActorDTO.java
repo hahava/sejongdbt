@@ -1,23 +1,22 @@
 package dto.admin;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
 
-public class MovieActorDTO implements DTO{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MovieActorDTO {
 
-	public String ACTOR_CODE;
-	public String MOVIE_CODE;
-	public String ACTOR_ROLE;
+	@ColumnName("ACTOR_CODE")
+	private String actorCode;
 
-	@Override
-	public String toString() {
-		return "MovieActorDTO [ACTOR_CODE=" + ACTOR_CODE + ", MOVIE_CODE=" + MOVIE_CODE + ", ACTOR_ROLE=" + ACTOR_ROLE
-				+ "]";
-	}
+	@ColumnName("MOVIE_CODE")
+	private String movieCode;
 
-	public MovieActorDTO(String aCTOR_CODE, String mOVIE_CODE, String aCTOR_ROLE) {
-		super();
-		ACTOR_CODE = aCTOR_CODE;
-		MOVIE_CODE = mOVIE_CODE;
-		ACTOR_ROLE = aCTOR_ROLE;
-	}
+	@ColumnName("ACTOR_ROLE")
+	private String actorRole;
 
 }
