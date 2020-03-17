@@ -49,8 +49,8 @@ public class ActorDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				actor.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
-						result.getString("actor_birth")));
+//				actor.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
+//						result.getString("actor_birth")));
 			}
 		} catch (SQLException e1) {
 			System.out.println(e1);
@@ -98,8 +98,8 @@ public class ActorDAO implements DAO {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			while (result.next()) {
-				actorByMovie.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
-						result.getString("actor_birth")));
+//				actorByMovie.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
+//						result.getString("actor_birth")));
 			}
 			if (actorByMovie.size() == 0) {
 				System.out.println("그런 영화가 없거나 관리자가 배우정보를 등록하지 않았습니다.");
@@ -107,7 +107,7 @@ public class ActorDAO implements DAO {
 			}
 			System.out.println("배우이름\t배우생일\t배우성별");
 			for (int i = 0; i < actorByMovie.size(); i++) {
-				System.out.println(actorByMovie.get(i).actorName + "\t" + actorByMovie.get(i).actorBirth + "\t" + actorByMovie.get(i).actorGender);
+//				System.out.println(actorByMovie.get(i).actorName + "\t" + actorByMovie.get(i).actorBirth + "\t" + actorByMovie.get(i).actorGender);
 
 			}
 		} catch (SQLException e) {
