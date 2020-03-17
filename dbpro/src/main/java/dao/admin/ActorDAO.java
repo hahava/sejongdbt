@@ -36,37 +36,6 @@ public class ActorDAO implements DAO {
 
 	// 등록된 배우를 전부 출력한다.
 	public void list() {
-
-		ArrayList<ActorDTO> actor = new ArrayList<>();
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-
-		String query = "select actor_code,actor_name,actor_gender, actor_birth from ACTOR";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-//				actor.add(new ActorDTO(result.getString("actor_code"), result.getString("actor_name"), result.getString("actor_gender"),
-//						result.getString("actor_birth")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0; i < actor.size(); i++) {
-			System.out.println(actor.get(i).toString());
-		}
 	}
 
 	// 특정 영화에 출연한 배우 검색

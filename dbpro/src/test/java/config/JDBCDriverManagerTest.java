@@ -9,8 +9,7 @@ import java.util.List;
 public class JDBCDriverManagerTest {
 	@Test
 	public void filedTest() {
-		JDBCManager jdbcManager = new JDBCManager();
-		List<MovieActorDTO> list = jdbcManager
+		List<MovieActorDTO> list = JDBCManager.getInstance()
 			.queryForList("select * from MOVIE_ACTOR", MovieActorDTO.class);
 		list.forEach(movieActorDTO -> {
 			System.out.println(movieActorDTO.toString());
