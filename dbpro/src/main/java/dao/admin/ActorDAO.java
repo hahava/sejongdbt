@@ -45,20 +45,17 @@ public class ActorDAO implements DAO {
 	}
 
 	// 특정 영화에 출연한 배우 검색
-	public void actorSearchByMovie() {
+	public void getActor(String movieTitle) {
 
-		Scanner sc = new Scanner(System.in);
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
 
-		String movieName;
 		ArrayList<ActorDTO> actorByMovie = new ArrayList<ActorDTO>();
 
 		System.out.println("특정 영화에 출연한 배우를 검색합니다. 영화 명을 입력하세요.");
 
-		movieName = sc.nextLine();
 
 		/*
 		 * 영화 이름으로 검색할 것이기 때문에 movie 테이블에서 해당 영화이름을 가진 영화의 코드를 받아온 뒤, movie_actor 테이블에서 해당 영화코드에 할당된 actor_code를
@@ -66,7 +63,7 @@ public class ActorDAO implements DAO {
 		 * subquery를 이용했다.
 		 * */
 		String query = "select actor_code, actor_name,actor_gender, actor_birth from actor where actor_code in "
-			+ "(select actor_code from movie_actor where movie_code in " + "(select movie_code from movie where movie_title='" + movieName
+			+ "(select actor_code from movie_actor where movie_code in " + "(select movie_code from movie where movie_title='" + movieTitle
 			+ "'))";
 
 		try {
