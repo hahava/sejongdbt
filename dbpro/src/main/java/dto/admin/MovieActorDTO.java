@@ -1,23 +1,30 @@
 package dto.admin;
 
+import oracle.connect.ColumnName;
 
 public class MovieActorDTO implements DTO{
 
-	public String ACTOR_CODE;
-	public String MOVIE_CODE;
-	public String ACTOR_ROLE;
+	@ColumnName("ACTOR_CODE")
+	private String actorCode;
+	@ColumnName("MOVIE_CODE")
+	private String movieCode;
+	@ColumnName("ACTOR_ROLE")
+	private String actorRole;
 
 	@Override
 	public String toString() {
-		return "MovieActorDTO [ACTOR_CODE=" + ACTOR_CODE + ", MOVIE_CODE=" + MOVIE_CODE + ", ACTOR_ROLE=" + ACTOR_ROLE
+		return "MovieActorDTO [ACTOR_CODE=" + actorCode + ", MOVIE_CODE=" + movieCode + ", ACTOR_ROLE=" + actorRole
 				+ "]";
+	}
+
+	public MovieActorDTO() {
 	}
 
 	public MovieActorDTO(String aCTOR_CODE, String mOVIE_CODE, String aCTOR_ROLE) {
 		super();
-		ACTOR_CODE = aCTOR_CODE;
-		MOVIE_CODE = mOVIE_CODE;
-		ACTOR_ROLE = aCTOR_ROLE;
+		actorCode = aCTOR_CODE;
+		movieCode = mOVIE_CODE;
+		actorRole = aCTOR_ROLE;
 	}
 
 }
