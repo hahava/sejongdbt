@@ -9,11 +9,11 @@ import java.util.Scanner;
 
 import dto.user.MyuserSnackOrderDTO;
 import main.ExecuteProject;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class MyuserSnackOrderDAO implements DAO {
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import dto.user.*;
 import main.ExecuteProject;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class MoviePaymentDAO implements DAO {
 
@@ -21,7 +21,7 @@ public class MoviePaymentDAO implements DAO {
 	}
 
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

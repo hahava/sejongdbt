@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import dto.user.RatDTO;
 import main.ExecuteProject;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class RatDAO implements DAO {
 
@@ -24,7 +24,7 @@ public class RatDAO implements DAO {
 	}
 
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

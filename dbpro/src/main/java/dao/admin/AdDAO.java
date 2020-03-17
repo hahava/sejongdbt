@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.AdDTO;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class AdDAO implements DAO {
 
@@ -24,7 +24,7 @@ public class AdDAO implements DAO {
 
 	// driver를 이용한 서버접속
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

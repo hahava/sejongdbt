@@ -4,11 +4,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class InitDatabaseDAO implements DAO {
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

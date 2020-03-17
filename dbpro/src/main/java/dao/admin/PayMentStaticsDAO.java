@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dto.admin.PaymentStaticsDTO;
-import oracle.connect.OracleJDBCManager;
+import oracle.connect.JDBCManager;
 
 public class PayMentStaticsDAO implements DAO {
 
@@ -25,7 +25,7 @@ public class PayMentStaticsDAO implements DAO {
 
 	// 오라클 드라이버를 로드한다.
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;

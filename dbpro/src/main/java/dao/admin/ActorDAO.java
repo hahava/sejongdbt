@@ -14,7 +14,7 @@ public class ActorDAO implements DAO {
 
 	// driver를 이용하여 서버에 접속하는 메서드
 	private Connection getConnection() {
-		OracleJDBCManager manager = new OracleJDBCManager();
+		JDBCManager manager = new JDBCManager();
 		String oracleId = "s15010924";
 		String passwd = "s15010924";
 		int port = 1521;
