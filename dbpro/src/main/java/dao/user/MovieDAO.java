@@ -111,7 +111,7 @@ public class MovieDAO implements DAO {
 			break;
 		case 3:
 			// 영화제목을 기준으로 해당 영화에 출연한 배우들을 검색
-			actordao.actorSearchByMovie();
+//			actordao.getActor();
 			break;
 
 		case 4:

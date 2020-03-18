@@ -1,6 +1,5 @@
 package oracle.connect;
 
-import org.apache.commons.lang3.StringUtils;
 import util.PropertiesWrapper;
 
 import java.lang.reflect.Field;
@@ -17,6 +16,19 @@ public class JDBCManager {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static JDBCManager jdbcManager;
+
+	// TODO : Change public to private
+	public JDBCManager() {
+	}
+
+	public static JDBCManager getInstance() {
+		if (jdbcManager == null) {
+			jdbcManager = new JDBCManager();
+		}
+		return jdbcManager;
 	}
 
 	public <T> List<T> queryForList(String query, Class<T> elementType) {

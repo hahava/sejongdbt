@@ -1,21 +1,25 @@
 package dto.admin;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
 
+import java.sql.Date;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ActorDTO implements DTO {
-	public String actorCode;
-	public String actorName;
-	public String actorGender;
-	public String actorBirth;
+	@ColumnName("ACTOR_CODE")
+	private String actorCode;
 
-	public ActorDTO(String actorCode, String actorName, String actorGender, String actorBirth) {
-		this.actorCode = actorCode;
-		this.actorName = actorName;
-		this.actorGender = actorGender;
-		this.actorBirth = actorBirth;
-	}
+	@ColumnName("ACTOR_NAME")
+	private String actorName;
 
-	@Override
-	public String toString() {
-		return actorName + "\t" + actorBirth + "\t" + actorGender + "\t" + actorCode;
-	}
+	@ColumnName("ACTOR_GENDER")
+	private String actorGender;
+
+	@ColumnName("ACTOR_BIRTH")
+	private Date actorBirth;
 }
