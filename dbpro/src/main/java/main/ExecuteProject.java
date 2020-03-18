@@ -82,7 +82,7 @@ public class ExecuteProject {
 				employeeDAO.list();
 				break;
 			case 7:
-				EmployeeTaskDAO employeeTaskDAO = EmployeeTaskDAO.getnstance();
+				EmployeeTaskDAO employeeTaskDAO = EmployeeTaskDAO.getInstance();
 				employeeTaskDAO.list();
 				break;
 			case 8:
