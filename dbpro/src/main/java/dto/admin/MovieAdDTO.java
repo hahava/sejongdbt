@@ -1,20 +1,22 @@
 package dto.admin;
 
-public class MovieAdDTO implements DTO {
-	public int CNT;
-	public String MOVIE_CODE;
-	public String AD_TITLE;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
 
-	@Override
-	public String toString() {
-		return "MovieAdDTO [CNT=" + CNT + ", MOVIE_CODE=" + MOVIE_CODE + ", AD_TITLE=" + AD_TITLE + "]";
-	}
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class MovieAdDTO {
 
-	public MovieAdDTO(int cNT, String mOVIE_CODE, String aD_TITLE) {
-		super();
-		CNT = cNT;
-		MOVIE_CODE = mOVIE_CODE;
-		AD_TITLE = aD_TITLE;
-	}
+	@ColumnName("CNT")
+	private int cnt;
+
+	@ColumnName("MOVIE_CODE")
+	private String movieCode;
+
+	@ColumnName("AD_TITLE")
+	private String adTitle;
 
 }
