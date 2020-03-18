@@ -1,25 +1,25 @@
 package dto.admin;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
+
 import java.sql.Date;
 
-public class AdDTO implements DTO {
-	public String AD_TITLE;
-	public String AD_COMPANY;
-	public Date AD_DATE;
-	public int AD_PRICE;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class AdDTO {
+	@ColumnName("AD_TITLE")
+	public String adTitle;
 
-	@Override
-	public String toString() {
-		return "AdDTO [AD_TITLE=" + AD_TITLE + ", AD_COMPANY=" + AD_COMPANY + ", AD_DATE=" + AD_DATE + ", AD_PRICE="
-				+ AD_PRICE + "]";
-	}
+	@ColumnName("AD_COMPANY")
+	public String adCompany;
 
-	public AdDTO(String aD_TITLE, String aD_COMPANY, Date aD_DATE, int aD_PRICE) {
-		super();
-		AD_TITLE = aD_TITLE;
-		AD_COMPANY = aD_COMPANY;
-		AD_DATE = aD_DATE;
-		AD_PRICE = aD_PRICE;
-	}
+	@ColumnName("AD_DATE")
+	public Date adDate;
 
+	@ColumnName("AD_PRICE")
+	public int adPrice;
 }
