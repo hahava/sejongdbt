@@ -1,12 +1,11 @@
 package oracle.connect;
 
+import org.apache.commons.lang3.StringUtils;
 import util.PropertiesWrapper;
 
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class JDBCManager {
 
@@ -52,6 +51,42 @@ public class JDBCManager {
 			ie.printStackTrace();
 		}
 		return queryResults;
+	}
+
+	public Map<String, Object> queryForMap(String query, String[] columns) {
+		Properties properties = PropertiesWrapper.getInstance();
+		Map<String, Object> result = new HashMap<>();
+		try (Connection connection = DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query)) {
+			while (resultSet.next()) {
+				for (String column : columns) {
+					result.put(column, resultSet.getObject(column));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<Map<String, Object>> queryForMaps(String query, String[] columns) {
+		Properties properties = PropertiesWrapper.getInstance();
+		List<Map<String, Object>> results = new LinkedList<>();
+		try (Connection connection = DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query)) {
+			while (resultSet.next()) {
+				Map<String, Object> row = new HashMap<>();
+				for (String column : columns) {
+					row.put(column, resultSet.getObject(column));
+				}
+				results.add(row);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 	public Connection connect(String id, String passwd, int port) {
