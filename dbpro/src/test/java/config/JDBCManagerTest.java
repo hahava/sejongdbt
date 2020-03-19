@@ -2,6 +2,7 @@ package config;
 
 import dto.admin.MovieActorDTO;
 import oracle.connect.JDBCManager;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -29,6 +30,16 @@ public class JDBCManagerTest {
 			"    employee_age BETWEEN 20 AND 30";
 		Map<String, Object> result = JDBCManager.getInstance().queryForMap(query, new String[] {"count", "average"});
 		result.forEach((key, value) -> System.out.println(key + "\t" + value));
+	}
+
+	@Test
+	@Ignore
+	public void delete() {
+		final String query = "DELETE FROM MOVIE WHERE MOVIE_CODE = ?";
+		JDBCManager
+			.getInstance()
+			.delete(query, new String[] {"M1"});
+
 	}
 
 }

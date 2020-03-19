@@ -2,7 +2,9 @@ package dao;
 
 import dao.admin.MovieAdDAO;
 import dao.user.MovieDAO;
+import oracle.connect.JDBCManager;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 public class MovieDAOTest {
 
@@ -24,5 +26,9 @@ public class MovieDAOTest {
 	@Test
 	public void getMoviesByActorNameTest(){
 		MovieDAO.getInstance().getMoviesByActor("박지성");
+	}
+
+	@Test
+	public void delete(){
 	}
 }
