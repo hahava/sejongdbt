@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import dao.admin.ActorDAO;
@@ -13,6 +15,7 @@ import java.sql.Date;
 import dto.user.*;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;
+import org.apache.commons.lang3.StringUtils;
 
 public class MovieDAO implements DAO {
 
@@ -84,7 +87,7 @@ public class MovieDAO implements DAO {
 			break;
 		case 1:
 			// 영화와 해당 출현 배우를 전부 출력한다.
-			movieInfo();
+			getMovieInfo(null);
 			break;
 		case 2:
 			// 배우를 기준으로 검색
@@ -213,68 +216,50 @@ public class MovieDAO implements DAO {
 	}
 
 	// 영화 정보 보여주기 - 영화 개요 검색
-	public void movieInfo() {
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		Scanner sc = new Scanner(System.in);
+	public void getMovieInfo(String movieTitle) {
 		System.out.println("영화 정보를 출력합니다. 조회를 원하는 영화이름을 입력하세요.(* : 배우와 모두 출력)");
-		String movieName = sc.nextLine();
 
-		if (movieName.compareTo("*") == 0) {
-			String query = "select m.movie_code,movie_title, movie_director,movie_age, movie_genre, movie_start, movie_end, a.actor_name, ma.actor_role, a.actor_birth, a.actor_gender "
-					+ "from movie m, movie_actor ma, actor a " + "where ma.MOVIE_CODE=m.MOVIE_CODE and ma.ACTOR_CODE=a.ACTOR_CODE "
-					+ "order by m.movie_code";
-			try {
-				pstm = conn.prepareStatement(query);
-				result = pstm.executeQuery();
-				System.out.println("영화코드\t영화제목\t\t영화감독\t연령\t장르\t상영일\t종영일\t배우이름\t역할\t생일\t성별");
+		StringBuilder query = new StringBuilder("SELECT ")
+			.append("M.MOVIE_CODE, ")
+			.append("MOVIE_TITLE, ")
+			.append("MOVIE_DIRECTOR, ")
+			.append("MOVIE_AGE, ")
+			.append("MOVIE_GENRE, ")
+			.append("MOVIE_START, ")
+			.append("MOVIE_END, ")
+			.append("A.ACTOR_NAME, ")
+			.append("MA.ACTOR_ROLE, ")
+			.append("A.ACTOR_BIRTH, ")
+			.append("A.ACTOR_GENDER ")
+			.append("FROM ")
+			.append("MOVIE M, MOVIE_ACTOR MA, ACTOR A ")
+			.append("WHERE ");
 
-				while (result.next()) {
-					System.out.println(result.getString(1) + "\t" + result.getString(2) + "\t\t" + result.getString(3) + "\t" + result.getInt(4)
-							+ "\t" + result.getString(5) + "\t" + result.getDate(6) + "\t" + result.getDate(7) + "\t" + result.getString(8) + "\t"
-							+ result.getString(9) + "\t" + result.getDate(10) + "\t" + result.getString(11));
-
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			ArrayList<MovieDTO> movie = new ArrayList<>();
-
-			String query = "select MOVIE_CODE,MOVIE_TITLE,MOVIE_DIRECTOR, "
-					+ " MOVIE_AGE,MOVIE_GENRE, MOVIE_START,MOVIE_END  from movie where movie_title='" + movieName + "'";
-
-			try {
-
-				pstm = conn.prepareStatement(query);
-				result = pstm.executeQuery();
-
-				while (result.next()) {
-					movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),
-							result.getInt("MOVIE_AGE"), result.getString("MOVIE_GENRE"), result.getDate("MOVIE_START"), result.getDate("MOVIE_END")));
-				}
-
-			} catch (SQLException e1) {
-				System.out.println(e1);
-				System.out.println(e1.getMessage());
-			}
-
-			try {
-				result.close();
-				pstm.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// 해당열 전부 출력
-			for (int i = 0; i < movie.size(); i++) {
-				System.out.println(movie.get(i).toString());
-			}
+		if (StringUtils.equals(movieTitle, "*") == false) {
+			query.append("MOVIE_TITLE = ")
+				.append("'")
+				.append(movieTitle)
+				.append("' AND ");
 		}
 
+		query.append("MA.MOVIE_CODE = M.MOVIE_CODE ")
+			.append("AND ")
+			.append("MA.ACTOR_CODE = A.ACTOR_CODE ")
+			.append("ORDER BY M.MOVIE_CODE ");
+
+		List<Map<String, Object>> result = JDBCManager
+			.getInstance()
+			.queryForMaps(query.toString(),
+				new String[] {"M.MOVIE_CODE", "MOVIE_TITLE", "MOVIE_DIRECTOR", "MOVIE_AGE", "MOVIE_GENRE",
+					"MOVIE_START", "MOVIE_END", "A.ACTOR_NAME", "MA.ACTOR_ROLE", "A.ACTOR_BIRTH", "A.ACTOR_GENDER"});
+
+		for (Map<String, Object> row : result) {
+			System.out.print("[ ");
+			row.forEach((s, o) -> {
+				System.out.print(s + " : " + o + ", \t");
+			});
+			System.out.println("]");
+		}
 	}
 
 	// 특정 배우가 출연한 영화 검색(subquery)
