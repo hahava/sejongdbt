@@ -2,8 +2,11 @@ package dao;
 
 import dao.admin.MovieAdDAO;
 import dao.user.MovieDAO;
+import dto.user.MovieDTO;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.sql.Date;
 
 public class MovieDAOTest {
 
@@ -31,5 +34,19 @@ public class MovieDAOTest {
 	@Test
 	public void deleteMovieByMovieCode(){
 		int result = MovieDAO.getInstance().deleteMovie("M1");
+	}
+
+//	@Ignore
+	@Test
+	public void updateTest() {
+		MovieDTO movieDTO = new MovieDTO();
+		movieDTO.setMovieTitle("movie title");
+		movieDTO.setMovieDirector("kalin");
+		movieDTO.setMovieAge(10);
+		movieDTO.setMovieGenre("action");
+		movieDTO.setMovieStart(new Date(2019, 10,1));
+		movieDTO.setMovieEnd(new Date(2019, 11, 1));
+		movieDTO.setMovieCode("M2");
+		MovieDAO.getInstance().updateMovie(movieDTO);
 	}
 }

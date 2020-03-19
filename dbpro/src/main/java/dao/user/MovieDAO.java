@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,6 +11,7 @@ import java.util.Scanner;
 import dao.admin.ActorDAO;
 
 import java.sql.Date;
+
 import dto.user.*;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;
@@ -80,46 +80,46 @@ public class MovieDAO implements DAO {
 		menu = sc.nextInt();
 
 		switch (menu) {
-		case 0:
+			case 0:
 
-			// 영화를 출력
-			instance.list();
-			break;
-		case 1:
-			// 영화와 해당 출현 배우를 전부 출력한다.
-			getMovieInfo(null);
-			break;
-		case 2:
-			// 배우를 기준으로 검색
-			getMoviesByActor(null);
-			break;
-		case 3:
-			// 영화제목을 기준으로 해당 영화에 출연한 배우들을 검색
-//			actordao.getActor();
-			break;
+				// 영화를 출력
+				instance.list();
+				break;
+			case 1:
+				// 영화와 해당 출현 배우를 전부 출력한다.
+				getMovieInfo(null);
+				break;
+			case 2:
+				// 배우를 기준으로 검색
+				getMoviesByActor(null);
+				break;
+			case 3:
+				// 영화제목을 기준으로 해당 영화에 출연한 배우들을 검색
+				//			actordao.getActor();
+				break;
 
-		case 4:
-			if (ExecuteProject.authority)
-				// 영화를 추가
-				instance.addMovie();
-			break;
-		case 5:
-			if (ExecuteProject.authority)
-				// 영화를 수정
-				instance.modifyMovie();
-			break;
-		case 6:
-			if (ExecuteProject.authority)
-				// 영화를 삭제
-//				instance.deleteMovie();
-			break;
-		case 7:
-			// 종료한다.
-			return;
-		default:
-			// 예외처리
-			System.out.println("잘못 입력하셨습니다.");
-			break;
+			case 4:
+				if (ExecuteProject.authority)
+					// 영화를 추가
+					instance.addMovie();
+				break;
+			case 5:
+				if (ExecuteProject.authority)
+					// 영화를 수정
+					//				instance.updateMovie();
+					break;
+			case 6:
+				if (ExecuteProject.authority)
+					// 영화를 삭제
+					//				instance.deleteMovie();
+					break;
+			case 7:
+				// 종료한다.
+				return;
+			default:
+				// 예외처리
+				System.out.println("잘못 입력하셨습니다.");
+				break;
 		}
 
 	}
@@ -136,68 +136,44 @@ public class MovieDAO implements DAO {
 	}
 
 	// 영화 내용 변경하기
-	private void modifyMovie() {
-		Scanner scanner = new Scanner(System.in);
-		String MOVIE_CODE;
-		String MOVIE_TITLE;
-		String MOVIE_DIRECTOR;
-		int MOVIE_AGE;
-		String MOVIE_GENRE;
-		Date MOVIE_START;
-		Date MOVIE_END;
-		String dateTemp;
+	public void updateMovie(MovieDTO movie) {
 		System.out.println("현재 영화 목록");
-		instance.list();
 
 		System.out.print("수정할 영화의 코드를 입력하세요: ");
-		MOVIE_CODE = scanner.nextLine();
 		System.out.print("영화 제목 : ");
-		MOVIE_TITLE = scanner.nextLine();
 
 		System.out.print("영화 감독 : ");
-		MOVIE_DIRECTOR = scanner.nextLine();
 
 		System.out.print("연령 : ");
-		MOVIE_AGE = scanner.nextInt();
-		scanner.nextLine();
 
 		System.out.print("영화 장르: ");
-		MOVIE_GENRE = scanner.nextLine();
 
 		System.out.print("상영 시작 일자 (yyyy-mm-dd): ");
-		dateTemp = scanner.nextLine();
-		MOVIE_START = Date.valueOf(dateTemp);
 
 		System.out.print("상영 종료 일자(yyyy-mm-dd): ");
-		dateTemp = scanner.nextLine();
-		MOVIE_END = Date.valueOf(dateTemp);
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
 
 		// 해당 where movie_code를 입력받아 수정한다.
-		String query = "update movie set MOVIE_TITLE = ?, MOVIE_DIRECTOR = ? ," + " MOVIE_AGE= ? , MOVIE_GENRE= ? , MOVIE_START=?, "
-				+ "MOVIE_END=? where movie_code =?";
+		final String query = "UPDATE MOVIE" +
+			" SET MOVIE_TITLE = ?, " +
+			"	MOVIE_DIRECTOR = ?, " +
+			"	MOVIE_AGE= ?, " +
+			"	MOVIE_GENRE= ?, " +
+			"	MOVIE_START=?, " +
+			"	MOVIE_END=? " +
+			"WHERE " +
+			"	MOVIE_CODE =?";
 
-		try {
-
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, MOVIE_TITLE);
-			pstm.setString(2, MOVIE_DIRECTOR);
-			pstm.setInt(3, MOVIE_AGE);
-			pstm.setString(4, MOVIE_GENRE);
-			pstm.setDate(5, MOVIE_START);
-			pstm.setDate(6, MOVIE_END);
-			pstm.setString(7, MOVIE_CODE);
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
+		JDBCManager
+			.getInstance()
+			.update(query, new Object[] {
+				movie.getMovieTitle(),
+				movie.getMovieDirector(),
+				movie.getMovieAge(),
+				movie.getMovieGenre(),
+				movie.getMovieStart(),
+				movie.getMovieEnd(),
+				movie.getMovieCode()
+			});
 	}
 
 	// 영화 정보 보여주기 - 영화 개요 검색
@@ -286,7 +262,7 @@ public class MovieDAO implements DAO {
 		ResultSet result = null;
 
 		query = "select m.myuser_id,count(*) from myuser m, movie_payment mp " + "where m.myuser_id=mp.myuser_id group by m.myuser_id "
-				+ "having count(*)=(select max(count(*))" + " from movie_payment group by myuser_id)";
+			+ "having count(*)=(select max(count(*))" + " from movie_payment group by myuser_id)";
 
 		try {
 			pstm = conn.prepareStatement(query);
@@ -318,7 +294,7 @@ public class MovieDAO implements DAO {
 		ResultSet result = null;
 		Scanner sc = new Scanner(System.in);
 		query = "select m.myuser_id,count(*) from myuser m, movie_payment mp " + "where m.myuser_id=mp.myuser_id group by m.myuser_id "
-				+ "having count(*)>=?";
+			+ "having count(*)>=?";
 		System.out.println("범위를 지정하세요.입력한 숫자 이상 영화를 본 회원들을 출력합니다.");
 		int num = sc.nextInt();
 
@@ -358,19 +334,19 @@ public class MovieDAO implements DAO {
 		menu = sc.nextInt();
 
 		switch (menu) {
-		case 1:
-			// 영화별 평점 통계를 내는 메서드이다.
-			movieRatStatic();
-			break;
-		case 2:
-			// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
-			movieADStatic();
-			break;
-		case 3:
-			return;
-		default:
-			System.out.println("잘못 입력하셨습니다.");
-			break;
+			case 1:
+				// 영화별 평점 통계를 내는 메서드이다.
+				movieRatStatic();
+				break;
+			case 2:
+				// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
+				movieADStatic();
+				break;
+			case 3:
+				return;
+			default:
+				System.out.println("잘못 입력하셨습니다.");
+				break;
 
 		}
 	}
@@ -395,7 +371,7 @@ public class MovieDAO implements DAO {
 		 * 사람들의 수를 출력한다. group by와 having이 사용되었다.
 		 */
 		String query = "select m.movie_code,m.movie_title, avg(r.rat_point), count(m.movie_code) from movie m, rat r "
-				+ "where m.movie_code=r.movie_code " + "group by m.movie_code, m.movie_title " + "having avg(r.rat_point)>=?";
+			+ "where m.movie_code=r.movie_code " + "group by m.movie_code, m.movie_title " + "having avg(r.rat_point)>=?";
 		try {
 			pstm = conn.prepareStatement(query);
 			pstm.setDouble(1, minVal);
@@ -406,7 +382,9 @@ public class MovieDAO implements DAO {
 			}
 			System.out.println("영화코드\t영화제목\t\t\t평점평균\t참여회원수");
 			do {
-				System.out.println(result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getDouble(3) + "\t" + result.getInt(4));
+				System.out.println(
+					result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getDouble(3) + "\t" + result
+						.getInt(4));
 			} while (result.next());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -432,15 +410,17 @@ public class MovieDAO implements DAO {
 		 * movie_code, movie_title, 광고비 합계, 해당 영화에 몇 개의 광고가 할당되었는지를 보여준다.
 		 * */
 		String query = "select m.movie_code, m.movie_title, sum(a.ad_price), count(*) " + "from movie m, movie_ad ma, ad a "
-				+ "where m.movie_code=ma.movie_code and ma.AD_TITLE=a.AD_TITLE " + "group by m.movie_code, m.movie_title "
-				+ "order by sum(a.ad_price) desc";
+			+ "where m.movie_code=ma.movie_code and ma.AD_TITLE=a.AD_TITLE " + "group by m.movie_code, m.movie_title "
+			+ "order by sum(a.ad_price) desc";
 
 		try {
 			pstm = conn.prepareStatement(query);
 			result = pstm.executeQuery();
 			System.out.println("영화코드\t영화제목\t\t\t총 광고료\t\t할당광고수");
 			while (result.next()) {
-				System.out.println(result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getInt(3) + "\t\t" + result.getInt(4));
+				System.out.println(
+					result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getInt(3) + "\t\t" + result
+						.getInt(4));
 			}
 
 		} catch (SQLException e) {

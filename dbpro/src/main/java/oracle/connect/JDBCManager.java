@@ -91,16 +91,20 @@ public class JDBCManager {
 	}
 
 	public int delete(String query, String[] params) {
+		return update(query, params);
+	}
+
+	public int update(String query, Object[] params) {
 		int result = 0;
 		try (Connection connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(query);
+			PreparedStatement statement = connection.prepareStatement(query)
 		) {
 			for (int i = 0; i < params.length; i++) {
 				statement.setObject(i + 1, params[i]);
 			}
 			result = statement.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		return result;
 	}

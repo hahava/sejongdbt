@@ -42,4 +42,19 @@ public class JDBCManagerTest {
 
 	}
 
+	@Test
+	public void update() {
+		final String query = "UPDATE MOVIE" +
+			" SET MOVIE_TITLE = ?, " +
+			"	MOVIE_DIRECTOR = ?, " +
+			"	MOVIE_AGE= ?, " +
+			"	MOVIE_GENRE= ?, " +
+			"	MOVIE_START=?, " +
+			"	MOVIE_END=? " +
+			"WHERE " +
+			"	MOVIE_CODE =?";
+
+		JDBCManager.getInstance().update(query, new Object[]{"hello world","hello world",10,"M","2019-10-01","2019-10-01","M2"});
+	}
+
 }
