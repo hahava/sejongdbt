@@ -17,7 +17,12 @@ public class MovieDAOTest {
 	}
 
 	@Test
-	public void getMovieInfo(){
+	public void getMovieInfoTest(){
 		MovieDAO.getInstance().getMovieInfo("어느날 그가 죽었다");
+	}
+
+	@Test
+	public void getMoviesByActorNameTest(){
+		MovieDAO.getInstance().getMoviesByActor("박지성");
 	}
 }

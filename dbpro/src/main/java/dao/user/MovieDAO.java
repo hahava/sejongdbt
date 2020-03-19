@@ -91,7 +91,7 @@ public class MovieDAO implements DAO {
 			break;
 		case 2:
 			// 배우를 기준으로 검색
-			movieSearchByActor();
+			getMoviesByActor(null);
 			break;
 		case 3:
 			// 영화제목을 기준으로 해당 영화에 출연한 배우들을 검색
@@ -262,57 +262,35 @@ public class MovieDAO implements DAO {
 		}
 	}
 
-	// 특정 배우가 출연한 영화 검색(subquery)
-	public void movieSearchByActor() {
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-
-		Scanner sc = new Scanner(System.in);
+	// 특정 배우가 출연한 영화 검색
+	public void getMoviesByActor(String actorName) {
 
 		System.out.println("특정 배우가 출연한 영화를 검색합니다. 배우 이름을 입력하세요.");
+		String query = "SELECT " +
+			"    mv.movie_title, " +
+			"    ac.actor_name, " +
+			"    ac.actor_birth, " +
+			"    ac.actor_gender, " +
+			"    ma.actor_role " +
+			"FROM " +
+			"	movie mv " +
+			"JOIN " +
+			"	movie_actor ma ON mv.movie_code = ma.movie_code " +
+			"JOIN " +
+			"	actor ac ON ac.actor_code = ma.actor_code " +
+			"WHERE ac.actor_name = '" + actorName + "'";
 
-		String actorName = sc.nextLine();
-
-		ArrayList<MovieDTO> movie = new ArrayList<MovieDTO>();
-		String query = "select  distinct MOVIE_CODE, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_AGE, MOVIE_GENRE, MOVIE_START, MOVIE_END from movie where movie_code in "
-				+ "(select movie_code from movie_actor where actor_code in " + "(select actor_code from actor where actor_name='" + actorName + "'))";
-
-		try {
-
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-
-			while (result.next()) {
-				movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),
-						result.getInt("MOVIE_AGE"), result.getString("MOVIE_GENRE"), result.getDate("MOVIE_START"), result.getDate("MOVIE_END")));
-			}
-
-			if (movie.size() == 0) {
-				System.out.println("그런 배우가 없거나, 아직 출연한 작품이 없습니다.");
-				return;
-			}
-
-			System.out.println("영화코드\t영화제목\t\t영화감독\t연령\t장르\t개봉일\t종영일");
-			for (int i = 0; i < movie.size(); i++) {
-				System.out.println(movie.get(i).movieCode + "\t" + movie.get(i).movieTitle + "\t\t" + movie.get(i).movieDirector + "\t"
-						+ movie.get(i).movieAge + "\t" + movie.get(i).movieGenre + "\t" + movie.get(i).movieStart + "\t\t" + movie.get(i).movieEnd
-						+ "\t");
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
+		JDBCManager
+			.getInstance()
+			.queryForMaps(query,
+				new String[] {"mv.movie_title", "ac.actor_name", "ac.actor_birth", "ac.actor_gender", "ma.actor_role"})
+			.forEach(stringObjectMap -> {
+				System.out.print("[ ");
+				stringObjectMap.forEach((s, o) -> {
+					System.out.print(s + ":" + o + "\t");
+				});
+				System.out.println(" ]");
+			});
 	}
 
 	// 영화 예약 횟수가 가장 많은 회원의 id와 예약횟수를 출력한다.
