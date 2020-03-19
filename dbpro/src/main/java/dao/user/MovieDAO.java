@@ -111,7 +111,7 @@ public class MovieDAO implements DAO {
 		case 6:
 			if (ExecuteProject.authority)
 				// 영화를 삭제
-				instance.deleteMovie();
+//				instance.deleteMovie();
 			break;
 		case 7:
 			// 종료한다.
@@ -124,30 +124,15 @@ public class MovieDAO implements DAO {
 
 	}
 
-	private void deleteMovie() {
-		// TODO Auto-generated method stub
-		String MOVIE_CODE;
-		Scanner scan = new Scanner(System.in);
+	public int deleteMovie(String movieCode) {
 		System.out.println("현재 영화 목록");
-		instance.list();
+		list();
 		System.out.print("지울 영화 코드 입력: ");
-		MOVIE_CODE = scan.nextLine();
+		final String query = "DELETE FROM MOVIE WHERE MOVIE_CODE = ?";
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		String query = "delete from movie where movie_code = ?";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, MOVIE_CODE);
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
+		return JDBCManager
+			.getInstance()
+			.delete(query, new String[] {movieCode});
 	}
 
 	// 영화 내용 변경하기
