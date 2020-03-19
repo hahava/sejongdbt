@@ -10,4 +10,8 @@ public class MovieDAOTest {
 		MovieAdDAO.getInstance().list();
 	}
 
+	@Test
+	public void getMoviesTest() {
+		MovieAdDAO.getInstance().list();
+	}
 }

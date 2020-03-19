@@ -41,39 +41,20 @@ public class MovieDAO implements DAO {
 
 	// Movie 테이블의 내용을 전부 출력한다.
 	public void list() {
-
-		ArrayList<MovieDTO> movie = new ArrayList<>();
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select MOVIE_CODE, MOVIE_TITLE,MOVIE_DIRECTOR, MOVIE_AGE,MOVIE_GENRE, MOVIE_START, MOVIE_END from movie";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				movie.add(new MovieDTO(result.getString("MOVIE_CODE"), result.getString("MOVIE_TITLE"), result.getString("MOVIE_DIRECTOR"),
-						result.getInt("MOVIE_AGE"), result.getString("MOVIE_GENRE"), result.getDate("MOVIE_START"), result.getDate("MOVIE_END")));
-			}
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			System.out.println(e1.getMessage());
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// 해당열 전부 출력
-		for (int i = 0; i < movie.size(); i++) {
-			System.out.println(movie.get(i).toString());
-		}
+		final String query = "SELECT " +
+			"	MOVIE_CODE, " +
+			"	MOVIE_TITLE, " +
+			"	MOVIE_DIRECTOR, " +
+			"	MOVIE_AGE, " +
+			"	MOVIE_GENRE, " +
+			"	MOVIE_START, " +
+			"	MOVIE_END " +
+			"FROM " +
+			"	MOVIE";
+		JDBCManager
+			.getInstance()
+			.queryForList(query, MovieDTO.class)
+			.forEach(movieDTO -> System.out.println(movieDTO.toString()));
 	}
 
 	// 영화 메뉴 상세. 관리자의 경우 영화를 추가, 삽입, 삭제 할 수 있다. 유저의 경우는 영화와 관련되 정보만을 출력해준다.
@@ -330,8 +311,8 @@ public class MovieDAO implements DAO {
 
 			System.out.println("영화코드\t영화제목\t\t영화감독\t연령\t장르\t개봉일\t종영일");
 			for (int i = 0; i < movie.size(); i++) {
-				System.out.println(movie.get(i).MOVIE_CODE + "\t" + movie.get(i).MOVIE_TITLE + "\t\t" + movie.get(i).MOVIE_DIRECTOR + "\t"
-						+ movie.get(i).MOVIE_AGE + "\t" + movie.get(i).MOVIE_GENRE + "\t" + movie.get(i).MOVIE_START + "\t\t" + movie.get(i).MOVIE_END
+				System.out.println(movie.get(i).movieCode + "\t" + movie.get(i).movieTitle + "\t\t" + movie.get(i).movieDirector + "\t"
+						+ movie.get(i).movieAge + "\t" + movie.get(i).movieGenre + "\t" + movie.get(i).movieStart + "\t\t" + movie.get(i).movieEnd
 						+ "\t");
 
 			}
@@ -448,18 +429,18 @@ public class MovieDAO implements DAO {
 
 	// 영화별 평점 통계를 내는 메서드이다.
 	public void movieRatStatic() {
-		
+
 		double minVal = 0.0;
-		
+
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
 		ResultSet result = null;
-		
+
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("영화별 평점 통계입니다.");
 		System.out.println("최소 범위를 입력해주세요.(0~5)(0 입력시, 전체 출력)");
-		
+
 		minVal = sc.nextDouble();
 		/*
 		 * 관리자가 최소 평점을 입력하면, 해당 평점 이상이 되는 영화의 movie_code, movie_title, 평점, 점수를 준
