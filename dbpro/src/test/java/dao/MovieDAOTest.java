@@ -55,4 +55,14 @@ public class MovieDAOTest {
 		MovieDAO.getInstance().getMovieReservationCountOfPerson(1);
 	}
 
+	@Test
+	public void getPersonWhoBookedTheMostMoviesTest(){
+		MovieDAO.getInstance().getPersonWhoBookedTheMostMovies();
+	}
+
+	@Test
+	public void getMovieRatStaticTest(){
+		MovieDAO.getInstance().getMovieRatStatic(4);
+	}
+
 }

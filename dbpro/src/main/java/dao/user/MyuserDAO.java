@@ -171,7 +171,7 @@ public class MyuserDAO implements DAO {
 
 		switch (menu) {
 		case 1:
-			moviedao.pickBestMovieOne();
+			moviedao.getPersonWhoBookedTheMostMovies();
 			break;
 		case 2:
 //			moviedao.getMovieReservationCountOfPerson();

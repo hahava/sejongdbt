@@ -1,21 +1,15 @@
 package dao.user;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
 import dao.admin.ActorDAO;
-
-import java.sql.Date;
-
-import dto.user.*;
+import dto.user.MovieDTO;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
+
+import java.sql.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class MovieDAO implements DAO {
 
@@ -255,35 +249,22 @@ public class MovieDAO implements DAO {
 	}
 
 	// 영화 예약 횟수가 가장 많은 회원의 id와 예약횟수를 출력한다.
-	public void pickBestMovieOne() {
-		String query;
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
+	public void getPersonWhoBookedTheMostMovies() {
 
-		query = "select m.myuser_id,count(*) from myuser m, movie_payment mp " + "where m.myuser_id=mp.myuser_id group by m.myuser_id "
-			+ "having count(*)=(select max(count(*))" + " from movie_payment group by myuser_id)";
+		final String query = "SELECT " +
+			"	m.myuser_id, COUNT(*) AS total_count " +
+			"FROM " +
+			"	myuser m " +
+			"JOIN " +
+			"	movie_payment mp ON m.myuser_id = mp.myuser_id " +
+			"GROUP BY myuser_id " +
+			"ORDER BY total_count DESC " +
+			"LIMIT 1;";
 
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			System.out.println("아이디\t횟수");
-			while (result.next()) {
-				System.out.println(result.getString(1) + "\t" + result.getInt(2));
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		JDBCManager
+			.getInstance()
+			.queryForMap(query, new String[] {"m.myuser_id", "total_count"})
+			.forEach((key, value) -> System.out.println(key + ":" + value));
 	}
 
 	// 특정 횟수를 입력하고 그 횟수보다 더 많이 예약한 회원의 id와 예약횟수를 출력한다.
@@ -326,7 +307,7 @@ public class MovieDAO implements DAO {
 		switch (menu) {
 			case 1:
 				// 영화별 평점 통계를 내는 메서드이다.
-				movieRatStatic();
+				getMovieRatStatic(0);
 				break;
 			case 2:
 				// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
@@ -342,51 +323,35 @@ public class MovieDAO implements DAO {
 	}
 
 	// 영화별 평점 통계를 내는 메서드이다.
-	public void movieRatStatic() {
-
-		double minVal = 0.0;
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-
-		Scanner sc = new Scanner(System.in);
+	public void getMovieRatStatic(double score) {
 
 		System.out.println("영화별 평점 통계입니다.");
 		System.out.println("최소 범위를 입력해주세요.(0~5)(0 입력시, 전체 출력)");
 
-		minVal = sc.nextDouble();
 		/*
 		 * 관리자가 최소 평점을 입력하면, 해당 평점 이상이 되는 영화의 movie_code, movie_title, 평점, 점수를 준
 		 * 사람들의 수를 출력한다. group by와 having이 사용되었다.
 		 */
-		String query = "select m.movie_code,m.movie_title, avg(r.rat_point), count(m.movie_code) from movie m, rat r "
-			+ "where m.movie_code=r.movie_code " + "group by m.movie_code, m.movie_title " + "having avg(r.rat_point)>=?";
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setDouble(1, minVal);
-			result = pstm.executeQuery();
-			if (result.next() != true) {
-				System.out.println("범위를 잘못 설정하셨습니다. 다시 시도해주세요.");
-				return;
-			}
-			System.out.println("영화코드\t영화제목\t\t\t평점평균\t참여회원수");
-			do {
-				System.out.println(
-					result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getDouble(3) + "\t" + result
-						.getInt(4));
-			} while (result.next());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		final String query = "SELECT " +
+			"	m.movie_code, " +
+			"	m.movie_title, " +
+			"	AVG(r.rat_point), " +
+			"	COUNT(m.movie_code) " +
+			"FROM " +
+				"movie m " +
+			"JOIN " +
+			"	rat r ON m.movie_code = r.movie_code " +
+			"GROUP BY m.movie_code , m.movie_title " +
+			"having avg(r.rat_point)>="+score;
 
+		JDBCManager.getInstance().queryForMaps(query,
+			new String[] {"m.movie_code", "m.movie_title", "AVG(r.rat_point)", "COUNT(m.movie_code)"})
+			.forEach(stringObjectMap -> {
+				stringObjectMap.forEach((s, o) -> {
+					System.out.print(s+" : "+o);
+				});
+				System.out.println("\t");
+			});
 	}
 
 	// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
