@@ -14,4 +14,9 @@ public class PaymentDAOTest {
 	public void getPaymentWays() {
 		PaymentDAO.getInstance().list();
 	}
+
+	@Test
+	public void deletePayment(){
+		PaymentDAO.getInstance().deletePayment(2);
+	}
 }

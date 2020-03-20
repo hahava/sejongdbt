@@ -64,7 +64,7 @@ public class PaymentDAO implements DAO {
 			instance.modifyPayment();
 			break;
 		case 3:
-			instance.deletePayment();
+			instance.deletePayment(0);
 			break;
 		default:
 			System.out.println("잘못된 입력입니다!");
@@ -73,38 +73,21 @@ public class PaymentDAO implements DAO {
 	}
 
 	// 예매 목록을 코드를 이용하여 삭제 하는 메뉴이다.
-	private void deletePayment() {
+	public void deletePayment(final int movieCode) {
 		MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
 		System.out.println("나의 예매 목록");
-		moviePaymentDAO.listMe(ExecuteProject.id);
-		int movie_payment_code = 0;
-		Scanner scanner = new Scanner(System.in);
+//		moviePaymentDAO.listMe(ExecuteProject.id);
 		System.out.print("취소할 예매 코드: ");
-		movie_payment_code = scanner.nextInt();
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		String query = "delete from movie_payment where movie_payment_code = ?";
+		final String query = "DELETE " +
+			"FROM " +
+			"	MOVIE_PAYMENT " +
+			"WHERE " +
+			"	MOVIE_PAYMENT_CODE = ?";
 
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setInt(1, movie_payment_code);
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			e1.printStackTrace();
-		}
-		try {
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		int result = JDBCManager
+			.getInstance()
+			.delete(query, new Object[] {movieCode});
 		System.out.println("삭제가 완료되었습니다!");
 	}
 
