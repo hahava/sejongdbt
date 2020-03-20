@@ -287,37 +287,27 @@ public class MovieDAO implements DAO {
 	}
 
 	// 특정 횟수를 입력하고 그 횟수보다 더 많이 예약한 회원의 id와 예약횟수를 출력한다.
-	public void pickBestMoviePeople() {
-		String query;
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		Scanner sc = new Scanner(System.in);
-		query = "select m.myuser_id,count(*) from myuser m, movie_payment mp " + "where m.myuser_id=mp.myuser_id group by m.myuser_id "
-			+ "having count(*)>=?";
+	public void getMovieReservationCountOfPerson(int reservationCount) {
 		System.out.println("범위를 지정하세요.입력한 숫자 이상 영화를 본 회원들을 출력합니다.");
-		int num = sc.nextInt();
+		final String query = "SELECT " +
+			"	m.myuser_id as userId, " +
+			"	COUNT(*) as watchCount " +
+			"FROM " +
+			"	myuser m," +
+			"	movie_payment mp " +
+			"WHERE " +
+			"	m.myuser_id = mp.myuser_id " +
+			"GROUP BY m.myuser_id " +
+			"HAVING COUNT(*) >=  " + reservationCount;
 
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setInt(1, num);
-			result = pstm.executeQuery();
-
-			System.out.println("아이디\t횟수");
-			while (result.next()) {
-				System.out.println(result.getString(1) + "\t" + result.getInt(2));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		JDBCManager.getInstance().queryForMaps(query, new String[] {"userId", "watchCount"})
+			.forEach(stringObjectMap -> {
+				System.out.print("[ ");
+				stringObjectMap.forEach((key, value) -> {
+					System.out.print(key + " : " + value+"\t");
+				});
+				System.out.println(" ]");
+			});
 	}
 
 	// 영화 별 평점통계와 광고비 통계를 낼 수 있는 메뉴이다.

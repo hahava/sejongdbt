@@ -36,7 +36,7 @@ public class MovieDAOTest {
 		int result = MovieDAO.getInstance().deleteMovie("M1");
 	}
 
-//	@Ignore
+	@Ignore
 	@Test
 	public void updateTest() {
 		MovieDTO movieDTO = new MovieDTO();
@@ -49,4 +49,10 @@ public class MovieDAOTest {
 		movieDTO.setMovieCode("M2");
 		MovieDAO.getInstance().updateMovie(movieDTO);
 	}
+
+	@Test
+	public void getMovieReservationCountTest(){
+		MovieDAO.getInstance().getMovieReservationCountOfPerson(1);
+	}
+
 }
