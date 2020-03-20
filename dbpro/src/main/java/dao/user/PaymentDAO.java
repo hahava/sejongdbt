@@ -38,34 +38,11 @@ public class PaymentDAO implements DAO {
 
 	// 결제 방법을 출력한다.
 	public void list() {
-
-		ArrayList<PaymentDTO> arrayList = new ArrayList<>();
-
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select PAYMENT_CODE, PAYMENT_WAY from PAYMENT";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				arrayList.add(new PaymentDTO(result.getString("PAYMENT_CODE"), result.getString("PAYMENT_WAY")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+		final String query = "SELECT PAYMENT_CODE, PAYMENT_WAY FROM PAYMENT";
+		JDBCManager
+			.getInstance()
+			.queryForList(query, PaymentDTO.class)
+			.forEach(paymentDTO -> System.out.println(paymentDTO.toString()));
 	}
 
 	// 유저로 로그인할 경우 영화 예약과 관련된 메뉴
@@ -196,11 +173,11 @@ public class PaymentDAO implements DAO {
 
 	//예약할 수 있는 메뉴
 	private void addPaymet() {
-		
+
 		MoviePaymentDTO dto = new MoviePaymentDTO();
 		MovieDAO dao = MovieDAO.getInstance();
 		PaymentDAO dao2 = PaymentDAO.getInstance();
-		
+
 		Scanner scanner = new Scanner(System.in);
 
 		System.out.println("영화 예매를 진행합니다.");
