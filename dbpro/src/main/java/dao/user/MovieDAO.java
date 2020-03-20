@@ -6,34 +6,22 @@ import main.ExecuteProject;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
-import java.sql.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-public class MovieDAO implements DAO {
+public class MovieDAO {
 
-	// 인스턴스를 리턴한다.
-	private static MovieDAO instance = new MovieDAO();
+	private static MovieDAO instance;
 
-	// 프라이빗 생성자를 만들어서 캡슐화
 	private MovieDAO() {
 	}
 
-	// 만들어진 객체를 리턴
 	public static MovieDAO getInstance() {
+		if (instance == null) {
+			instance = new MovieDAO();
+		}
 		return instance;
-	}
-
-	// 오라클 드라이버 로드한다.
-	private Connection getConnection() {
-		JDBCManager manager = new JDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-
-		Connection conn = manager.connect(oracleId, passwd, port);
-		return conn;
 	}
 
 	// Movie 테이블의 내용을 전부 출력한다.
@@ -95,7 +83,7 @@ public class MovieDAO implements DAO {
 			case 4:
 				if (ExecuteProject.authority)
 					// 영화를 추가
-					instance.addMovie();
+					instance.addMovie(null);
 				break;
 			case 5:
 				if (ExecuteProject.authority)
@@ -285,7 +273,7 @@ public class MovieDAO implements DAO {
 			.forEach(stringObjectMap -> {
 				System.out.print("[ ");
 				stringObjectMap.forEach((key, value) -> {
-					System.out.print(key + " : " + value+"\t");
+					System.out.print(key + " : " + value + "\t");
 				});
 				System.out.println(" ]");
 			});
@@ -311,7 +299,7 @@ public class MovieDAO implements DAO {
 				break;
 			case 2:
 				// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
-				movieADStatic();
+				getMovieADStatic();
 				break;
 			case 3:
 				return;
@@ -338,124 +326,87 @@ public class MovieDAO implements DAO {
 			"	AVG(r.rat_point), " +
 			"	COUNT(m.movie_code) " +
 			"FROM " +
-				"movie m " +
+			"movie m " +
 			"JOIN " +
 			"	rat r ON m.movie_code = r.movie_code " +
 			"GROUP BY m.movie_code , m.movie_title " +
-			"having avg(r.rat_point)>="+score;
+			"having avg(r.rat_point)>=" + score;
 
 		JDBCManager.getInstance().queryForMaps(query,
 			new String[] {"m.movie_code", "m.movie_title", "AVG(r.rat_point)", "COUNT(m.movie_code)"})
 			.forEach(stringObjectMap -> {
 				stringObjectMap.forEach((s, o) -> {
-					System.out.print(s+" : "+o);
+					System.out.print(s + " : " + o);
 				});
 				System.out.println("\t");
 			});
 	}
 
 	// 영화에 할당된 광고비의 합계 통계를 내는 메서드이다.
-	public void movieADStatic() {
+	public void getMovieADStatic() {
 		System.out.println("영화별 광고 통계입니다. 영화에 할당된 광고료가 높은 순서로 출력됩니다.");
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
 		/*
 		 * movie와 movie_ad 테이블을 조인한 뒤 movie_code, movie_title로 grouping을 하고, 광고비 합계가 가장 많은 순서대로 정렬했다.
 		 * movie_code, movie_title, 광고비 합계, 해당 영화에 몇 개의 광고가 할당되었는지를 보여준다.
 		 * */
-		String query = "select m.movie_code, m.movie_title, sum(a.ad_price), count(*) " + "from movie m, movie_ad ma, ad a "
-			+ "where m.movie_code=ma.movie_code and ma.AD_TITLE=a.AD_TITLE " + "group by m.movie_code, m.movie_title "
-			+ "order by sum(a.ad_price) desc";
+		final String query = "SELECT " +
+			"	m.movie_code, " +
+			"	m.movie_title, " +
+			"	SUM(a.ad_price) as ad_sum_price, " +
+			"	COUNT(*) as ad_count " +
+			"FROM " +
+			"    movie m, " +
+			"    movie_ad ma, " +
+			"    ad a " +
+			"WHERE " +
+			"	m.movie_code = ma.movie_code " +
+			"	AND ma.AD_TITLE = a.AD_TITLE " +
+			"GROUP BY m.movie_code , m.movie_title " +
+			"ORDER BY SUM(a.ad_price) DESC;";
 
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			System.out.println("영화코드\t영화제목\t\t\t총 광고료\t\t할당광고수");
-			while (result.next()) {
-				System.out.println(
-					result.getString(1) + "\t" + result.getString(2) + "\t\t\t" + result.getInt(3) + "\t\t" + result
-						.getInt(4));
-			}
+		JDBCManager
+			.getInstance()
+			.queryForMaps(query, new String[] {"m.movie_code", "m.movie_title", "ad_sum_price", "ad_count"})
+			.forEach(stringObjectMap -> {
+				stringObjectMap.forEach((key, value) -> {
+					System.out.print(key + " : " + value);
+				});
+				System.out.println();
+			});
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	// 영화 추가 메서드
-	public void addMovie() {
-		// TODO Auto-generated method stub
-
-		Scanner scanner = new Scanner(System.in);
-
-		String MOVIE_CODE;
-		String MOVIE_TITLE;
-		String MOVIE_DIRECTOR;
-		int MOVIE_AGE;
-		String MOVIE_GENRE;
-		Date MOVIE_START;
-		Date MOVIE_END;
-		String dateTemp;
+	public void addMovie(MovieDTO movie) {
 
 		System.out.println("영화를 추가합니다");
 		System.err.println("현재 상영중인 영화");
 		instance.list();
 
 		System.out.print("영화 코드 : ");
-		MOVIE_CODE = scanner.nextLine();
 		System.out.print("영화 제목 : ");
-		MOVIE_TITLE = scanner.nextLine();
 
 		System.out.print("영화 감독 : ");
-		MOVIE_DIRECTOR = scanner.nextLine();
 
 		System.out.print("연령 : ");
-		MOVIE_AGE = scanner.nextInt();
-		scanner.nextLine();
 
 		System.out.print("영화 장르: ");
-		MOVIE_GENRE = scanner.nextLine();
 
 		System.out.print("상영 시작 일자 (yyyy-mm-dd): ");
-		dateTemp = scanner.nextLine();
-		MOVIE_START = Date.valueOf(dateTemp);
 
 		System.out.print("상영 종료 일자(yyyy-mm-dd): ");
-		dateTemp = scanner.nextLine();
-		MOVIE_END = Date.valueOf(dateTemp);
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		String query = "insert into movie values (?,?,?,?,?,?,?)";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, MOVIE_CODE);
-			pstm.setString(2, MOVIE_TITLE);
-			pstm.setString(3, MOVIE_DIRECTOR);
-			pstm.setInt(4, MOVIE_AGE);
-			pstm.setString(5, MOVIE_GENRE);
-			pstm.setDate(6, MOVIE_START);
-			pstm.setDate(7, MOVIE_END);
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
+		final String query = "insert into movie values (?,?,?,?,?,?,?)";
+		int result = JDBCManager.getInstance().update(query,
+			new Object[] {
+				movie.getMovieCode(),
+				movie.getMovieTitle(),
+				movie.getMovieDirector(),
+				movie.getMovieAge(),
+				movie.getMovieGenre(),
+				movie.getMovieStart(),
+				movie.getMovieEnd()
+			});
 
 	}
 

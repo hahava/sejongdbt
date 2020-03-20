@@ -65,4 +65,22 @@ public class MovieDAOTest {
 		MovieDAO.getInstance().getMovieRatStatic(4);
 	}
 
+	@Test
+	public void getMovieADStaticTest(){
+		MovieDAO.getInstance().getMovieADStatic();
+	}
+
+	@Test
+	public void insertMovie(){
+		MovieDTO movieDTO = new MovieDTO();
+		movieDTO.setMovieCode("M13");
+		movieDTO.setMovieTitle("movie title");
+		movieDTO.setMovieDirector("kalin");
+		movieDTO.setMovieAge(10);
+		movieDTO.setMovieGenre("action");
+		movieDTO.setMovieStart(new Date(2019, 10,1));
+		movieDTO.setMovieEnd(new Date(2019, 11, 1));
+		MovieDAO.getInstance().addMovie(movieDTO);
+	}
+
 }
