@@ -1,6 +1,5 @@
 package oracle.connect;
 
-import org.apache.commons.lang3.StringUtils;
 import util.PropertiesWrapper;
 
 import java.lang.reflect.Field;
@@ -30,10 +29,14 @@ public class JDBCManager {
 		return jdbcManager;
 	}
 
-	public <T> List<T> queryForList(String query, Class<T> elementType) {
+	private Connection getConnection() throws SQLException {
 		Properties properties = PropertiesWrapper.getInstance();
+		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+	}
+
+	public <T> List<T> queryForList(String query, Class<T> elementType) {
 		List<T> queryResults = new LinkedList<>();
-		try (Connection connection = DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+		try (Connection connection = getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query)) {
 			while (resultSet.next()) {
@@ -54,9 +57,8 @@ public class JDBCManager {
 	}
 
 	public Map<String, Object> queryForMap(String query, String[] columns) {
-		Properties properties = PropertiesWrapper.getInstance();
 		Map<String, Object> result = new HashMap<>();
-		try (Connection connection = DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+		try (Connection connection = getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query)) {
 			while (resultSet.next()) {
@@ -71,9 +73,8 @@ public class JDBCManager {
 	}
 
 	public List<Map<String, Object>> queryForMaps(String query, String[] columns) {
-		Properties properties = PropertiesWrapper.getInstance();
 		List<Map<String, Object>> results = new LinkedList<>();
-		try (Connection connection = DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+		try (Connection connection = getConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query)) {
 			while (resultSet.next()) {
@@ -87,6 +88,25 @@ public class JDBCManager {
 			e.printStackTrace();
 		}
 		return results;
+	}
+
+	public int delete(String query, String[] params) {
+		return update(query, params);
+	}
+
+	public int update(String query, Object[] params) {
+		int result = 0;
+		try (Connection connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(query)
+		) {
+			for (int i = 0; i < params.length; i++) {
+				statement.setObject(i + 1, params[i]);
+			}
+			result = statement.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
+		return result;
 	}
 
 	public Connection connect(String id, String passwd, int port) {
