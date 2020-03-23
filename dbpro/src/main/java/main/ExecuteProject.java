@@ -150,11 +150,11 @@ public class ExecuteProject {
 				break;
 			case 3:
 				RatDAO ratdaover2 = RatDAO.getInstance();
-				ratdaover2.showMovieRat();
+//				ratdaover2.selectMovieRat();
 				break;
 			case 4:
 				RatDAO ratDAO = RatDAO.getInstance();
-				ratDAO.listMe(id);
+				ratDAO.selectRatListByUserId(id);
 				break;
 			case 5:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
