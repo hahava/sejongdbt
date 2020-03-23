@@ -1,37 +1,23 @@
 package dao.user;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Scanner;
-
 import dto.user.MoviePaymentDTO;
 import dto.user.PaymentDTO;
-import main.ExecuteProject;
 import oracle.connect.JDBCManager;
+
+import java.util.Scanner;
 
 public class PaymentDAO implements DAO {
 
-	private static PaymentDAO instance = new PaymentDAO();
+	private static PaymentDAO instance;
 
 	private PaymentDAO() {
-
 	}
 
 	public static PaymentDAO getInstance() {
+		if (instance == null) {
+			instance = new PaymentDAO();
+		}
 		return instance;
-	}
-
-	private Connection getConnection() {
-		JDBCManager manager = new JDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-
-		Connection conn = manager.connect(oracleId, passwd, port);
-		return conn;
 	}
 
 	// 결제 방법을 출력한다.
@@ -55,17 +41,17 @@ public class PaymentDAO implements DAO {
 		menu = sc.nextInt();
 
 		switch (menu) {
-		case 1:
-			instance.addPaymet();
-			break;
-		case 2:
-//			instance.updatePayment();
-			break;
-		case 3:
-			instance.deletePayment(0);
-			break;
-		default:
-			System.out.println("잘못된 입력입니다!");
+			case 1:
+				//			instance.addPaymet();
+				break;
+			case 2:
+				//			instance.updatePayment();
+				break;
+			case 3:
+				instance.deletePayment(0);
+				break;
+			default:
+				System.out.println("잘못된 입력입니다!");
 
 		}
 	}
@@ -74,7 +60,7 @@ public class PaymentDAO implements DAO {
 	public void deletePayment(final int movieCode) {
 		MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
 		System.out.println("나의 예매 목록");
-//		moviePaymentDAO.listMe(ExecuteProject.id);
+		//		moviePaymentDAO.listMe(ExecuteProject.id);
 		System.out.print("취소할 예매 코드: ");
 
 		final String query = "DELETE " +
@@ -91,7 +77,6 @@ public class PaymentDAO implements DAO {
 
 	// 영화 수정을 할 수 있는 메뉴이다.
 	public void updatePayment(MoviePaymentDTO moviePaymentDTO) {
-
 
 		System.out.println("예매한 영화를 수정합니다.");
 
@@ -120,62 +105,35 @@ public class PaymentDAO implements DAO {
 				moviePaymentDTO.getPaymentCode(),
 				moviePaymentDTO.getPaymentDate(),
 				moviePaymentDTO.getMoviePaymentCode()
-		});
+			});
 		System.out.println("수정이 완료되었습니다!");
 	}
 
 	//예약할 수 있는 메뉴
-	private void addPaymet() {
-
-		MoviePaymentDTO dto = new MoviePaymentDTO();
-		MovieDAO dao = MovieDAO.getInstance();
-		PaymentDAO dao2 = PaymentDAO.getInstance();
-
-		Scanner scanner = new Scanner(System.in);
+	public int addPaymet(MoviePaymentDTO moviePaymentDTO) {
 
 		System.out.println("영화 예매를 진행합니다.");
 
 		System.out.println("현재 상영중인 영화");
-		dao.list();
 		System.out.println("예매할 영화의 코드를 입력하세요");
-		dto.setMovieCode(scanner.nextLine());
-
 		System.out.println("예약 방식의 코드를 입력하세요");
 		instance.list();
-		dto.setPaymentCode(scanner.nextLine());
 
-		dto.setMyuserId(ExecuteProject.id);
-		dto.setPaymentDate(java.sql.Date.valueOf(timeNow()));
+		final String query = "INSERT " +
+			"INTO " +
+			"	MOVIE_PAYMENT " +
+			"VALUES " +
+			"	(DEFAULT,?,?,?,?)";
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		String query = "insert into movie_payment values (movie_payment_inc.nextval,?,?,?,?)";
-
-		try {
-
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, dto.getMyuserId());
-			pstm.setString(2, dto.getMovieCode());
-			pstm.setString(3, dto.getPaymentCode());
-			pstm.setDate(4, dto.getPaymentDate());
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			e1.printStackTrace();
-		}
-
-	}
-
-	//현재 시각을 반환한다.
-	private String timeNow() {
-		long time = System.currentTimeMillis();
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd");
-		String str = dayTime.format(new Date(time));
-		return str;
+		int result = JDBCManager
+			.getInstance()
+			.insert(query, new Object[] {
+				moviePaymentDTO.getMyuserId(),
+				moviePaymentDTO.getMovieCode(),
+				moviePaymentDTO.getPaymentCode(),
+				moviePaymentDTO.getPaymentDate()
+			});
+		return result;
 	}
 
 }
