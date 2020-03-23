@@ -90,7 +90,11 @@ public class JDBCManager {
 		return results;
 	}
 
-	public int delete(String query, String[] params) {
+	public int insert(String query, Object[] params){
+		return update(query, params);
+	}
+
+	public int delete(String query, Object[] params) {
 		return update(query, params);
 	}
 
