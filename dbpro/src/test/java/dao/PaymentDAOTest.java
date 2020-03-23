@@ -1,6 +1,7 @@
 package dao;
 
 import dao.admin.PayMentStaticsDAO;
+import dao.user.MoviePaymentDAO;
 import dao.user.PaymentDAO;
 import dto.user.MoviePaymentDTO;
 import org.junit.Assert;
@@ -44,5 +45,18 @@ public class PaymentDAOTest {
 
 		// then
 		Assert.assertEquals(result, ADD_SUCCESS);
+	}
+
+	@Test
+	public void getMoviePayments() {
+		MoviePaymentDAO.getInstance().list();
+	}
+
+	@Test
+	public void getMoviePaymentsByUserIdTest() {
+		// given
+		final String userId = "eeww95";
+		// when
+		MoviePaymentDAO.getInstance().listMe("eeww95");
 	}
 }

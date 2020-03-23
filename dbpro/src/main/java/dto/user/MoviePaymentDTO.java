@@ -12,17 +12,17 @@ import java.sql.Date;
 @NoArgsConstructor
 public class MoviePaymentDTO {
 	@ColumnName("MOVIE_PAYMENT_CODE")
-	public int moviePaymentCode;
+	private int moviePaymentCode;
 
 	@ColumnName("MYUSER_ID")
-	public String myuserId;
+	private String myuserId;
 
 	@ColumnName("MOVIE_CODE")
-	public String movieCode;
+	private String movieCode;
 
 	@ColumnName("PAYMENT_CODE")
-	public String paymentCode;
+	private String paymentCode;
 
 	@ColumnName("PAYMENT_DATE")
-	public Date paymentDate;
+	private Date paymentDate;
 }
