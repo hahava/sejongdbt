@@ -1,24 +1,25 @@
 package dto.admin;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
+
 import java.sql.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaymentStaticsDTO {
-	public Date PAYMENT_DATE;
-	public int PAYMENT_SUM;
-	public int PAYMENT_COUNT;
-	public int MYUSER_COUNT;
+	@ColumnName("PAYMENT_DATE")
+	private Date paymentDate;
 
-	@Override
-	public String toString() {
-		return "PaymentStaticsDTO [PAYMENT_DATE=" + PAYMENT_DATE + ", PAYMENT_SUM=" + PAYMENT_SUM + ", PAYMENT_COUNT="
-				+ PAYMENT_COUNT + ", MYUSER_COUNT=" + MYUSER_COUNT + "]";
-	}
+	@ColumnName("PAYMENT_SUM")
+	private int paymentSum;
 
-	public PaymentStaticsDTO(Date pAYMENT_DATE, int pAYMENT_SUM, int pAYMENT_COUNT, int mYUSER_COUNT) {
-		PAYMENT_DATE = pAYMENT_DATE;
-		PAYMENT_SUM = pAYMENT_SUM;
-		PAYMENT_COUNT = pAYMENT_COUNT;
-		MYUSER_COUNT = mYUSER_COUNT;
-	}
+	@ColumnName("PAYMENT_COUNT")
+	private int paymentCount;
 
+	@ColumnName("MYUSER_COUNT")
+	private int myuserCount;
 }

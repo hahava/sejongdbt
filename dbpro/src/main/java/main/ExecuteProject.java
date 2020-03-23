@@ -74,7 +74,7 @@ public class ExecuteProject {
 				adDAO.list();
 				break;
 			case 5:
-				MovieAdDAO movieAdDAO = MovieAdDAO.getInstnace();
+				MovieAdDAO movieAdDAO = MovieAdDAO.getInstance();
 				movieAdDAO.list();
 				break;
 			case 6:
