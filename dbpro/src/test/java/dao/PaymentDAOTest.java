@@ -2,6 +2,7 @@ package dao;
 
 import dao.admin.PayMentStaticsDAO;
 import dao.user.PaymentDAO;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class PaymentDAOTest {
@@ -15,6 +16,7 @@ public class PaymentDAOTest {
 		PaymentDAO.getInstance().list();
 	}
 
+	@Ignore
 	@Test
 	public void deletePayment(){
 		PaymentDAO.getInstance().deletePayment(2);

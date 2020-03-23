@@ -2,10 +2,8 @@ package dao.user;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -61,7 +59,7 @@ public class PaymentDAO implements DAO {
 			instance.addPaymet();
 			break;
 		case 2:
-			instance.modifyPayment();
+//			instance.updatePayment();
 			break;
 		case 3:
 			instance.deletePayment(0);
@@ -92,65 +90,37 @@ public class PaymentDAO implements DAO {
 	}
 
 	// 영화 수정을 할 수 있는 메뉴이다.
-	private void modifyPayment() {
+	public void updatePayment(MoviePaymentDTO moviePaymentDTO) {
 
-		MoviePaymentDTO dto = new MoviePaymentDTO();
-		MovieDAO dao = MovieDAO.getInstance();
-		PaymentDAO dao2 = PaymentDAO.getInstance();
-
-		Scanner scanner = new Scanner(System.in);
-
-		MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
 
 		System.out.println("예매한 영화를 수정합니다.");
 
 		System.out.println("나의 예매 목록");
-		moviePaymentDAO.listMe(ExecuteProject.id);
 
 		System.out.println("수정할 예매 번호를 입력하세요");
-		dto.setMOVIE_PAYMENT_CODE(scanner.nextInt());
-
-		scanner.nextLine();
 
 		System.out.println("어떤 영화로 바꾸시겠습니까?");
-		dao.list();
 		System.out.println("바꿀 영화의 코드를 입력하세요");
-		dto.setMOVIE_CODE(scanner.nextLine());
 
 		System.out.println("결제 방법을 선택하세요");
-		dao2.list();
 		System.out.println("결제 방법의 코드를 입력하세요");
-		dto.setPAYMENT_CODE(scanner.nextLine());
 
-		dto.setMYUSER_ID(ExecuteProject.id);
-		dto.setPAYMENT_DATE(java.sql.Date.valueOf(timeNow()));
+		final String query = "UPDATE " +
+			"	MOVIE_PAYMENT " +
+			"SET " +
+			"	MOVIE_CODE = ?, " +
+			"	PAYMENT_CODE = ?, " +
+			"	PAYMENT_DATE = ? " +
+			"WHERE " +
+			"	MOVIE_PAYMENT_CODE = ?";
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		String query = "update  movie_payment set MOVIE_CODE = ? ,PAYMENT_CODE = ? ,PAYMENT_DATE = ? where movie_payment_code = ?";
-
-		try {
-			pstm = conn.prepareStatement(query);
-
-			pstm.setString(1, dto.getMOVIE_CODE());
-			pstm.setString(2, dto.getPAYMENT_CODE());
-			pstm.setDate(3, dto.getPAYMENT_DATE());
-			pstm.setInt(4, dto.getMOVIE_PAYMENT_CODE());
-			pstm.executeUpdate();
-
-			pstm = conn.prepareStatement("commit");
-			pstm.executeUpdate();
-
-		} catch (SQLException e1) {
-			System.out.println(e1);
-			e1.printStackTrace();
-		}
-		try {
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		JDBCManager.getInstance().update(query,
+			new Object[] {
+				moviePaymentDTO.getMovieCode(),
+				moviePaymentDTO.getPaymentCode(),
+				moviePaymentDTO.getPaymentDate(),
+				moviePaymentDTO.getMoviePaymentCode()
+		});
 		System.out.println("수정이 완료되었습니다!");
 	}
 
@@ -168,14 +138,14 @@ public class PaymentDAO implements DAO {
 		System.out.println("현재 상영중인 영화");
 		dao.list();
 		System.out.println("예매할 영화의 코드를 입력하세요");
-		dto.setMOVIE_CODE(scanner.nextLine());
+		dto.setMovieCode(scanner.nextLine());
 
 		System.out.println("예약 방식의 코드를 입력하세요");
 		instance.list();
-		dto.setPAYMENT_CODE(scanner.nextLine());
+		dto.setPaymentCode(scanner.nextLine());
 
-		dto.setMYUSER_ID(ExecuteProject.id);
-		dto.setPAYMENT_DATE(java.sql.Date.valueOf(timeNow()));
+		dto.setMyuserId(ExecuteProject.id);
+		dto.setPaymentDate(java.sql.Date.valueOf(timeNow()));
 
 		Connection conn = getConnection();
 		PreparedStatement pstm = null;
@@ -184,10 +154,10 @@ public class PaymentDAO implements DAO {
 		try {
 
 			pstm = conn.prepareStatement(query);
-			pstm.setString(1, dto.getMYUSER_ID());
-			pstm.setString(2, dto.getMOVIE_CODE());
-			pstm.setString(3, dto.getPAYMENT_CODE());
-			pstm.setDate(4, dto.getPAYMENT_DATE());
+			pstm.setString(1, dto.getMyuserId());
+			pstm.setString(2, dto.getMovieCode());
+			pstm.setString(3, dto.getPaymentCode());
+			pstm.setDate(4, dto.getPaymentDate());
 			pstm.executeUpdate();
 
 			pstm = conn.prepareStatement("commit");
