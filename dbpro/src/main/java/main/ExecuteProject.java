@@ -142,7 +142,7 @@ public class ExecuteProject {
 			switch (num) {
 			case 1:
 				MyuserDAO dao = MyuserDAO.getInstance();
-				dao.listMe(id);
+				dao.selectUserInfo(id);
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();

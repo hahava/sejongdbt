@@ -9,6 +9,7 @@ import java.util.Scanner;
 import dto.user.MyuserDTO;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;
+import org.apache.commons.lang3.StringUtils;
 
 public class MyuserDAO implements DAO {
 
@@ -41,74 +42,45 @@ public class MyuserDAO implements DAO {
 
 	// myuser테이블 전부 출력
 	public void list() {
+		final String query = "SELECT " +
+			"	MYUSER_ID, " +
+			"	MYUSER_NAME, " +
+			"	MYUSER_PW, " +
+			"	MYUSER_BIRTH, " +
+			"	MYUSER_PHONE, " +
+			"	MYUSER_EMAIL " +
+			"FROM " +
+			"	MYUSER";
 
-		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
+		JDBCManager
+			.getInstance()
+			.queryForList(query, MyuserDTO.class)
+			.forEach(myuserDTO -> System.out.println(myuserDTO.toString()));
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select MYUSER_ID, MYUSER_NAME, MYUSER_PW, MYUSER_BIRTH, MYUSER_PHONE,  MYUSER_EMAIL from MYUSER";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
-						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
-						result.getString("MYUSER_EMAIL")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		// arraylist안에 테이블내용을 전부 출력한다.
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
 	}
 
 	// 로그인 한 유저의 정보만을 출력한다.
-	public void listMe(String id) {
+	public void selectUserInfo(String id) {
 
-		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
+		final String query = "SELECT " +
+			"	MYUSER_ID, " +
+			"	MYUSER_NAME, " +
+			"	MYUSER_PW, " +
+			"	MYUSER_BIRTH, " +
+			"	MYUSER_PHONE, " +
+			"	MYUSER_EMAIL " +
+			"FROM " +
+			"	MYUSER " +
+			"WHERE " +
+			"	MYUSER_ID = "+ StringUtils.wrap(id, "'");
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select MYUSER_ID, MYUSER_NAME, MYUSER_PW, MYUSER_BIRTH, MYUSER_PHONE,  MYUSER_EMAIL from MYUSER where MYUSER_ID = ?";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			pstm.setString(1, ExecuteProject.id);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
-						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
-						result.getString("MYUSER_EMAIL")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+		JDBCManager
+			.getInstance()
+			.queryForList(query, MyuserDTO.class)
+			.forEach(myuserDTO -> System.out.println(myuserDTO.toString()));
 	}
 
+	// TODO : 계정관련 클래스를 분리하여 완전히 새롭게 작성 할 것
 	// 로그인 메서드 id와 password를 입력받아 myuser테이블안에 저장되어 있는지 확인한다. 로그인 가능 여부를 확인 하는 메서드
 	public int login(String id, String pw) {
 		int returnnum = NOLOGIN;
@@ -140,16 +112,16 @@ public class MyuserDAO implements DAO {
 			e.printStackTrace();
 		}
 
-		for (int i = 0; i < arrayList.size(); i++) {
-			if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).MYUSER_PW.equals(pw) && id.equals("admin")) {
-				returnnum = ADMINLOGIN;
-				break;
-			} else if (arrayList.get(i).MYUSER_ID.equals(id) && arrayList.get(i).MYUSER_PW.equals(pw)) {
-				returnnum = USERLOGIN;
-				break;
-			}
-
-		}
+//		for (int i = 0; i < arrayList.size(); i++) {
+//			if (arrayList.get(i).myuserId.equals(id) && arrayList.get(i).myuserPw.equals(pw) && id.equals("admin")) {
+//				returnnum = ADMINLOGIN;
+//				break;
+//			} else if (arrayList.get(i).myuserId.equals(id) && arrayList.get(i).myuserPw.equals(pw)) {
+//				returnnum = USERLOGIN;
+//				break;
+//			}
+//
+//		}
 		return returnnum;
 	}
 	
