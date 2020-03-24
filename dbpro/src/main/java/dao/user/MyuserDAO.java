@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import dto.user.MyuserDTO;
-import main.ExecuteProject;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
@@ -150,10 +149,10 @@ public class MyuserDAO implements DAO {
 
 			break;
 		case 3:
-			myuserSnackOrderDao.pickBestSnackOne();
+			myuserSnackOrderDao.selectMostOrderedMember();
 			return;
 		case 4:
-			myuserSnackOrderDao.pickBestSnackPeople();
+//			myuserSnackOrderDao.selectMinPriceOrders();
 		default:
 			System.out.println("잘못 입력하셨습니다.");
 			break;

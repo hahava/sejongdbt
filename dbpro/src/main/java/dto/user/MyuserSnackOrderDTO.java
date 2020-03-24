@@ -1,56 +1,25 @@
 package dto.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import oracle.connect.ColumnName;
+
 import java.sql.Date;
 
-public class MyuserSnackOrderDTO implements DTO {
-	public int ORDER_NUM;
-	public String MYUSER_ID;
-	public String SNACK_CODE;
-	public Date ORDER_DATE;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class MyuserSnackOrderDTO {
+	@ColumnName("ORDER_NUM")
+	private int orderNum;
 
-	public int getORDER_NUM() {
-		return ORDER_NUM;
-	}
+	@ColumnName("MYUSER_ID")
+	private String myuserId;
 
-	public void setORDER_NUM(int oRDER_NUM) {
-		ORDER_NUM = oRDER_NUM;
-	}
+	@ColumnName("SNACK_CODE")
+	private String snackCode;
 
-	public String getMYUSER_ID() {
-		return MYUSER_ID;
-	}
-
-	public void setMYUSER_ID(String mYUSER_ID) {
-		MYUSER_ID = mYUSER_ID;
-	}
-
-	public String getSNACK_CODE() {
-		return SNACK_CODE;
-	}
-
-	public void setSNACK_CODE(String sNACK_CODE) {
-		SNACK_CODE = sNACK_CODE;
-	}
-
-	public Date getORDER_DATE() {
-		return ORDER_DATE;
-	}
-
-	public void setORDER_DATE(Date oRDER_DATE) {
-		ORDER_DATE = oRDER_DATE;
-	}
-
-	@Override
-	public String toString() {
-		return "MyuserSnackOrder [ORDER_NUM=" + ORDER_NUM + ", MYUSER_ID=" + MYUSER_ID + ", SNACK_CODE=" + SNACK_CODE
-				+ ", ORDER_DATE=" + ORDER_DATE + "]";
-	}
-
-	public MyuserSnackOrderDTO(int oRDER_NUM, String mYUSER_ID, String sNACK_CODE, Date oRDER_DATE) {
-		ORDER_NUM = oRDER_NUM;
-		MYUSER_ID = mYUSER_ID;
-		SNACK_CODE = sNACK_CODE;
-		ORDER_DATE = oRDER_DATE;
-	}
-
+	@ColumnName("ORDER_DATE")
+	private Date orderDate;
 }

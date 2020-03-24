@@ -170,7 +170,7 @@ public class ExecuteProject {
 				break;
 			case 8:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
-				myuserSnackOrderDAO.listMe(id);
+				myuserSnackOrderDAO.selectSnackOrders(id);
 				break;
 			case 9:
 				login();
