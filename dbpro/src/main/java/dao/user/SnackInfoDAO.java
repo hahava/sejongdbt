@@ -1,65 +1,37 @@
 package dao.user;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import dto.user.SnackInfoDTO;
 import oracle.connect.JDBCManager;
 
 public class SnackInfoDAO implements DAO {
-	private Connection getConnection() {
-		JDBCManager manager = new JDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-
-		Connection conn = manager.connect(oracleId, passwd, port);
-		return conn;
-	}
 
 	private SnackInfoDAO() {
 	}
 
-	private static SnackInfoDAO instance = new SnackInfoDAO();
+	private static SnackInfoDAO instance;
 
 	public static SnackInfoDAO getInstance() {
+		if (instance == null) {
+			instance = new SnackInfoDAO();
+		}
 		return instance;
 	}
 
 	// 스낵관련 정보를 전부 출력한다.
 	@Override
 	public void list() {
-		ArrayList<SnackInfoDTO> arrayList = new ArrayList<>();
+		final String query = "SELECT " +
+			"	SNACK_CODE, " +
+			"	SNACK_NAME, " +
+			"	SNACK_CONTENT, " +
+			"	SNACK_CAL, " +
+			"	SNACK_PRICE " +
+			"FROM " +
+			"	SNACK_INFO";
 
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
-		String query = "select SNACK_CODE,SNACK_NAME, SNACK_CONTENT, SNACK_CAL,SNACK_PRICE from SNACK_INFO";
-
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				arrayList.add(new SnackInfoDTO(result.getString("SNACK_CODE"), result.getString("SNACK_NAME"), result.getString("SNACK_CONTENT"),
-						result.getInt("SNACK_CAL"), result.getInt("SNACK_PRICE")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i < arrayList.size(); i++) {
-			System.out.println(arrayList.get(i).toString());
-		}
+		JDBCManager
+			.getInstance()
+			.queryForList(query, SnackInfoDTO.class)
+			.forEach(snackInfoDTO -> System.out.println(snackInfoDTO.toString()));
 	}
-
 }

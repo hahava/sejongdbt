@@ -142,7 +142,7 @@ public class ExecuteProject {
 			switch (num) {
 			case 1:
 				MyuserDAO dao = MyuserDAO.getInstance();
-				dao.listMe(id);
+				dao.selectUserInfo(id);
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
@@ -150,11 +150,11 @@ public class ExecuteProject {
 				break;
 			case 3:
 				RatDAO ratdaover2 = RatDAO.getInstance();
-				ratdaover2.showMovieRat();
+//				ratdaover2.selectMovieRat();
 				break;
 			case 4:
 				RatDAO ratDAO = RatDAO.getInstance();
-				ratDAO.listMe(id);
+				ratDAO.selectRatListByUserId(id);
 				break;
 			case 5:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
@@ -170,7 +170,7 @@ public class ExecuteProject {
 				break;
 			case 8:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
-				myuserSnackOrderDAO.listMe(id);
+				myuserSnackOrderDAO.selectSnackOrders(id);
 				break;
 			case 9:
 				login();
