@@ -2,6 +2,7 @@ package main;
 
 import java.util.Scanner;
 
+import auth.Account;
 import dao.admin.*;
 import dao.user.*;
 
@@ -39,7 +40,7 @@ public class ExecuteProject {
 			System.out.println("아이디와 패스워 드를 입력해주세요");
 			id = scanner.nextLine();
 			pw = scanner.nextLine();
-			num = dao.login(id, pw);
+//			num = dao.login(id, pw);
 			if (num == MyuserDAO.NOLOGIN) {
 				System.out.println("없는 계정이거나 잘못된 암호입니다!!!\n\n\n");
 			}
