@@ -9,7 +9,7 @@ public class ActorDAOTest {
 	@Ignore
 	@Test
 	public void getActorsTest() {
-		ActorDAO.getInstance().list();
+		ActorDAO.getInstance().selectEmployees();
 	}
 
 	@Ignore

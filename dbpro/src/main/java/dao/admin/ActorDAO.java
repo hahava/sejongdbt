@@ -21,7 +21,7 @@ public class ActorDAO implements DAO {
 	}
 
 	// 등록된 배우를 전부 출력한다.
-	public void list() {
+	public void selectEmployees() {
 		final String query = "SELECT ACTOR_CODE, ACTOR_NAME, ACTOR_GENDER, ACTOR_BIRTH FROM ACTOR";
 		JDBCManager
 			.getInstance()

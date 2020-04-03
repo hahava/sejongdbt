@@ -1,4 +1,4 @@
-package dto.admin;
+package feat.advertisement;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +12,14 @@ import java.sql.Date;
 @NoArgsConstructor
 public class AdDTO {
 	@ColumnName("AD_TITLE")
-	public String adTitle;
+	private String adTitle;
 
 	@ColumnName("AD_COMPANY")
-	public String adCompany;
+	private String adCompany;
 
 	@ColumnName("AD_DATE")
-	public Date adDate;
+	private Date adDate;
 
 	@ColumnName("AD_PRICE")
-	public int adPrice;
+	private int adPrice;
 }

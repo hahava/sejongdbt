@@ -1,14 +1,12 @@
 package dao.user;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Scanner;
 import dto.user.MyuserDTO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
+
+import java.sql.Connection;
+import java.util.Map;
+import java.util.Scanner;
 
 public class MyuserDAO implements DAO {
 
@@ -79,49 +77,21 @@ public class MyuserDAO implements DAO {
 			.forEach(myuserDTO -> System.out.println(myuserDTO.toString()));
 	}
 
-	// TODO : 계정관련 클래스를 분리하여 완전히 새롭게 작성 할 것
 	// 로그인 메서드 id와 password를 입력받아 myuser테이블안에 저장되어 있는지 확인한다. 로그인 가능 여부를 확인 하는 메서드
-	public int login(String id, String pw) {
-		int returnnum = NOLOGIN;
-		ArrayList<MyuserDTO> arrayList = new ArrayList<>();
-		Connection conn = getConnection();
-		PreparedStatement pstm = null;
-		ResultSet result = null;
+	public Map<String, Object> login(String id, String pw) {
+		final String query = "SELECT " +
+			"	MYUSER_ID " +
+			"FROM " +
+			"	MYUSER " +
+			"WHERE " +
+			"	MYUSER_ID = " + StringUtils.wrap(id, "'") + " " +
+			"AND " +
+			"	MYUSER_PW = " + StringUtils.wrap(pw, "'");
 
-		String query = "select * from MYUSER";
+		return JDBCManager
+			.getInstance()
+			.queryForMap(query, new String[] {"MYUSER_ID"});
 
-		try {
-			pstm = conn.prepareStatement(query);
-			result = pstm.executeQuery();
-			while (result.next()) {
-				arrayList.add(new MyuserDTO(result.getString("MYUSER_ID"), result.getString("MYUSER_NAME"),
-						result.getString("MYUSER_PW"), result.getDate("MYUSER_BIRTH"), result.getString("MYUSER_PHONE"),
-						result.getString("MYUSER_EMAIL")));
-			}
-		} catch (SQLException e1) {
-			System.out.println(e1);
-		}
-
-		try {
-			result.close();
-			pstm.close();
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-//		for (int i = 0; i < arrayList.size(); i++) {
-//			if (arrayList.get(i).myuserId.equals(id) && arrayList.get(i).myuserPw.equals(pw) && id.equals("admin")) {
-//				returnnum = ADMINLOGIN;
-//				break;
-//			} else if (arrayList.get(i).myuserId.equals(id) && arrayList.get(i).myuserPw.equals(pw)) {
-//				returnnum = USERLOGIN;
-//				break;
-//			}
-//
-//		}
-		return returnnum;
 	}
 	
 	//우수회원을 선별 하는 메뉴
