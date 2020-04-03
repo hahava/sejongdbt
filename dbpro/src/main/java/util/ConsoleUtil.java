@@ -8,6 +8,11 @@ public class ConsoleUtil {
 	private static final BufferedWriter BUFFERED_WRITER = new BufferedWriter(new OutputStreamWriter(System.out));
 	public static final String HORIZONTAL_RULE = "=================================";
 
+	public static String readString() throws IOException {
+		String input = BUFFERED_READER.readLine();
+		return input;
+	}
+
 	public static String readString(String msg) throws IOException {
 		printLn(msg);
 		String input = BUFFERED_READER.readLine();

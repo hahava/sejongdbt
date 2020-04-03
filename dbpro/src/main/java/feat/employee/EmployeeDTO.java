@@ -1,4 +1,4 @@
-package dto.admin;
+package feat.employee;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

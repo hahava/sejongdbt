@@ -18,7 +18,7 @@ public class EmployeeTaskDAO implements DAO {
 	}
 
 	@Override
-	public void list() {
+	public void selectEmployees() {
 		final String query = "SELECT " +
 			"	EMPLOYEE_ROLE, " +
 			"	EMPLOYEE_TASK_CON, " +

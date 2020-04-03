@@ -28,7 +28,7 @@ public class InitDatabaseDAO implements DAO {
 
 	@Override
 	// 데이터베이스를 초기화하는 메서드이다.
-	public void list() {
+	public void selectEmployees() {
 		// TODO Auto-generated method stub
 		String[] tableName = { "MOVIE", "MYUSER", "RAT", "PAYMENT", "MOVIE_PAYMENT", "SNACK_INFO", "MYUSER_SNACK_ORDER",
 				"EMPLOYEE_TASK", "EMPLOYEE", "AD", "MOVIE_AD", "ACTOR", "MOVIE_ACTOR", "PAYMENT_STATICS" };
