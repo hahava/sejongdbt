@@ -1,10 +1,12 @@
 package main;
 
-import java.util.Scanner;
+import java.io.IOException;
 
 import auth.Account;
 import dao.admin.*;
 import dao.user.*;
+import menu.MainView;
+import util.ConsoleUtil;
 
 /**
  * @author kalin
@@ -14,43 +16,24 @@ import dao.user.*;
  */
 public class ExecuteProject {
 
+	private static final int EXIT = 0;
 	public static boolean authority = false; // true인경우 관리자
 	public static String id; // 로그인 세션기능
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
-		int num = 0;
-		Scanner scanner = new Scanner(System.in);
-		// 로그인 메서드
-		login();
-		while (num != 10) {
-			showMenu();
-			num = scanner.nextInt();
-			num = selectMenu(num);
+		while (Account.isLogin() == false) {
+			String id = ConsoleUtil.readString("아이디를 입력해주세요.");
+			String pw = ConsoleUtil.readString("패스워드를 입력해주세요");
+			Account.doLogin(id, pw);
 		}
-	}
 
-	// 로그인 메서드
-	private static void login() {
-		String pw = null;
-		Scanner scanner = new Scanner(System.in);
-		int num = MyuserDAO.NOLOGIN;
-		MyuserDAO dao = MyuserDAO.getInstance();
-		while (num == 0) {
-			System.out.println("아이디와 패스워 드를 입력해주세요");
-			id = scanner.nextLine();
-			pw = scanner.nextLine();
-//			num = dao.login(id, pw);
-			if (num == MyuserDAO.NOLOGIN) {
-				System.out.println("없는 계정이거나 잘못된 암호입니다!!!\n\n\n");
+		while (true) {
+			MainView.show();
+			int requestCode = ConsoleUtil.readInt("원하는 메뉴를 선택해주세요");
+			if (requestCode == EXIT) {
+				System.exit(0);
 			}
-		}
-		if (num == MyuserDAO.ADMINLOGIN) {
-			System.out.println("관리자 입니다 반갑습니다!");
-			authority = true;
-		} else if (num == MyuserDAO.USERLOGIN) {
-			System.out.println(id + " 님 반갑습니다.");
-			authority = false;
 		}
 	}
 
@@ -115,7 +98,7 @@ public class ExecuteProject {
 				myuserSnackDAO.list();
 				break;
 			case 15:
-				login();
+//				login();
 				return 0;
 			case 16:
 				InitDatabaseDAO initDAO = InitDatabaseDAO.getInstance();
@@ -174,7 +157,7 @@ public class ExecuteProject {
 				myuserSnackOrderDAO.selectSnackOrders(id);
 				break;
 			case 9:
-				login();
+//				login();
 				return 0;
 			case 10:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
@@ -184,53 +167,6 @@ public class ExecuteProject {
 			}
 		}
 		return 0;
-	}
-
-	// 초기 메뉴를 보여준다. 유저와 관리자에 따라 다른 화면이 보여지도록한다.
-	private static void showMenu() {
-		System.out.println("원하는 정보를 보여드립니다.!");
-		if (isAdmin()) {
-			System.out.println("1. 유저 정보");
-			System.out.println("2. 영화 정보");
-			System.out.println("3. 결제 통계 정보");
-			System.out.println("4. 광고 정보");
-			System.out.println("5. 영화에 삽입 된 정보");
-			System.out.println("6. 직원 정보");
-			System.out.println("7. 직원 업무 내역");
-			System.out.println("8. 배우 정보");
-			System.out.println("9. 영화에 출연한 배우 정보");
-			System.out.println("10. 회원평점정보");
-			System.out.println("11. 결제 정보");
-			System.out.println("12. 영화 결제 정보");
-			System.out.println("13. 간식 종류");
-			System.out.println("14. 회원들이 주문한 간식 종류 ");
-			System.out.println("15. 로그인 변경");
-			System.out.println("16. 데이터 초기화");
-			System.out.println("17. 프로그램 종료");
-			System.out.println("18. 직원관련 검색");
-			// 나이 기반 검색(subquery.),
-			// 부서 검색 단순쿼리,
-			// 근무태만 직원 (단순쿼리), 최대 최소연봉 지정해서 쿼리
-			// (subquery)
-			System.out.println("19. 우수회원");
-			// 4개 스낵 많이 산 사람, 영화 많이 본 사람
-			// (groupby, having )
-			System.out.println("20. 영화 통계");
-			// 특정 배우가 출연한 영화 검색 (subquery)
-			// 특정 영화에 출연한 배우 검색 (subquery)
-
-		} else {
-			System.out.println("1. 나의 정보");
-			System.out.println("2. 영화 정보");
-			System.out.println("3. 영화 평점 정보");
-			System.out.println("4. 나의 평점 정보");
-			System.out.println("5. 결제 관련");
-			System.out.println("6. 나의 결제 내역");
-			System.out.println("7. 스낵정보");
-			System.out.println("8. 나의 스낵주문 내역");
-			System.out.println("9. 로그인 변경");
-			System.out.println("10. 프로그램 종료");
-		}
 	}
 
 	// 현재 세션의 admin 여부 판단.
