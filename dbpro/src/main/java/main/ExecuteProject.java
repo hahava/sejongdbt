@@ -6,6 +6,7 @@ import auth.Account;
 import dao.admin.*;
 import dao.user.*;
 import feat.advertisement.AdDAO;
+import feat.employee.EmployeeDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -64,15 +65,15 @@ public class ExecuteProject {
 				break;
 			case 6:
 				EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
-				employeeDAO.list();
+				employeeDAO.selectEmployees();
 				break;
 			case 7:
 				EmployeeTaskDAO employeeTaskDAO = EmployeeTaskDAO.getInstance();
-				employeeTaskDAO.list();
+				employeeTaskDAO.selectEmployees();
 				break;
 			case 8:
 				ActorDAO actorDAO = ActorDAO.getInstance();
-				actorDAO.list();
+				actorDAO.selectEmployees();
 				break;
 			case 9:
 				MovieActorDAO movieActorDAO = MovieActorDAO.getInstance();
@@ -103,14 +104,14 @@ public class ExecuteProject {
 				return 0;
 			case 16:
 				InitDatabaseDAO initDAO = InitDatabaseDAO.getInstance();
-				initDAO.list();
+				initDAO.selectEmployees();
 				break;
 			case 17:
 				System.out.println("프로그램이 종료됩니다 안녕히 가십시오!");
 				return 10;
 			case 18:
 				EmployeeDAO employeeDAOver2 = EmployeeDAO.getInstance();
-				employeeDAOver2.employeeSearchMenu();
+//				employeeDAOver2.employeeSearchMenu();
 				break;
 			case 19:
 				MyuserDAO myuserDAOver2 = MyuserDAO.getInstance();
