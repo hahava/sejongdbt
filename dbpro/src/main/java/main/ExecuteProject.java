@@ -5,6 +5,7 @@ import java.io.IOException;
 import auth.Account;
 import dao.admin.*;
 import dao.user.*;
+import feat.advertisement.AdDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -55,7 +56,7 @@ public class ExecuteProject {
 				break;
 			case 4:
 				AdDAO adDAO = AdDAO.getInstance();
-				adDAO.list();
+//				adDAO.selectAdvertiseMents();
 				break;
 			case 5:
 				MovieAdDAO movieAdDAO = MovieAdDAO.getInstance();
