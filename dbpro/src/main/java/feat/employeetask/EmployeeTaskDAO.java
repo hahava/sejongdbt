@@ -1,9 +1,10 @@
-package dao.admin;
+package feat.employeetask;
 
-import dto.admin.EmployeeTaskDTO;
 import oracle.connect.JDBCManager;
 
-public class EmployeeTaskDAO implements DAO {
+import java.util.List;
+
+public class EmployeeTaskDAO {
 
 	private EmployeeTaskDAO() {
 	}
@@ -17,8 +18,7 @@ public class EmployeeTaskDAO implements DAO {
 		return instance;
 	}
 
-	@Override
-	public void selectEmployees() {
+	public List<EmployeeTaskDTO> selectEmployeeTasks() {
 		final String query = "SELECT " +
 			"	EMPLOYEE_ROLE, " +
 			"	EMPLOYEE_TASK_CON, " +
@@ -26,10 +26,9 @@ public class EmployeeTaskDAO implements DAO {
 			"FROM " +
 			"	EMPLOYEE_TASK";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, EmployeeTaskDTO.class)
-			.forEach(employeeTaskDTO -> System.out.println(employeeTaskDTO.toString()));
+			.queryForList(query, EmployeeTaskDTO.class);
 	}
 
 }

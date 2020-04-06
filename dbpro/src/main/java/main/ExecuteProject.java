@@ -8,6 +8,7 @@ import dao.user.*;
 import feat.actor.ActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
+import feat.employeetask.EmployeeTaskDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -70,7 +71,7 @@ public class ExecuteProject {
 				break;
 			case 7:
 				EmployeeTaskDAO employeeTaskDAO = EmployeeTaskDAO.getInstance();
-				employeeTaskDAO.selectEmployees();
+				employeeTaskDAO.selectEmployeeTasks();
 				break;
 			case 8:
 				ActorDAO actorDAO = ActorDAO.getInstance();
