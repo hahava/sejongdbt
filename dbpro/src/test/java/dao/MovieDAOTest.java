@@ -22,12 +22,12 @@ public class MovieDAOTest {
 
 	@Test
 	public void getMovieInfoTest(){
-		MovieDAO.getInstance().getMovieInfo("어느날 그가 죽었다");
+		MovieDAO.getInstance().selectMoviesWithActors("어느날 그가 죽었다");
 	}
 
 	@Test
 	public void getMoviesByActorNameTest(){
-		MovieDAO.getInstance().getMoviesByActor("박지성");
+		MovieDAO.getInstance().selectMoviesByActor("박지성");
 	}
 
 	@Ignore
@@ -62,12 +62,12 @@ public class MovieDAOTest {
 
 	@Test
 	public void getMovieRatStaticTest(){
-		MovieDAO.getInstance().getMovieRatStatic(4);
+		MovieDAO.getInstance().selectMovieRatStatic(4);
 	}
 
 	@Test
 	public void getMovieADStaticTest(){
-		MovieDAO.getInstance().getMovieADStatic();
+		MovieDAO.getInstance().selectMovieADStatic();
 	}
 
 	@Test
