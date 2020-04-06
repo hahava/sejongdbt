@@ -1,4 +1,4 @@
-package dto.admin;
+package feat.employeetask;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,11 +10,11 @@ import oracle.connect.ColumnName;
 @NoArgsConstructor
 public class EmployeeTaskDTO {
 	@ColumnName("EMPLOYEE_ROLE")
-	public String employeeRole;
+	private String employeeRole;
 
 	@ColumnName("EMPLOYEE_TASK_CON")
-	public String employeeTaskCon;
+	private String employeeTaskCon;
 
 	@ColumnName("EMPLOYEE_TASK_SAL")
-	public int employeeTaskSal;
+	private int employeeTaskSal;
 }

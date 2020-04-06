@@ -1,6 +1,6 @@
-package dao;
+package feat.actor;
 
-import dao.admin.ActorDAO;
+import feat.actor.ActorDAO;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -9,13 +9,13 @@ public class ActorDAOTest {
 	@Ignore
 	@Test
 	public void getActorsTest() {
-		ActorDAO.getInstance().selectEmployees();
+		ActorDAO.getInstance().selectActors();
 	}
 
 	@Ignore
 	@Test
 	public void getActorByMovieTitleTest() {
-		ActorDAO.getInstance().getActor("겟 아웃");
+		ActorDAO.getInstance().selectActorByMovieTitle("겟 아웃");
 	}
 
 }

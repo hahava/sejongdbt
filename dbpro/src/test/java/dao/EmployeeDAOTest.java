@@ -14,10 +14,10 @@ public class EmployeeDAOTest {
 		EmployeeDAO.getInstance().selectPunishmentMember();
 	}
 
-	@Test
-	public void getAverageSalary() {
-		EmployeeDAO.getInstance().selectSalaryAverage(20, 30);
-	}
+	//	@Test
+	//	public void getAverageSalary() {
+	//		EmployeeDAO.getInstance().selectSalaryAverage(20, 30);
+	//	}
 
 	@Test
 	public void getEmployeeByEmployeeRoleTest() {
@@ -29,9 +29,9 @@ public class EmployeeDAOTest {
 		EmployeeDAO.getInstance().selectEmployeeByName("이순규");
 	}
 
-	@Test
-	public void getEmployeeSalaryByRangeTest() {
-		EmployeeDAO.getInstance().selectEmployeeBySalaryRange(3000, 6000);
-	}
+	//	@Test
+	//	public void getEmployeeSalaryByRangeTest() {
+	//		EmployeeDAO.getInstance().selectEmployeeBySalaryRange(3000, 6000);
+	//	}
 
 }
