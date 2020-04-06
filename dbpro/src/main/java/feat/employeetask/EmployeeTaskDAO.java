@@ -1,6 +1,6 @@
-package dao.admin;
+package feat.employeetask;
 
-import dto.admin.EmployeeTaskDTO;
+import dao.admin.DAO;
 import oracle.connect.JDBCManager;
 
 public class EmployeeTaskDAO implements DAO {

@@ -8,6 +8,7 @@ import dao.user.*;
 import feat.actor.ActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
+import feat.employeetask.EmployeeTaskDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 

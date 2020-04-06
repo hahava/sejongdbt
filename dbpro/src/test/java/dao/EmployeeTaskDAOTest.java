@@ -1,6 +1,6 @@
 package dao;
 
-import dao.admin.EmployeeTaskDAO;
+import feat.employeetask.EmployeeTaskDAO;
 import org.junit.Test;
 
 public class EmployeeTaskDAOTest {
