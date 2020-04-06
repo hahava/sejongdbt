@@ -1,6 +1,6 @@
 package dao.user;
 
-import dao.admin.ActorDAO;
+import feat.actor.ActorDAO;
 import dto.user.MovieDTO;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;

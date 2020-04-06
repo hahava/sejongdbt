@@ -1,6 +1,6 @@
 package dao;
 
-import dao.admin.ActorDAO;
+import feat.actor.ActorDAO;
 import org.junit.Ignore;
 import org.junit.Test;
 

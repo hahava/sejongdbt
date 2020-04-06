@@ -5,6 +5,7 @@ import java.io.IOException;
 import auth.Account;
 import dao.admin.*;
 import dao.user.*;
+import feat.actor.ActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import menu.MainView;

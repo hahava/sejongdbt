@@ -1,5 +1,6 @@
-package dto.admin;
+package feat.actor;
 
+import dto.admin.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

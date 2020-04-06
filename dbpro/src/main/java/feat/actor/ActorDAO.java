@@ -1,6 +1,6 @@
-package dao.admin;
+package feat.actor;
 
-import dto.admin.ActorDTO;
+import dao.admin.DAO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
