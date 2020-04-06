@@ -1,12 +1,11 @@
 package feat.actor;
 
-import dao.admin.DAO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public class ActorDAO implements DAO {
+public class ActorDAO {
 
 	private static ActorDAO instance;
 
@@ -21,18 +20,20 @@ public class ActorDAO implements DAO {
 	}
 
 	// 등록된 배우를 전부 출력한다.
-	public void selectEmployees() {
-		final String query = "SELECT ACTOR_CODE, ACTOR_NAME, ACTOR_GENDER, ACTOR_BIRTH FROM ACTOR";
-		JDBCManager
+	public List<ActorDTO> selectActors() {
+		final String query = "SELECT ACTOR_CODE, " +
+			"	ACTOR_NAME, " +
+			"	ACTOR_GENDER, " +
+			"	ACTOR_BIRTH " +
+			"FROM ACTOR";
+
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, ActorDTO.class)
-			.forEach(actorDTO -> System.out.println(actorDTO.toString()));
+			.queryForList(query, ActorDTO.class);
 	}
 
 	// 특정 영화에 출연한 배우 검색
-	public void getActor(String movieTitle) {
-
-		System.out.println("특정 영화에 출연한 배우를 검색합니다. 영화 명을 입력하세요.");
+	public List<ActorDTO> selectActorByMovieTitle(String movieTitle) {
 
 		final String query = new StringBuilder(
 			"SELECT AC.ACTOR_CODE AS ACTOR_CODE, AC.ACTOR_NAME AS ACTOR_NAME, AC.ACTOR_BIRTH AS ACTOR_BIRTH, AC.ACTOR_GENDER AS ACTOR_GENDER")
@@ -51,14 +52,6 @@ public class ActorDAO implements DAO {
 			.append("\'" + movieTitle + "\'")
 			.toString();
 
-		List<ActorDTO> actors = JDBCManager.getInstance().queryForList(query, ActorDTO.class);
-		if (actors.size() == 0) {
-			System.out.println("영화정보가 없거나 배우정보가 존재하지 않습니다.");
-		} else {
-			actors.stream().forEach(actorDTO -> {
-				System.out.println("배우명 : " + actorDTO.getActorName() + "\t" + "성별 : " + actorDTO
-					.getActorGender() + " \t " + "생년월일 : " + actorDTO.getActorBirth());
-			});
-		}
+		return JDBCManager.getInstance().queryForList(query, ActorDTO.class);
 	}
 }

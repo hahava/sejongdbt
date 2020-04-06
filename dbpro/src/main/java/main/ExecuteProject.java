@@ -74,7 +74,7 @@ public class ExecuteProject {
 				break;
 			case 8:
 				ActorDAO actorDAO = ActorDAO.getInstance();
-				actorDAO.selectEmployees();
+				actorDAO.selectActors();
 				break;
 			case 9:
 				MovieActorDAO movieActorDAO = MovieActorDAO.getInstance();
