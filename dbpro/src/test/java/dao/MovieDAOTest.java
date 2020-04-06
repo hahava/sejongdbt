@@ -1,8 +1,8 @@
 package dao;
 
 import dao.admin.MovieAdDAO;
-import dao.user.MovieDAO;
-import dto.user.MovieDTO;
+import feat.movie.MovieDAO;
+import feat.movie.MovieDTO;
 import org.junit.Ignore;
 import org.junit.Test;
 

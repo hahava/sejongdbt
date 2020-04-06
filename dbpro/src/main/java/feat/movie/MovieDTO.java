@@ -1,5 +1,6 @@
-package dto.user;
+package feat.movie;
 
+import dto.user.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,23 +13,23 @@ import java.sql.Date;
 @AllArgsConstructor
 public class MovieDTO implements DTO {
 	@ColumnName("MOVIE_CODE")
-	public String movieCode;
+	private String movieCode;
 
 	@ColumnName("MOVIE_TITLE")
-	public String movieTitle;
+	private String movieTitle;
 
 	@ColumnName("MOVIE_DIRECTOR")
-	public String movieDirector;
+	private String movieDirector;
 
 	@ColumnName("MOVIE_AGE")
-	public int movieAge;
+	private int movieAge;
 
 	@ColumnName("MOVIE_GENRE")
-	public String movieGenre;
+	private String movieGenre;
 
 	@ColumnName("MOVIE_START")
-	public Date movieStart;
+	private Date movieStart;
 
 	@ColumnName("MOVIE_END")
-	public Date movieEnd;
+	private Date movieEnd;
 }

@@ -1,7 +1,6 @@
-package dao.user;
+package feat.movie;
 
 import feat.actor.ActorDAO;
-import dto.user.MovieDTO;
 import main.ExecuteProject;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
