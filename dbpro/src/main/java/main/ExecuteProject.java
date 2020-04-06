@@ -5,6 +5,7 @@ import java.io.IOException;
 import auth.Account;
 import dao.admin.*;
 import dao.user.*;
+import feat.actor.ActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import menu.MainView;
@@ -73,7 +74,7 @@ public class ExecuteProject {
 				break;
 			case 8:
 				ActorDAO actorDAO = ActorDAO.getInstance();
-				actorDAO.selectEmployees();
+				actorDAO.selectActors();
 				break;
 			case 9:
 				MovieActorDAO movieActorDAO = MovieActorDAO.getInstance();
