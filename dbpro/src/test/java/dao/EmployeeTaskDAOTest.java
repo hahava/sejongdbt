@@ -6,6 +6,6 @@ import org.junit.Test;
 public class EmployeeTaskDAOTest {
 	@Test
 	public void getEmployeeTaskTest() {
-		EmployeeTaskDAO.getInstance().selectEmployees();
+		EmployeeTaskDAO.getInstance().selectEmployeeTasks();
 	}
 }
