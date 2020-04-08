@@ -1,6 +1,7 @@
 package dao.user;
 
 import dto.user.MyuserDTO;
+import feat.movie.MovieDAO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 

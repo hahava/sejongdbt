@@ -9,6 +9,7 @@ import feat.actor.ActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
+import feat.movie.MovieDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -51,7 +52,7 @@ public class ExecuteProject {
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
-				movieDAO.movieMenu();
+//				movieDAO.movieMenu();
 				break;
 			case 3:
 				PayMentStaticsDAO mentStaticsDAO = PayMentStaticsDAO.getInstance();
@@ -134,7 +135,7 @@ public class ExecuteProject {
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
-				movieDAO.movieMenu();
+//				movieDAO.movieMenu();
 				break;
 			case 3:
 				RatDAO ratdaover2 = RatDAO.getInstance();
