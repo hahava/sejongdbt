@@ -1,6 +1,6 @@
-package dao.user;
+package feat.snack;
 
-import dto.user.SnackInfoDTO;
+import dao.user.DAO;
 import oracle.connect.JDBCManager;
 
 public class SnackInfoDAO implements DAO {

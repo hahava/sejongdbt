@@ -1,6 +1,6 @@
 package dao;
 
-import dao.user.SnackInfoDAO;
+import feat.snack.SnackInfoDAO;
 import org.junit.Test;
 
 public class SnackInfoDAOTest {

@@ -13,6 +13,7 @@ import feat.movie.MovieDAO;
 import feat.payment.PaymentDAO;
 import feat.paymentstatics.PaymentStaticsDAO;
 import feat.rat.RatDAO;
+import feat.snack.SnackInfoDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
