@@ -5,14 +5,13 @@ import dao.user.MyuserSnackOrderDAO;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.management.ObjectName;
 import java.util.Map;
 
 public class MyUserDAOTest {
 
 	@Test
 	public void getMyUserTest() {
-		MyuserDAO.getInstance().list();
+		MyuserDAO.getInstance().selectSnacks();
 	}
 
 	@Test

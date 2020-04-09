@@ -7,7 +7,7 @@ public class SnackInfoDAOTest {
 
 	@Test
 	public void getSnackInfoTest() {
-		SnackInfoDAO.getInstance().list();
+		SnackInfoDAO.getInstance().selectSnacks();
 	}
 
 }
