@@ -14,6 +14,8 @@ import feat.payment.PaymentDAO;
 import feat.paymentstatics.PaymentStaticsDAO;
 import feat.rat.RatDAO;
 import feat.snack.SnackInfoDAO;
+import feat.user.MyuserDAO;
+import dao.user.MyuserSnackOrderDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 

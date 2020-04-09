@@ -1,10 +1,10 @@
-package user;
+package feat.user;
 
 import menu.MenuMapper;
 import menu.MenuMapping;
 
 @MenuMapper
-public class UserMapper {
+public class MyuserMapper {
 
 	@MenuMapping("유저 정보")
 	public void getUsers() {
