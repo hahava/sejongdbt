@@ -1,8 +1,8 @@
 package dao;
 
-import dao.admin.PayMentStaticsDAO;
+import feat.paymentstatics.PaymentStaticsDAO;
 import dao.user.MoviePaymentDAO;
-import dao.user.PaymentDAO;
+import feat.payment.PaymentDAO;
 import dto.user.MoviePaymentDTO;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -16,12 +16,12 @@ public class PaymentDAOTest {
 
 	@Test
 	public void getPaymentStaticsTest() {
-		PayMentStaticsDAO.getInstance().list();
+		PaymentStaticsDAO.getInstance().selectPaymentStatics();
 	}
 
 	@Test
 	public void getPaymentWays() {
-		PaymentDAO.getInstance().list();
+		PaymentDAO.getInstance().selectPaymentWays();
 	}
 
 	@Ignore
@@ -41,7 +41,7 @@ public class PaymentDAOTest {
 		moviePaymentDTO.setPaymentDate(new Date(2020, 1, 2));
 
 		// when
-		int result = PaymentDAO.getInstance().addPaymet(moviePaymentDTO);
+		int result = PaymentDAO.getInstance().insertMovieReservation(moviePaymentDTO);
 
 		// then
 		Assert.assertEquals(result, ADD_SUCCESS);
