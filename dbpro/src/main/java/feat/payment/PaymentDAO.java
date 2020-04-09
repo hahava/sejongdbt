@@ -1,12 +1,13 @@
-package dao.user;
+package feat.payment;
 
+import dao.user.DAO;
+import dao.user.MoviePaymentDAO;
 import dto.user.MoviePaymentDTO;
-import dto.user.PaymentDTO;
 import oracle.connect.JDBCManager;
 
 import java.util.Scanner;
 
-public class PaymentDAO implements DAO {
+public class PaymentDAO {
 
 	private static PaymentDAO instance;
 

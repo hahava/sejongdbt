@@ -2,7 +2,7 @@ package dao;
 
 import feat.paymentstatics.PaymentStaticsDAO;
 import dao.user.MoviePaymentDAO;
-import dao.user.PaymentDAO;
+import feat.payment.PaymentDAO;
 import dto.user.MoviePaymentDTO;
 import org.junit.Assert;
 import org.junit.Ignore;
