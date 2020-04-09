@@ -12,6 +12,7 @@ import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
 import feat.payment.PaymentDAO;
 import feat.paymentstatics.PaymentStaticsDAO;
+import feat.rat.RatDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -86,7 +87,7 @@ public class ExecuteProject {
 				break;
 			case 10:
 				RatDAO ratDAO = RatDAO.getInstance();
-				ratDAO.list();
+				ratDAO.selectRatings();
 				break;
 			case 11:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
