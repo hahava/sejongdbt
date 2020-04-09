@@ -3,19 +3,24 @@ package feat.rat;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+import java.util.Map;
+
 public class RatDAO {
 
 	private static RatDAO instance;
 
 	private RatDAO() {
-		instance = new RatDAO();
 	}
 
 	public static RatDAO getInstance() {
+		if (instance == null) {
+			instance = new RatDAO();
+		}
 		return instance;
 	}
 
-	public void list() {
+	public List<RatDTO> selectRatings() {
 		final String query = "select " +
 			"	MYUSER_ID, " +
 			"	MOVIE_CODE, " +
@@ -23,14 +28,14 @@ public class RatDAO {
 			"	RAT_COMMENT " +
 			"from " +
 			"	RAT";
-		JDBCManager
+
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, RatDTO.class)
-			.forEach(ratDTO -> System.out.println(ratDTO.toString()));
+			.queryForList(query, RatDTO.class);
 	}
 
 	// 로그인한 유저의 통계 내역을 출력한다.
-	public void selectRatListByUserId(String id) {
+	public List<Map<String, Object>> selectRatListByUserId(String id) {
 		/*
 		 * movie, rat 테이블을 조인(movie_code)하고 로그인한 유저가 매긴 평점과 감상평을 출력해준다.
 		 */
@@ -47,7 +52,7 @@ public class RatDAO {
 			"WHERE " +
 			"	r.myuser_id = " + StringUtils.wrap(id, "'");
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
 			.queryForMaps(query, new String[] {
 				"r.myuser_id",
@@ -55,18 +60,11 @@ public class RatDAO {
 				"m.movie_title",
 				"r.rat_point",
 				"r.rat_comment"
-			}).forEach(stringObjectMap -> {
-			stringObjectMap.forEach((key, value) -> System.out.print(key + ":" + value + "\t"));
-			System.out.println();
-		});
+			});
 	}
 
 	// 해당 영화의 평점의 평균과 감상평을 보여주는 메서드이다.
-	public void selectMovieRat(String movieTitle) {
-
-		System.out.println("원하시는 영화의 평점의 평균과 감상평을 보여드립니다.");
-		System.out.println("영화 이름을 입력하세요.");
-
+	public List<RatDTO> selectMovieRat(String movieTitle) {
 		/*
 		 * subquery를 이용해서 movie table에서 movie_code를 얻은 뒤 rat 테이블에서 movie_code로 그룹핑해 평균과 평점을 매긴 회원 수를 출력한다.
 		 *
@@ -101,10 +99,9 @@ public class RatDAO {
 			"	MOVIE_CODE IN(SELECT MOVIE_CODE FROM MOVIE WHERE MOVIE_TITLE="
 			+ StringUtils.wrap(movieTitle, "'") + ")";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(movieAudiencQuery, RatDTO.class)
-			.forEach(ratDTO -> System.out.println(ratDTO.toString()));
+			.queryForList(movieAudiencQuery, RatDTO.class);
 	}
 
 }

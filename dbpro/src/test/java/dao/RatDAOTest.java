@@ -7,7 +7,7 @@ public class RatDAOTest {
 
 	@Test
 	public void getRatingsTest() {
-		RatDAO.getInstance().list();
+		RatDAO.getInstance().selectRatings();
 	}
 
 	@Test
