@@ -1,6 +1,6 @@
 package dao;
 
-import dao.user.RatDAO;
+import feat.rat.RatDAO;
 import org.junit.Test;
 
 public class RatDAOTest {

@@ -1,6 +1,5 @@
-package dao.user;
+package feat.rat;
 
-import dto.user.RatDTO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 

@@ -12,6 +12,7 @@ import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
 import feat.payment.PaymentDAO;
 import feat.paymentstatics.PaymentStaticsDAO;
+import feat.rat.RatDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
