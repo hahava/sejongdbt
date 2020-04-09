@@ -10,7 +10,7 @@ import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
-import feat.paymentstatics.PayMentStaticsDAO;
+import feat.paymentstatics.PaymentStaticsDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -56,8 +56,8 @@ public class ExecuteProject {
 //				movieDAO.movieMenu();
 				break;
 			case 3:
-				PayMentStaticsDAO mentStaticsDAO = PayMentStaticsDAO.getInstance();
-				mentStaticsDAO.list();
+				PaymentStaticsDAO mentStaticsDAO = PaymentStaticsDAO.getInstance();
+				mentStaticsDAO.selectPaymentStatics();
 				break;
 			case 4:
 				AdDAO adDAO = AdDAO.getInstance();

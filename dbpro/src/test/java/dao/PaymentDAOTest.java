@@ -1,6 +1,6 @@
 package dao;
 
-import feat.paymentstatics.PayMentStaticsDAO;
+import feat.paymentstatics.PaymentStaticsDAO;
 import dao.user.MoviePaymentDAO;
 import dao.user.PaymentDAO;
 import dto.user.MoviePaymentDTO;
@@ -16,7 +16,7 @@ public class PaymentDAOTest {
 
 	@Test
 	public void getPaymentStaticsTest() {
-		PayMentStaticsDAO.getInstance().list();
+		PaymentStaticsDAO.getInstance().selectPaymentStatics();
 	}
 
 	@Test
