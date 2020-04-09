@@ -39,7 +39,7 @@ public class MyuserDAO implements DAO {
 	}
 
 	// myuser테이블 전부 출력
-	public void list() {
+	public void selectSnacks() {
 		final String query = "SELECT " +
 			"	MYUSER_ID, " +
 			"	MYUSER_NAME, " +

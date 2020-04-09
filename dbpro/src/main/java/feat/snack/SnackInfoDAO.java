@@ -1,9 +1,11 @@
-package dao.user;
+package feat.snack;
 
-import dto.user.SnackInfoDTO;
+import dao.user.DAO;
 import oracle.connect.JDBCManager;
 
-public class SnackInfoDAO implements DAO {
+import java.util.List;
+
+public class SnackInfoDAO {
 
 	private SnackInfoDAO() {
 	}
@@ -18,8 +20,7 @@ public class SnackInfoDAO implements DAO {
 	}
 
 	// 스낵관련 정보를 전부 출력한다.
-	@Override
-	public void list() {
+	public List<SnackInfoDTO> selectSnacks() {
 		final String query = "SELECT " +
 			"	SNACK_CODE, " +
 			"	SNACK_NAME, " +
@@ -29,9 +30,8 @@ public class SnackInfoDAO implements DAO {
 			"FROM " +
 			"	SNACK_INFO";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, SnackInfoDTO.class)
-			.forEach(snackInfoDTO -> System.out.println(snackInfoDTO.toString()));
+			.queryForList(query, SnackInfoDTO.class);
 	}
 }

@@ -1,4 +1,4 @@
-package dto.user;
+package feat.snack;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

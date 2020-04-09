@@ -10,6 +10,10 @@ import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
+import feat.payment.PaymentDAO;
+import feat.paymentstatics.PaymentStaticsDAO;
+import feat.rat.RatDAO;
+import feat.snack.SnackInfoDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -48,15 +52,15 @@ public class ExecuteProject {
 			switch (num) {
 			case 1:
 				MyuserDAO myuserDAO = MyuserDAO.getInstance();
-				myuserDAO.list();
+				myuserDAO.selectSnacks();
 				break;
 			case 2:
 				MovieDAO movieDAO = MovieDAO.getInstance();
 //				movieDAO.movieMenu();
 				break;
 			case 3:
-				PayMentStaticsDAO mentStaticsDAO = PayMentStaticsDAO.getInstance();
-				mentStaticsDAO.list();
+				PaymentStaticsDAO mentStaticsDAO = PaymentStaticsDAO.getInstance();
+				mentStaticsDAO.selectPaymentStatics();
 				break;
 			case 4:
 				AdDAO adDAO = AdDAO.getInstance();
@@ -84,19 +88,19 @@ public class ExecuteProject {
 				break;
 			case 10:
 				RatDAO ratDAO = RatDAO.getInstance();
-				ratDAO.list();
+				ratDAO.selectRatings();
 				break;
 			case 11:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
-				paymentDAO.list();
+				paymentDAO.selectPaymentWays();
 				break;
 			case 12:
 				MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
-				moviePaymentDAO.list();
+				moviePaymentDAO.selectSnacks();
 				break;
 			case 13:
 				SnackInfoDAO snackInfoDAO = SnackInfoDAO.getInstance();
-				snackInfoDAO.list();
+				snackInfoDAO.selectSnacks();
 				break;
 			case 14:
 				MyuserSnackOrderDAO myuserSnackDAO = MyuserSnackOrderDAO.getInstance();
@@ -147,7 +151,7 @@ public class ExecuteProject {
 				break;
 			case 5:
 				PaymentDAO paymentDAO = PaymentDAO.getInstance();
-				paymentDAO.paymentMenu();
+//				paymentDAO.paymentMenu();
 				break;
 			case 6:
 				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();
@@ -155,7 +159,7 @@ public class ExecuteProject {
 				break;
 			case 7:
 				SnackInfoDAO infoDAO = SnackInfoDAO.getInstance();
-				infoDAO.list();
+				infoDAO.selectSnacks();
 				break;
 			case 8:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
