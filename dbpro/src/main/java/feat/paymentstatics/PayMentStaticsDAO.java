@@ -1,6 +1,5 @@
-package dao.admin;
+package feat.paymentstatics;
 
-import dto.admin.PaymentStaticsDTO;
 import oracle.connect.JDBCManager;
 
 public class PayMentStaticsDAO {

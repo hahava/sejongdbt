@@ -1,6 +1,6 @@
 package dao;
 
-import dao.admin.PayMentStaticsDAO;
+import feat.paymentstatics.PayMentStaticsDAO;
 import dao.user.MoviePaymentDAO;
 import dao.user.PaymentDAO;
 import dto.user.MoviePaymentDTO;

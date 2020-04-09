@@ -10,6 +10,7 @@ import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
+import feat.paymentstatics.PayMentStaticsDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
