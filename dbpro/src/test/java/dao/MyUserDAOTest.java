@@ -1,6 +1,6 @@
 package dao;
 
-import dao.user.MyuserDAO;
+import feat.user.MyuserDAO;
 import dao.user.MyuserSnackOrderDAO;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,7 +11,7 @@ public class MyUserDAOTest {
 
 	@Test
 	public void getMyUserTest() {
-		MyuserDAO.getInstance().selectSnacks();
+		MyuserDAO.getInstance().selectUsers();
 	}
 
 	@Test

@@ -49,7 +49,7 @@ public class PaymentDAOTest {
 
 	@Test
 	public void getMoviePayments() {
-		MoviePaymentDAO.getInstance().selectSnacks();
+		MoviePaymentDAO.getInstance().selectUsers();
 	}
 
 	@Test

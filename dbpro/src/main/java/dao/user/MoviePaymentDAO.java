@@ -18,7 +18,7 @@ public class MoviePaymentDAO implements DAO {
 		return instance;
 	}
 
-	public void selectSnacks() {
+	public void selectUsers() {
 		final String query = "SELECT " +
 			"    MOVIE_PAYMENT_CODE, " +
 			"    MYUSER_ID, " +

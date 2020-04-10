@@ -52,12 +52,12 @@ public class MovieDAOTest {
 
 	@Test
 	public void getMovieReservationCountTest(){
-		MovieDAO.getInstance().getMovieReservationCountOfPerson(1);
+		MovieDAO.getInstance().selectMovieReservationCountOfPerson(1);
 	}
 
 	@Test
 	public void getPersonWhoBookedTheMostMoviesTest(){
-		MovieDAO.getInstance().getPersonWhoBookedTheMostMovies();
+		MovieDAO.getInstance().selectPersonWhoBookedTheMostMovies();
 	}
 
 	@Test
