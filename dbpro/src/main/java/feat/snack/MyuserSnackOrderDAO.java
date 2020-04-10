@@ -1,9 +1,9 @@
-package dao.user;
+package feat.snack;
 
-import dto.user.MyuserSnackOrderDTO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Map;
 
 public class MyuserSnackOrderDAO {
@@ -21,7 +21,7 @@ public class MyuserSnackOrderDAO {
 	}
 
 	// 회원이 주문한 스낵 정보를 출력한다.
-	public void list() {
+	public List<MyuserSnackOrderDTO> selectOrderedSnacks() {
 		final String query = "SELECT " +
 			"	ORDER_NUM, " +
 			"	MYUSER_ID, " +
@@ -30,15 +30,13 @@ public class MyuserSnackOrderDAO {
 			"FROM " +
 			"	MYUSER_SNACK_ORDER";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, MyuserSnackOrderDTO.class)
-			.forEach(myuserSnackOrderDTO -> System.out.println(myuserSnackOrderDTO.toString()));
+			.queryForList(query, MyuserSnackOrderDTO.class);
 	}
 
 	// 로그인한 유저의 구매내역을 보여준다.
-	public void selectSnackOrders(String userId) {
-
+	public List<Map<String, Object>> selectMySnackOrders(String userId) {
 		final String query = "SELECT " +
 			"MSO.ORDER_NUM, " +
 			"MSO.MYUSER_ID, " +
@@ -51,15 +49,9 @@ public class MyuserSnackOrderDAO {
 			"WHERE " +
 			"MSO.SNACK_CODE=S.SNACK_CODE AND MSO.MYUSER_ID=" + StringUtils.wrap(userId, "'");
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForMaps(query, new String[] {"MSO.ORDER_NUM", "MSO.MYUSER_ID", "S.SNACK_NAME", "S.SNACK_PRICE"})
-			.forEach(stringObjectMap -> {
-				stringObjectMap.forEach((key, value) -> {
-					System.out.print(key + " : " + value + "\t");
-				});
-				System.out.println();
-			});
+			.queryForMaps(query, new String[] {"MSO.ORDER_NUM", "MSO.MYUSER_ID", "S.SNACK_NAME", "S.SNACK_PRICE"});
 	}
 
 	// 가장 간식을 많이 구매한 회원을 출력하는 메서드이다.

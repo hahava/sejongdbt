@@ -16,7 +16,7 @@ import feat.paymentstatics.PaymentStaticsDAO;
 import feat.rat.RatDAO;
 import feat.snack.SnackInfoDAO;
 import feat.user.MyuserDAO;
-import dao.user.MyuserSnackOrderDAO;
+import feat.snack.MyuserSnackOrderDAO;
 import menu.MainView;
 import util.ConsoleUtil;
 
@@ -107,7 +107,7 @@ public class ExecuteProject {
 				break;
 			case 14:
 				MyuserSnackOrderDAO myuserSnackDAO = MyuserSnackOrderDAO.getInstance();
-				myuserSnackDAO.list();
+				myuserSnackDAO.selectOrderedSnacks();
 				break;
 			case 15:
 //				login();
@@ -166,7 +166,7 @@ public class ExecuteProject {
 				break;
 			case 8:
 				MyuserSnackOrderDAO myuserSnackOrderDAO = MyuserSnackOrderDAO.getInstance();
-				myuserSnackOrderDAO.selectSnackOrders(id);
+				myuserSnackOrderDAO.selectMySnackOrders(id);
 				break;
 			case 9:
 //				login();

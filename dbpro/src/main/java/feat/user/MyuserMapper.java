@@ -1,6 +1,6 @@
 package feat.user;
 
-import dao.user.MyuserSnackOrderDAO;
+import feat.snack.MyuserSnackOrderDAO;
 import feat.movie.MovieDAO;
 import menu.MenuMapper;
 import menu.MenuMapping;

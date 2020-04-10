@@ -1,7 +1,7 @@
 package dao;
 
 import feat.user.MyuserDAO;
-import dao.user.MyuserSnackOrderDAO;
+import feat.snack.MyuserSnackOrderDAO;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,7 +25,7 @@ public class MyUserDAOTest {
 
 	@Test
 	public void selectUserSnackOrders() {
-		MyuserSnackOrderDAO.getInstance().list();
+		MyuserSnackOrderDAO.getInstance().selectOrderedSnacks();
 	}
 
 	@Test
@@ -34,7 +34,7 @@ public class MyUserDAOTest {
 		String userId = "eeww95";
 
 		// when
-		MyuserSnackOrderDAO.getInstance().selectSnackOrders(userId);
+		MyuserSnackOrderDAO.getInstance().selectMySnackOrders(userId);
 	}
 
 	@Test

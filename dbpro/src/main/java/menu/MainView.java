@@ -27,7 +27,7 @@ public class MainView {
 		System.out.println("11. 결제 정보");
 		System.out.println("12. 영화 결제 정보");
 		System.out.println("13. 간식 종류");
-		System.out.println("14. 회원들이 주문한 간식 종류 ");
+		System.out.println("14. 회원들이 주문한 간식 종류");
 		System.out.println("15. 로그인 변경");
 		System.out.println("16. 데이터 초기화");
 		System.out.println("17. 프로그램 종료");
