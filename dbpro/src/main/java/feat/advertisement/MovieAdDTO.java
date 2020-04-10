@@ -1,4 +1,4 @@
-package dto.admin;
+package feat.advertisement;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

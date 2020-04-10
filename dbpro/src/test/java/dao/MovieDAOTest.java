@@ -1,6 +1,6 @@
 package dao;
 
-import dao.admin.MovieAdDAO;
+import feat.advertisement.MovieAdDAO;
 import feat.movie.MovieDAO;
 import feat.movie.MovieDTO;
 import org.junit.Ignore;
@@ -12,12 +12,12 @@ public class MovieDAOTest {
 
 	@Test
 	public void getMovieAdTest() {
-		MovieAdDAO.getInstance().list();
+		MovieAdDAO.getInstance().selectMovieADs();
 	}
 
 	@Test
 	public void getMoviesTest() {
-		MovieAdDAO.getInstance().list();
+		MovieAdDAO.getInstance().selectMovieADs();
 	}
 
 	@Test
