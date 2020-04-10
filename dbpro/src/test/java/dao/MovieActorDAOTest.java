@@ -1,13 +1,13 @@
 package dao;
 
-import dao.admin.MovieActorDAO;
+import feat.actor.MovieActorDAO;
 import org.junit.Test;
 
 public class MovieActorDAOTest {
 
 	@Test
 	public void getMovieActorTest() {
-		MovieActorDAO.getInstance().list();
+		MovieActorDAO.getInstance().selectMovieActors();
 	}
 
 }
