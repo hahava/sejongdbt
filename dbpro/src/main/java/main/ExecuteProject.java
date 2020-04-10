@@ -6,6 +6,7 @@ import auth.Account;
 import dao.admin.*;
 import dao.user.*;
 import feat.actor.ActorDAO;
+import feat.actor.MovieActorDAO;
 import feat.advertisement.AdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
@@ -86,7 +87,7 @@ public class ExecuteProject {
 				break;
 			case 9:
 				MovieActorDAO movieActorDAO = MovieActorDAO.getInstance();
-				movieActorDAO.list();
+				movieActorDAO.selectMovieActors();
 				break;
 			case 10:
 				RatDAO ratDAO = RatDAO.getInstance();
@@ -124,7 +125,7 @@ public class ExecuteProject {
 				break;
 			case 19:
 				MyuserDAO myuserDAOver2 = MyuserDAO.getInstance();
-				myuserDAOver2.showBestMemberMenu();
+//				myuserDAOver2.showBestMemberMenu();
 				break;
 			case 20:
 				MovieDAO moviedaover3 = MovieDAO.getInstance();
