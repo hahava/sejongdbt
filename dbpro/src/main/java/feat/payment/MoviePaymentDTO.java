@@ -1,9 +1,9 @@
-package dto.user;
+package feat.payment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import oracle.connect.ColumnName;
+import config.ColumnName;
 
 import java.sql.Date;
 

@@ -23,8 +23,17 @@ public class ActorMapper {
 			System.out.println("영화정보가 없거나 배우정보가 존재하지 않습니다.");
 		} else {
 			actors.stream()
-				.forEach(actorDTO -> System.out.println("배우명 : " + actorDTO.getActorName() + "\t" + "성별 : " + actorDTO.getActorGender() + " \t " + "생년월일 : " + actorDTO.getActorBirth()));
+				.forEach(actorDTO -> System.out.println("배우명 : " + actorDTO.getActorName() + "\t" + "성별 : " + actorDTO
+					.getActorGender() + " \t " + "생년월일 : " + actorDTO.getActorBirth()));
 		}
+	}
+
+	@MenuMapping("영화에 출연한 배우 정보")
+	public void getMovieActors() {
+		MovieActorDAO
+			.getInstance()
+			.selectMovieActors()
+			.forEach(movieActorDTO -> System.out.println(movieActorDTO.toString()));
 	}
 
 }

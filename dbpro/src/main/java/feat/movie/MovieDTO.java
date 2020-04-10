@@ -1,17 +1,16 @@
 package feat.movie;
 
-import dto.user.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import oracle.connect.ColumnName;
+import config.ColumnName;
 
 import java.sql.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieDTO implements DTO {
+public class MovieDTO {
 	@ColumnName("MOVIE_CODE")
 	private String movieCode;
 

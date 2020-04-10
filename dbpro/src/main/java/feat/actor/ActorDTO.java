@@ -1,17 +1,16 @@
 package feat.actor;
 
-import dto.admin.DTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import oracle.connect.ColumnName;
+import config.ColumnName;
 
 import java.sql.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActorDTO implements DTO {
+public class ActorDTO {
 	@ColumnName("ACTOR_CODE")
 	private String actorCode;
 

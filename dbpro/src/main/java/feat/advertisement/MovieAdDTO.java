@@ -1,9 +1,9 @@
-package dto.admin;
+package feat.advertisement;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import oracle.connect.ColumnName;
+import config.ColumnName;
 
 @Data
 @AllArgsConstructor

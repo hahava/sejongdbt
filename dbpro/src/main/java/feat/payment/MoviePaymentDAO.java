@@ -1,10 +1,12 @@
-package dao.user;
+package feat.payment;
 
-import dto.user.MoviePaymentDTO;
-import oracle.connect.JDBCManager;
+import config.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
-public class MoviePaymentDAO implements DAO {
+import java.util.List;
+import java.util.Map;
+
+public class MoviePaymentDAO {
 
 	private static MoviePaymentDAO instance;
 
@@ -18,7 +20,7 @@ public class MoviePaymentDAO implements DAO {
 		return instance;
 	}
 
-	public void selectSnacks() {
+	public List<MoviePaymentDTO> selectMoviePayments() {
 		final String query = "SELECT " +
 			"    MOVIE_PAYMENT_CODE, " +
 			"    MYUSER_ID, " +
@@ -27,15 +29,13 @@ public class MoviePaymentDAO implements DAO {
 			"    PAYMENT_DATE " +
 			"FROM " +
 			"    MOVIE_PAYMENT ";
-		JDBCManager
+
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, MoviePaymentDTO.class)
-			.forEach(moviePaymentDTO -> {
-				System.out.println(moviePaymentDTO.toString());
-			});
+			.queryForList(query, MoviePaymentDTO.class);
 	}
 
-	public void listMe(String id) {
+	public List<Map<String, Object>> selectMyMoviePayments(String id) {
 
 		final String query = "SELECT " +
 			"    mp.movie_payment_code, " +
@@ -53,7 +53,7 @@ public class MoviePaymentDAO implements DAO {
 			"WHERE " +
 			"    mp.myuser_id = " + StringUtils.wrap(id, "'");
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
 			.queryForMaps(query, new String[] {"mp.movie_payment_code",
 				"mp.myuser_id",
@@ -61,10 +61,6 @@ public class MoviePaymentDAO implements DAO {
 				"m.movie_age",
 				"p.payment_way",
 				"mp.payment_date"
-			})
-			.forEach(stringObjectMap -> {
-				stringObjectMap.forEach((key, value) -> System.out.print(key + " : " + value + "\t"));
-				System.out.println();
 			});
 	}
 }

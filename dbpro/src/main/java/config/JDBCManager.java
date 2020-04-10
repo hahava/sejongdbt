@@ -1,4 +1,4 @@
-package oracle.connect;
+package config;
 
 import util.PropertiesWrapper;
 

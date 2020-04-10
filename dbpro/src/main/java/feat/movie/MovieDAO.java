@@ -1,6 +1,6 @@
 package feat.movie;
 
-import oracle.connect.JDBCManager;
+import config.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
@@ -136,8 +136,7 @@ public class MovieDAO {
 	}
 
 	// 영화 예약 횟수가 가장 많은 회원의 id와 예약횟수를 출력한다.
-	public void getPersonWhoBookedTheMostMovies() {
-
+	public Map<String, Object> selectPersonWhoBookedTheMostMovies() {
 		final String query = "SELECT " +
 			"	m.myuser_id, COUNT(*) AS total_count " +
 			"FROM " +
@@ -148,15 +147,13 @@ public class MovieDAO {
 			"ORDER BY total_count DESC " +
 			"LIMIT 1;";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForMap(query, new String[] {"m.myuser_id", "total_count"})
-			.forEach((key, value) -> System.out.println(key + ":" + value));
+			.queryForMap(query, new String[] {"m.myuser_id", "total_count"});
 	}
 
 	// 특정 횟수를 입력하고 그 횟수보다 더 많이 예약한 회원의 id와 예약횟수를 출력한다.
-	public void getMovieReservationCountOfPerson(int reservationCount) {
-		System.out.println("범위를 지정하세요.입력한 숫자 이상 영화를 본 회원들을 출력합니다.");
+	public List<Map<String, Object>> selectMovieReservationCountOfPerson(int reservationCount) {
 		final String query = "SELECT " +
 			"	m.myuser_id as userId, " +
 			"	COUNT(*) as watchCount " +
@@ -168,14 +165,7 @@ public class MovieDAO {
 			"GROUP BY m.myuser_id " +
 			"HAVING COUNT(*) >=  " + reservationCount;
 
-		JDBCManager.getInstance().queryForMaps(query, new String[] {"userId", "watchCount"})
-			.forEach(stringObjectMap -> {
-				System.out.print("[ ");
-				stringObjectMap.forEach((key, value) -> {
-					System.out.print(key + " : " + value + "\t");
-				});
-				System.out.println(" ]");
-			});
+		return JDBCManager.getInstance().queryForMaps(query, new String[] {"userId", "watchCount"});
 	}
 
 	// 영화 별 평점통계와 광고비 통계를 낼 수 있는 메뉴이다.

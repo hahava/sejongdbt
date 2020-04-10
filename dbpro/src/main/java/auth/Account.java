@@ -1,7 +1,7 @@
 package auth;
 
 import consts.UserLevel;
-import dao.user.MyuserDAO;
+import feat.user.MyuserDAO;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;

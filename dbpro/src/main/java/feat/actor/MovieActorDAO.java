@@ -1,7 +1,8 @@
-package dao.admin;
+package feat.actor;
 
-import dto.admin.MovieActorDTO;
-import oracle.connect.JDBCManager;
+import config.JDBCManager;
+
+import java.util.List;
 
 public class MovieActorDAO {
 
@@ -17,7 +18,7 @@ public class MovieActorDAO {
 		return instance;
 	}
 
-	public void list() {
+	public List<MovieActorDTO> selectMovieActors() {
 		final String query = "select " +
 			"ACTOR_CODE, " +
 			"MOVIE_CODE, " +
@@ -25,9 +26,8 @@ public class MovieActorDAO {
 			"	from " +
 			"MOVIE_ACTOR";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, MovieActorDTO.class)
-			.forEach(movieActorDTO -> System.out.println(movieActorDTO.toString()));
+			.queryForList(query, MovieActorDTO.class);
 	}
 }

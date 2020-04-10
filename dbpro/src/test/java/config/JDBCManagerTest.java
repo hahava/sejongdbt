@@ -1,7 +1,6 @@
 package config;
 
-import dto.admin.MovieActorDTO;
-import oracle.connect.JDBCManager;
+import feat.actor.MovieActorDTO;
 import org.junit.Ignore;
 import org.junit.Test;
 

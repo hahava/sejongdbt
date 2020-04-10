@@ -1,9 +1,9 @@
 package dao;
 
 import feat.paymentstatics.PaymentStaticsDAO;
-import dao.user.MoviePaymentDAO;
+import feat.payment.MoviePaymentDAO;
 import feat.payment.PaymentDAO;
-import dto.user.MoviePaymentDTO;
+import feat.payment.MoviePaymentDTO;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -49,7 +49,7 @@ public class PaymentDAOTest {
 
 	@Test
 	public void getMoviePayments() {
-		MoviePaymentDAO.getInstance().selectSnacks();
+		MoviePaymentDAO.getInstance().selectMoviePayments();
 	}
 
 	@Test
@@ -57,6 +57,6 @@ public class PaymentDAOTest {
 		// given
 		final String userId = "eeww95";
 		// when
-		MoviePaymentDAO.getInstance().listMe("eeww95");
+		MoviePaymentDAO.getInstance().selectMyMoviePayments("eeww95");
 	}
 }
