@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import auth.Account;
 import dao.admin.*;
-import dao.user.*;
 import feat.actor.ActorDAO;
 import feat.actor.MovieActorDAO;
 import feat.advertisement.AdDAO;
@@ -12,6 +11,7 @@ import feat.advertisement.MovieAdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
+import feat.payment.MoviePaymentDAO;
 import feat.payment.PaymentDAO;
 import feat.paymentstatics.PaymentStaticsDAO;
 import feat.rat.RatDAO;
@@ -100,7 +100,7 @@ public class ExecuteProject {
 				break;
 			case 12:
 				MoviePaymentDAO moviePaymentDAO = MoviePaymentDAO.getInstance();
-				moviePaymentDAO.selectUsers();
+				moviePaymentDAO.selectMoviePayments();
 				break;
 			case 13:
 				SnackInfoDAO snackInfoDAO = SnackInfoDAO.getInstance();
@@ -159,7 +159,7 @@ public class ExecuteProject {
 				break;
 			case 6:
 				MoviePaymentDAO moviepaymentDAO = MoviePaymentDAO.getInstance();
-				moviepaymentDAO.listMe(id);
+				moviepaymentDAO.selectMyMoviePayments(id);
 				break;
 			case 7:
 				SnackInfoDAO infoDAO = SnackInfoDAO.getInstance();

@@ -1,6 +1,5 @@
 package feat.payment;
 
-import dto.user.MoviePaymentDTO;
 import oracle.connect.JDBCManager;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package dto.user;
+package feat.payment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
