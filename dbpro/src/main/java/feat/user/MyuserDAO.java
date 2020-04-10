@@ -1,23 +1,14 @@
 package feat.user;
 
-import dao.user.DAO;
-import dao.user.MyuserSnackOrderDAO;
-import feat.movie.MovieDAO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
-import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
-public class MyuserDAO implements DAO {
+public class MyuserDAO {
 
-	// 로그인 상태
-	public final static int NOLOGIN = 0; // 로그인 실패
-	public final static int ADMINLOGIN = 1; // admin으로 로그인이 됨
-	public final static int USERLOGIN = 2; // user로 로그인이 됨
-
-	private static MyuserDAO instance = new MyuserDAO();
+	private static MyuserDAO instance;
 
 	// 캡슐화
 	private MyuserDAO() {
@@ -25,22 +16,14 @@ public class MyuserDAO implements DAO {
 
 	// 만들어진 인스턴스 리턴
 	public static MyuserDAO getInstance() {
+		if (instance == null) {
+			instance = new MyuserDAO();
+		}
 		return instance;
 	}
 
-	// connection 메서드
-	private Connection getConnection() {
-		JDBCManager manager = new JDBCManager();
-		String oracleId = "s15010924";
-		String passwd = "s15010924";
-		int port = 1521;
-
-		Connection conn = manager.connect(oracleId, passwd, port);
-		return conn;
-	}
-
 	// myuser테이블 전부 출력
-	public void selectSnacks() {
+	public List<MyuserDTO> selectUsers() {
 		final String query = "SELECT " +
 			"	MYUSER_ID, " +
 			"	MYUSER_NAME, " +
@@ -51,11 +34,9 @@ public class MyuserDAO implements DAO {
 			"FROM " +
 			"	MYUSER";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, MyuserDTO.class)
-			.forEach(myuserDTO -> System.out.println(myuserDTO.toString()));
-
+			.queryForList(query, MyuserDTO.class);
 	}
 
 	// 로그인 한 유저의 정보만을 출력한다.
@@ -71,7 +52,7 @@ public class MyuserDAO implements DAO {
 			"FROM " +
 			"	MYUSER " +
 			"WHERE " +
-			"	MYUSER_ID = "+ StringUtils.wrap(id, "'");
+			"	MYUSER_ID = " + StringUtils.wrap(id, "'");
 
 		JDBCManager
 			.getInstance()
@@ -93,43 +74,6 @@ public class MyuserDAO implements DAO {
 		return JDBCManager
 			.getInstance()
 			.queryForMap(query, new String[] {"MYUSER_ID"});
-
-	}
-	
-	//우수회원을 선별 하는 메뉴
-	public void pickBestMenu() {
-		int menu;
-		Scanner sc = new Scanner(System.in);
-
-		System.out.println("이달의 우수회원을 선출합니다.");
-		System.out.println("1. 영화왕)가장 많이 본 회원 1명 선출");
-		System.out.println("2. 영화왕)범위 지정 후 여러명 선출");
-		System.out.println("3. 스낵왕)스낵에 돈을 가장 많이 쓴 회원 선출");
-		System.out.println("4. 스낵왕)범위 지정후 여러명 선출");
-		
-		menu = sc.nextInt();
-		
-		MovieDAO moviedao = MovieDAO.getInstance();
-		MyuserSnackOrderDAO myuserSnackOrderDao = MyuserSnackOrderDAO.getInstance();
-
-		switch (menu) {
-		case 1:
-			moviedao.getPersonWhoBookedTheMostMovies();
-			break;
-		case 2:
-//			moviedao.getMovieReservationCountOfPerson();
-
-			break;
-		case 3:
-			myuserSnackOrderDao.selectMostOrderedMember();
-			return;
-		case 4:
-//			myuserSnackOrderDao.selectMinPriceOrders();
-		default:
-			System.out.println("잘못 입력하셨습니다.");
-			break;
-
-		}
 
 	}
 

@@ -11,7 +11,7 @@ public class MyUserDAOTest {
 
 	@Test
 	public void getMyUserTest() {
-		MyuserDAO.getInstance().selectSnacks();
+		MyuserDAO.getInstance().selectUsers();
 	}
 
 	@Test

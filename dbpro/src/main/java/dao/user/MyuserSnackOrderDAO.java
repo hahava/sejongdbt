@@ -4,6 +4,8 @@ import dto.user.MyuserSnackOrderDTO;
 import oracle.connect.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 public class MyuserSnackOrderDAO {
 
 	private MyuserSnackOrderDAO() {
@@ -61,7 +63,7 @@ public class MyuserSnackOrderDAO {
 	}
 
 	// 가장 간식을 많이 구매한 회원을 출력하는 메서드이다.
-	public void selectMostOrderedMember() {
+	public Map<String, Object> selectMostOrderedMember() {
 		/*
 		 * myuser_snack_order 테이블과 snack_info 테이블을 조인하고 myuser_id로 그룹핑 한 뒤 회원별
 		 * 스낵 총 구매액과 횟수를 보여준다. 이 때 snack_price의 합계가 가장 많은 순서로 정렬한다.
@@ -78,12 +80,10 @@ public class MyuserSnackOrderDAO {
 			"GROUP BY MSO.MYUSER_ID " +
 			"ORDER BY SUM(SI.SNACK_PRICE) DESC";
 
-		System.out.println("가장 스낵에 돈을 많이 투자한 회원을 출력합니다.");
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForMap(query, new String[] {"userId", "sum", "count"})
-			.forEach((key, value) -> System.out.println(key + " : " + value));
+			.queryForMap(query, new String[] {"userId", "sum", "count"});
 	}
 
 	// 최소 스낵 구매액을 지정해주면 그 이상 구매한 사람의 명단을 출력해주는 메서드이다.
