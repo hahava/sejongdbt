@@ -1,7 +1,8 @@
-package dao.admin;
+package feat.advertisement;
 
-import dto.admin.MovieAdDTO;
 import oracle.connect.JDBCManager;
+
+import java.util.List;
 
 public class MovieAdDAO {
 
@@ -17,7 +18,7 @@ public class MovieAdDAO {
 		return instance;
 	}
 
-	public void list() {
+	public List<MovieAdDTO> selectMovieADs() {
 		final String query = "SELECT " +
 			"	CNT, " +
 			"	MOVIE_CODE, " +
@@ -25,10 +26,9 @@ public class MovieAdDAO {
 			"FROM " +
 			"	MOVIE_AD";
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForList(query, MovieAdDTO.class)
-			.forEach(movieAdDTO -> System.out.println(movieAdDTO.toString()));
+			.queryForList(query, MovieAdDTO.class);
 	}
 
 }

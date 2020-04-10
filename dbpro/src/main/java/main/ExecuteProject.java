@@ -8,6 +8,7 @@ import dao.user.*;
 import feat.actor.ActorDAO;
 import feat.actor.MovieActorDAO;
 import feat.advertisement.AdDAO;
+import feat.advertisement.MovieAdDAO;
 import feat.employee.EmployeeDAO;
 import feat.employeetask.EmployeeTaskDAO;
 import feat.movie.MovieDAO;
@@ -71,7 +72,7 @@ public class ExecuteProject {
 				break;
 			case 5:
 				MovieAdDAO movieAdDAO = MovieAdDAO.getInstance();
-				movieAdDAO.list();
+				movieAdDAO.selectMovieADs();
 				break;
 			case 6:
 				EmployeeDAO employeeDAO = EmployeeDAO.getInstance();
