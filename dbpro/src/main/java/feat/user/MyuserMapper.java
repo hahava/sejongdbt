@@ -71,4 +71,19 @@ public class MyuserMapper {
 			.forEach((key, value) -> System.out.println(key + " : " + value));
 	}
 
+	@MenuMapping("(스낵)범위 지정후 여러명 선출")
+	public void getMinPriceOrders() throws IOException {
+		int minPrice = readInt("스낵에 돈을 많이 투자한 회원을 출력합니다. 범위를 지정하세요.");
+		MyuserSnackOrderDAO
+			.getInstance()
+			.selectMinPriceOrders(minPrice)
+			.forEach(stringObjectMap -> {
+				stringObjectMap.forEach((key, value) -> {
+					System.out.print(key + " : " + value + "\t");
+				});
+				System.out.println();
+			});
+		;
+	}
+
 }

@@ -79,7 +79,7 @@ public class MyuserSnackOrderDAO {
 	}
 
 	// 최소 스낵 구매액을 지정해주면 그 이상 구매한 사람의 명단을 출력해주는 메서드이다.
-	public void selectMinPriceOrders(int minPrice) {
+	public List<Map<String, Object>>  selectMinPriceOrders(int minPrice) {
 		/*
 		 * myuser_snack_order 테이블과 snack_info 테이블을 조인하고 myuser_id로 그룹핑 한 뒤 회원별
 		 * 스낵 총 구매액과 횟수를 보여준다. 이 때 지정한 스낵 구매액보다 큰 회원을 출력한다.
@@ -96,17 +96,10 @@ public class MyuserSnackOrderDAO {
 			"GROUP BY MSO.MYUSER_ID " +
 			"HAVING SUM(SI.SNACK_PRICE)> " + StringUtils.wrap(String.valueOf(minPrice), "'") +
 			"ORDER BY SUM(SI.SNACK_PRICE) DESC";
-		System.out.println("스낵에 돈을 많이 투자한 회원을 출력합니다. 범위를 지정하세요.");
 
-		JDBCManager
+		return JDBCManager
 			.getInstance()
-			.queryForMaps(query, new String[] {"userId", "sum", "count"})
-			.forEach(stringObjectMap -> {
-				stringObjectMap.forEach((key, value) -> {
-					System.out.print(key + " : " + value + "\t");
-				});
-				System.out.println();
-			});
+			.queryForMaps(query, new String[] {"userId", "sum", "count"});
 	}
 
 }
