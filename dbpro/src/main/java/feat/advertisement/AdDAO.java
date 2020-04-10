@@ -1,6 +1,6 @@
 package feat.advertisement;
 
-import oracle.connect.JDBCManager;
+import config.JDBCManager;
 
 import java.util.List;
 

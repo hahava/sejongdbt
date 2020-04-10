@@ -1,7 +1,6 @@
 package config;
 
 import feat.actor.MovieActorDTO;
-import oracle.connect.JDBCManager;
 import org.junit.Ignore;
 import org.junit.Test;
 

@@ -1,6 +1,6 @@
 package feat.movie;
 
-import oracle.connect.JDBCManager;
+import config.JDBCManager;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
