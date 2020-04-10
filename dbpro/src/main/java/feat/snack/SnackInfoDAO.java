@@ -1,6 +1,5 @@
 package feat.snack;
 
-import dao.user.DAO;
 import oracle.connect.JDBCManager;
 
 import java.util.List;
