@@ -1,7 +1,5 @@
 package feat.payment;
 
-import dao.user.MoviePaymentDAO;
-import dto.user.MoviePaymentDTO;
 import feat.movie.MovieDAO;
 import menu.MenuMapper;
 import menu.MenuMapping;
@@ -66,7 +64,7 @@ public class PaymentMapper {
 		printLn("예매한 영화를 수정합니다.");
 		printLn("나의 예매 목록");
 		// TODO: Account 수정 후 아래 코드 변경 할 것
-		MoviePaymentDAO.getInstance().listMe("id");
+		MoviePaymentDAO.getInstance().selectMyMoviePayments("id");
 		// TODO: 방어로직 작성할 것
 		MoviePaymentDTO moviePaymentDTO = new MoviePaymentDTO();
 
@@ -90,8 +88,28 @@ public class PaymentMapper {
 	public void removeMoviePayment() throws IOException {
 		printLn("나의 예매 목록");
 		// TODO: Account 수정 후 하기 코드 변경
-		MoviePaymentDAO.getInstance().listMe("id");
+		MoviePaymentDAO.getInstance().selectMyMoviePayments("id");
 		int movieReservationCode = readInt("취소할 예매 코드: ");
 		PaymentDAO.getInstance().deletePayment(movieReservationCode);
+	}
+
+	@MenuMapping("영화 결제 정보")
+	public void getMoviePayments() {
+		MoviePaymentDAO
+			.getInstance()
+			.selectMoviePayments()
+			.forEach(moviePaymentDTO -> System.out.println(moviePaymentDTO.toString()));
+	}
+
+	@MenuMapping("나의 결제 내역")
+	public void getMyMoviePayments() {
+		// Account 수정 후 변경할 것
+		MoviePaymentDAO
+			.getInstance()
+			.selectMyMoviePayments("id")
+			.forEach(stringObjectMap -> {
+				stringObjectMap.forEach((key, value) -> System.out.print(key + " : " + value + "\t"));
+				System.out.println();
+			});
 	}
 }
