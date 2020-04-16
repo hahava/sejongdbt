@@ -1,19 +1,19 @@
 package menu;
 
 import auth.Account;
-import consts.UserLevel;
+import auth.AuthLevel;
 
 public class MainView {
 	public static void show() {
 		System.out.println("원하는 정보를 보여드립니다.!");
-		if (Account.getUserLevel() == UserLevel.ADMIN) {
-			showAdminMenu();
-		} else {
+		if (Account.getUser().getLevel() == AuthLevel.ADMIN) {
 			showUserMenu();
+		} else {
+			showAdminMenu();
 		}
 	}
 
-	private static void showUserMenu() {
+	private static void showAdminMenu() {
 		System.out.println("1. 유저 정보");
 		System.out.println("2. 영화 정보");
 		System.out.println("3. 결제 통계 정보");
@@ -36,7 +36,7 @@ public class MainView {
 		System.out.println("20. 영화 통계");
 	}
 
-	private static void showAdminMenu() {
+	private static void showUserMenu() {
 		System.out.println("1. 나의 정보");
 		System.out.println("2. 영화 정보");
 		System.out.println("3. 영화 평점 정보");

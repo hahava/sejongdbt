@@ -1,6 +1,5 @@
 package auth;
 
-import consts.UserLevel;
 import feat.user.MyuserDAO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,7 +8,11 @@ import java.util.Map;
 public class Account {
 
 	private static Account instance;
-	private static UserLevel level;
+	private static User user;
+
+	public static User getUser() {
+		return user;
+	}
 
 	public static void doLogin(String id, String passWord) {
 		if (isLogin()) {
@@ -21,11 +24,13 @@ public class Account {
 			return;
 		}
 
+		user = new User();
+		user.setId(id);
+
 		if (StringUtils.equals(id, "admin")) {
-			level = UserLevel.ADMIN;
-		} else {
-			level = UserLevel.USER;
+			user.setLevel(AuthLevel.ADMIN);
 		}
+		user.setLevel(AuthLevel.USER);
 
 		instance = new Account();
 	}
@@ -37,7 +42,4 @@ public class Account {
 		return true;
 	}
 
-	public static UserLevel getUserLevel() {
-		return level;
-	}
 }
