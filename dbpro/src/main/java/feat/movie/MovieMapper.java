@@ -1,7 +1,7 @@
 package feat.movie;
 
 import auth.Account;
-import consts.UserLevel;
+import auth.AuthLevel;
 import feat.actor.ActorDAO;
 import menu.MenuMapper;
 import menu.MenuMapping;
@@ -27,7 +27,7 @@ public class MovieMapper {
 			System.out.println("2. 배우기반 영화 검색");
 			System.out.println("3. 특정 영화에 출연한 배우 검색");
 			// 관리자 여부 화인
-			if (Account.getUserLevel().equals(UserLevel.ADMIN)) {
+			if (Account.getUser().getLevel().equals(AuthLevel.ADMIN)) {
 				System.out.println("4. 영화 추가 하기");
 				System.out.println("5. 영화 수정 하기");
 				System.out.println("6. 영화 삭제 하기");
