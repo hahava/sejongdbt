@@ -1,6 +1,7 @@
 package util;
 
 import java.io.*;
+import java.lang.reflect.Field;
 
 public class ConsoleUtil {
 
@@ -35,9 +36,29 @@ public class ConsoleUtil {
 		return parseInt;
 	}
 
+	public static void printObject(Object instance) throws IllegalAccessException, IOException {
+		Field[] fields = instance.getClass().getDeclaredFields();
+		print("[");
+		for (int i = 0; i < fields.length; i++) {
+			fields[i].setAccessible(true);
+			String fieldName = fields[i].getName();
+			Object value = fields[i].get(instance);
+			print(fieldName + " : " + value);
+			if (i != fields.length - 1) {
+				print(", ");
+			}
+		}
+		printLn("]");
+	}
+
 	public static void printLn(String msg) throws IOException {
 		BUFFERED_WRITER.write(msg);
 		BUFFERED_WRITER.newLine();
+		BUFFERED_WRITER.flush();
+	}
+
+	private static void print(String msg) throws IOException {
+		BUFFERED_WRITER.write(msg);
 		BUFFERED_WRITER.flush();
 	}
 
