@@ -18,8 +18,7 @@ public class JDBCManager {
 
 	private static JDBCManager jdbcManager;
 
-	// TODO : Change public to private
-	public JDBCManager() {
+	private JDBCManager() {
 	}
 
 	public static JDBCManager getInstance() {
@@ -90,7 +89,7 @@ public class JDBCManager {
 		return results;
 	}
 
-	public int insert(String query, Object[] params){
+	public int insert(String query, Object[] params) {
 		return update(query, params);
 	}
 
@@ -113,22 +112,4 @@ public class JDBCManager {
 		return result;
 	}
 
-	public Connection connect(String id, String passwd, int port) {
-		String jdbcUrl = "jdbc:oracle:thin:@sce.sejong.ac.kr:" + port + "/orcl";
-		Connection connection = null;
-		try {
-			connection = DriverManager.getConnection(jdbcUrl, id, passwd);
-		} catch (SQLException e) {
-			System.out.println("Connection Failed! Check output console");
-			e.printStackTrace();
-			return null;
-		}
-
-		if (connection != null) {
-			return connection;
-		} else {
-			System.out.println("Failed to make connection!");
-			return null;
-		}
-	}
 }
