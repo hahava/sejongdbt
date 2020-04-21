@@ -11,10 +11,6 @@ import java.io.IOException;
 import static kr.ac.sejong.util.ConsoleUtil.close;
 import static kr.ac.sejong.util.ConsoleUtil.readString;
 
-/**
- * @author kalin
- * @date 2017. 6. 8.
- */
 public class Main {
 
 	public static void initialize() {
