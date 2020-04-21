@@ -55,7 +55,7 @@ local.properties
 .apt_generated/
 
 # Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
+.cache-kr.ac.sejong.main
 .scala_dependencies
 .worksheet
 
