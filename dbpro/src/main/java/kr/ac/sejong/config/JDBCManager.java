@@ -8,14 +8,6 @@ import java.util.*;
 
 public class JDBCManager {
 
-	static {
-		try {
-			Class.forName(PropertiesWrapper.getInstance().getProperty("jdbc.driver"));
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private static JDBCManager jdbcManager;
 
 	private JDBCManager() {
@@ -30,7 +22,7 @@ public class JDBCManager {
 
 	private Connection getConnection() throws SQLException {
 		Properties properties = PropertiesWrapper.getInstance();
-		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
+		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "1234");
 	}
 
 	public <T> List<T> queryForList(String query, Class<T> elementType) {
