@@ -5,9 +5,11 @@ import org.reflections.Reflections;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 public class MenuSelector {
 
@@ -36,18 +38,13 @@ public class MenuSelector {
 	}
 
 	private List<Method> getMenuMappingMethods(Method[] declaredMethods) {
-		List<Method> list = new LinkedList<>();
-		for (Method method : declaredMethods) {
-			if (method.getAnnotation(MenuMapping.class) != null) {
-				list.add(method);
-			}
-		}
-		return list;
+		return Arrays.stream(declaredMethods)
+			.filter(method -> method.getAnnotation(MenuMapping.class) != null)
+			.collect(toList());
 	}
 
 	private Set<Class<?>> getMenuMapperAnnotatedClasses() {
 		Reflections reflections = new Reflections();
 		return reflections.getTypesAnnotatedWith(MenuMapper.class);
 	}
-
 }
