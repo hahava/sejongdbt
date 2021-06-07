@@ -15,14 +15,16 @@ public class JDBCManager {
 
 	public static JDBCManager getInstance() {
 		if (jdbcManager == null) {
-			jdbcManager = new JDBCManager();
+			synchronized (JDBCManager.class) {
+				jdbcManager = new JDBCManager();
+			}
 		}
 		return jdbcManager;
 	}
 
 	private Connection getConnection() throws SQLException {
 		Properties properties = PropertiesWrapper.getInstance();
-		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "1234");
+		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
 	}
 
 	public <T> List<T> queryForList(String query, Class<T> elementType) {
