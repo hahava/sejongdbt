@@ -22,7 +22,7 @@ public class JDBCManager {
 
 	private Connection getConnection() throws SQLException {
 		Properties properties = PropertiesWrapper.getInstance();
-		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "1234");
+		return DriverManager.getConnection(properties.getProperty("jdbc.host"), "root", "");
 	}
 
 	public <T> List<T> queryForList(String query, Class<T> elementType) {

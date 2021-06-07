@@ -1,6 +1,5 @@
 package kr.ac.sejong.main;
 
-import kr.ac.sejong.auth.Account;
 import kr.ac.sejong.menu.MainView;
 import kr.ac.sejong.menu.MenuSelector;
 import kr.ac.sejong.util.PropertiesWrapper;
@@ -13,7 +12,7 @@ import static kr.ac.sejong.util.ConsoleUtil.readString;
 
 public class Main {
 
-	public static void initialize() {
+	private static void initialize() {
 		try {
 			Class.forName(PropertiesWrapper.getInstance().getProperty("jdbc.driver"));
 		} catch (ClassNotFoundException e) {
@@ -23,12 +22,6 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 		initialize();
-
-		while (Account.isLogin() == false) {
-			String id = readString("아이디를 입력해주세요.");
-			String pw = readString("패스워드를 입력해주세요.");
-			Account.doLogin(id, pw);
-		}
 
 		while (true) {
 			MainView.show();
@@ -43,7 +36,7 @@ public class Main {
 		destroy();
 	}
 
-	public static void destroy() {
+	private static void destroy() {
 		try {
 			close();
 		} catch (IOException e) {

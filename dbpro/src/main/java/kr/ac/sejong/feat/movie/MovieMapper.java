@@ -1,7 +1,5 @@
 package kr.ac.sejong.feat.movie;
 
-import kr.ac.sejong.auth.Account;
-import kr.ac.sejong.auth.AuthLevel;
 import kr.ac.sejong.feat.actor.ActorDAO;
 import kr.ac.sejong.menu.MenuMapper;
 import kr.ac.sejong.menu.MenuMapping;
@@ -27,11 +25,11 @@ public class MovieMapper {
 			System.out.println("2. 배우기반 영화 검색");
 			System.out.println("3. 특정 영화에 출연한 배우 검색");
 			// 관리자 여부 화인
-			if (Account.getUser().getLevel().equals(AuthLevel.ADMIN)) {
-				System.out.println("4. 영화 추가 하기");
-				System.out.println("5. 영화 수정 하기");
-				System.out.println("6. 영화 삭제 하기");
-			}
+//			if (Account.getUser().getLevel().equals(AuthLevel.ADMIN)) {
+//				System.out.println("4. 영화 추가 하기");
+//				System.out.println("5. 영화 수정 하기");
+//				System.out.println("6. 영화 삭제 하기");
+//			}
 			System.out.println("7. 뒤로");
 
 			String userInput = readString();
