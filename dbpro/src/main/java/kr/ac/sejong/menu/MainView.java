@@ -1,16 +1,10 @@
 package kr.ac.sejong.menu;
 
-import kr.ac.sejong.auth.Account;
-import kr.ac.sejong.auth.AuthLevel;
-
 public class MainView {
 	public static void show() {
 		System.out.println("원하는 정보를 보여드립니다.!");
-		if (Account.getUser().getLevel() == AuthLevel.ADMIN) {
-			showUserMenu();
-		} else {
-			showAdminMenu();
-		}
+		showUserMenu();
+//			showAdminMenu();
 	}
 
 	private static void showAdminMenu() {
