@@ -15,7 +15,9 @@ public class JDBCManager {
 
 	public static JDBCManager getInstance() {
 		if (jdbcManager == null) {
-			jdbcManager = new JDBCManager();
+			synchronized (JDBCManager.class) {
+				jdbcManager = new JDBCManager();
+			}
 		}
 		return jdbcManager;
 	}
