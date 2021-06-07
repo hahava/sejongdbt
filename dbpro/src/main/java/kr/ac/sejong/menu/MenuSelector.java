@@ -17,7 +17,9 @@ public class MenuSelector {
 
 	public static MenuSelector getInstance() {
 		if (menuSelector == null) {
-			menuSelector = new MenuSelector();
+			synchronized (MenuSelector.class) {
+				menuSelector = new MenuSelector();
+			}
 		}
 		return menuSelector;
 	}

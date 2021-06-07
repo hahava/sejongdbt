@@ -27,17 +27,18 @@ public final class PropertiesWrapper {
 	 */
 	public static Properties getInstance() {
 		if (properties == null) {
-			InputStream inputStream = PropertiesWrapper.class.getResourceAsStream(RESOURCE_FILE);
-			properties = new Properties();
-			try {
-				properties.load(inputStream);
-				inputStream.close();
-			} catch (IOException ie) {
-				ie.printStackTrace();
-				System.exit(ABNORMAL_EXIT);
+			synchronized (Properties.class) {
+				InputStream inputStream = PropertiesWrapper.class.getResourceAsStream(RESOURCE_FILE);
+				properties = new Properties();
+				try {
+					properties.load(inputStream);
+					inputStream.close();
+				} catch (IOException ie) {
+					ie.printStackTrace();
+					System.exit(ABNORMAL_EXIT);
+				}
 			}
 		}
 		return properties;
 	}
-
 }
